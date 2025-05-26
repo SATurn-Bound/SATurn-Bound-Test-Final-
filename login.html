@@ -1,0 +1,123 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>Login | SATurn Bound</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<link rel="stylesheet" href="assets/css/main.css" />
+	<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+</head>
+<body class="is-preload">
+
+<div id="page-wrapper">
+	<!-- Header -->
+	<header id="header">
+		<h1><a href="index.html">SATurn Bound</a></h1>
+		<nav><a href="#menu">Menu</a></nav>
+	</header>
+
+	<!-- Menu -->
+	<nav id="menu">
+		<div class="inner">
+			<h2>Menu</h2>
+			<ul class="links">
+				<li><a href="index.html">Home</a></li>
+				<li><a href="generic.html">Generic</a></li>
+				<li><a href="elements.html">Elements</a></li>
+				<li><a href="signup.html">Sign Up</a></li>
+				<li><a href="login.html">Login</a></li>
+			</ul>
+			<a href="#" class="close">Close</a>
+		</div>
+	</nav>
+
+	<!-- Main -->
+	<section id="main" class="wrapper">
+		<div class="inner">
+			<h2 class="major">Login</h2>
+			<form id="loginForm">
+				<div class="fields">
+					<div class="field">
+						<label for="email">Email</label>
+						<input type="email" name="email" id="email" required />
+					</div>
+					<div class="field">
+						<label for="password">Password</label>
+						<input type="password" name="password" id="password" required />
+					</div>
+				</div>
+				<ul class="actions">
+					<li><input type="submit" value="Log In with Email" class="primary" /></li>
+				</ul>
+			</form>
+
+			<hr />
+
+			<button id="googleLogin" class="button icon brands fa-google">Log In with Google</button>
+		</div>
+	</section>
+
+	<!-- Footer -->
+	<section id="footer">
+		<div class="inner">
+			<p>&copy; SATurn Bound Inc. All rights reserved.</p>
+		</div>
+	</section>
+</div>
+
+<!-- Firebase Auth & App SDKs -->
+<script type="module">
+	import { initializeApp } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-app.js";
+	import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-auth.js";
+
+	const firebaseConfig = {
+		apiKey: "AIzaSyDedw_zEK-L-AoKO1WkeomLVztoRnYBXt4",
+		authDomain: "saturn-bound.firebaseapp.com",
+		projectId: "saturn-bound",
+		storageBucket: "saturn-bound.appspot.com",
+		messagingSenderId: "46027081851",
+		appId: "1:46027081851:web:8402230dc2ff241c6cfade"
+	};
+
+	const app = initializeApp(firebaseConfig);
+	const auth = getAuth(app);
+
+	// Email/Password Login
+	document.getElementById('loginForm').addEventListener('submit', async function (e) {
+		e.preventDefault();
+		const email = document.getElementById('email').value;
+		const password = document.getElementById('password').value;
+
+		try {
+			const userCredential = await signInWithEmailAndPassword(auth, email, password);
+			alert('Logged in successfully! Welcome, ' + (userCredential.user.displayName || 'User') + '.');
+			// Redirect if needed
+			// window.location.href = 'dashboard.html';
+		} catch (error) {
+			alert('Login failed: ' + error.message);
+		}
+	});
+
+	// Google Login
+	document.getElementById('googleLogin').addEventListener('click', async function () {
+		const provider = new GoogleAuthProvider();
+		try {
+			const result = await signInWithPopup(auth, provider);
+			alert('Logged in with Google: ' + result.user.displayName);
+			// Redirect if needed
+			// window.location.href = 'dashboard.html';
+		} catch (error) {
+			alert('Google Login Error: ' + error.message);
+		}
+	});
+</script>
+
+<!-- UI Scripts -->
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/browser.min.js"></script>
+<script src="assets/js/breakpoints.min.js"></script>
+<script src="assets/js/util.js"></script>
+<script src="assets/js/main.js"></script>
+
+</body>
+</html>
