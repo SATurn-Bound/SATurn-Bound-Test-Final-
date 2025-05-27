@@ -6,7 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
   <link rel="stylesheet" href="assets/css/main.css" />
   <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
-
   <style>
     .logo img {
       max-width: 150px;
@@ -21,70 +20,85 @@
       margin-bottom: 1em;
       font-weight: bold;
     }
+    #logoutBtn {
+      display: inline-block;
+      margin-top: 1em;
+      padding: 0.5em 1em;
+      background: #f56a6a;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      text-decoration: none;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body class="is-preload">
 
-<div id="page-wrapper">
-	<!-- Header -->
-	<header id="header" class="alt">
-		<h1><a href="index.html">SATurn Bound</a></h1>
-		<nav><a href="#menu">Menu</a></nav>
-	</header>
+<div id="wrapper">
+  <div id="page-wrapper">
 
-	<!-- Menu -->
-	<nav id="menu">
-		<div class="inner">
-			<h2>Menu</h2>
-			<ul class="links">
-				<li><a href="index.html">Home</a></li>
-				<li><a href="signup.html">Sign Up</a></li>
-			</ul>
-			<a href="#" class="close">Close</a>
-		</div>
-	</nav>
+    <!-- Header -->
+    <header id="header" class="alt">
+      <h1><a href="index.html">SATurn Bound</a></h1>
+      <nav><a href="#menu">Menu</a></nav>
+    </header>
 
-  <!-- Banner -->
-  <section id="banner">
-    <div class="inner">
-      <div class="logo"><img src="images/Logo.png" alt="SATurn Bound Logo"></div>
-      <h2>Welcome to Your Dashboard</h2>
-      <p class="user-greeting" id="userGreeting">Loading...</p>
-    </div>
-  </section>
-
-  <!-- Dashboard Content -->
-  <section id="wrapper">
-    <section class="wrapper spotlight style1">
+    <!-- Banner -->
+    <section id="banner">
       <div class="inner">
-        <a href="#" class="image"><img src="images/books.webp" alt="" /></a>
-        <div class="content">
-          <h2 class="major">Practice Tests</h2>
-          <p>Start your skill-specific or full-length SAT practice tests below.</p>
-          <a href="#" class="special">View Tests</a>
-        </div>
+        <div class="logo"><img src="images/Logo.png" alt="SATurn Bound Logo"></div>
+        <h2>Welcome to Your Dashboard</h2>
+        <p class="user-greeting" id="userGreeting">Loading...</p>
+        <button id="logoutBtn">Log Out</button>
       </div>
     </section>
 
-    <section class="wrapper alt spotlight style2">
-      <div class="inner">
-        <a href="#" class="image"><img src="images/ytlogo.webp" alt="" /></a>
-        <div class="content">
-          <h2 class="major">Explanations & Videos</h2>
-          <p>Access guided video solutions and step-by-step breakdowns.</p>
-          <a href="#" class="special">Watch Now</a>
+    <!-- Dashboard Content -->
+    <section id="wrapper">
+      <section class="wrapper spotlight style1">
+        <div class="inner">
+          <a href="#" class="image"><img src="images/books.webp" alt="" /></a>
+          <div class="content">
+            <h2 class="major">Practice Tests</h2>
+            <p>Start your skill-specific or full-length SAT practice tests below.</p>
+            <a href="#" class="special">View Tests</a>
+          </div>
         </div>
+      </section>
+
+      <section class="wrapper alt spotlight style2">
+        <div class="inner">
+          <a href="#" class="image"><img src="images/ytlogo.webp" alt="" /></a>
+          <div class="content">
+            <h2 class="major">Explanations & Videos</h2>
+            <p>Access guided video solutions and step-by-step breakdowns.</p>
+            <a href="#" class="special">Watch Now</a>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <!-- Footer -->
+    <section id="footer">
+      <div class="inner">
+        <p>&copy; SATurn Bound Inc. All rights reserved.</p>
       </div>
     </section>
-  </section>
 
-  <!-- Footer -->
-  <section id="footer">
+  </div>
+
+  <!-- ✅ Menu placed outside page-wrapper, inside wrapper -->
+  <nav id="menu">
     <div class="inner">
-      <p>&copy; SATurn Bound Inc. All rights reserved.</p>
+      <h2>Menu</h2>
+      <ul class="links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="signup.html">Sign Up</a></li>
+      </ul>
+      <a href="#" class="close">Close</a>
     </div>
-  </section>
-
+  </nav>
 </div>
 
 <!-- Firebase Auth & App SDK -->
