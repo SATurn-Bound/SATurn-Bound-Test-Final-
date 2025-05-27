@@ -22,8 +22,6 @@
 			<h2>Menu</h2>
 			<ul class="links">
 				<li><a href="index.html">Home</a></li>
-				<li><a href="generic.html">Generic</a></li>
-				<li><a href="elements.html">Elements</a></li>
 				<li><a href="signup.html">Sign Up</a></li>
 				<li><a href="login.html">Login</a></li>
 			</ul>
@@ -91,8 +89,7 @@
 		try {
 			const userCredential = await signInWithEmailAndPassword(auth, email, password);
 			alert('Logged in successfully! Welcome, ' + (userCredential.user.displayName || 'User') + '.');
-			// Redirect if needed
-			// window.location.href = 'dashboard.html';
+			window.location.href = 'dashboard.html';
 		} catch (error) {
 			alert('Login failed: ' + error.message);
 		}
@@ -104,8 +101,7 @@
 		try {
 			const result = await signInWithPopup(auth, provider);
 			alert('Logged in with Google: ' + result.user.displayName);
-			// Redirect if needed
-			// window.location.href = 'dashboard.html';
+			window.location.href = 'dashboard.html';
 		} catch (error) {
 			alert('Google Login Error: ' + error.message);
 		}
