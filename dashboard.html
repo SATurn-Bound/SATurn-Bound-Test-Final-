@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
   <link rel="stylesheet" href="assets/css/main.css" />
   <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+
   <style>
     .logo img {
       max-width: 150px;
@@ -20,22 +21,14 @@
       margin-bottom: 1em;
       font-weight: bold;
     }
-    #logoutBtn {
-      display: inline-block;
-      margin-top: 1em;
-      padding: 0.5em 1em;
-      background: #f56a6a;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      text-decoration: none;
-      cursor: pointer;
-    }
   </style>
 </head>
 <body class="is-preload">
 
+<!-- Wrapper required for menu to function -->
 <div id="wrapper">
+
+  <!-- Page content -->
   <div id="page-wrapper">
 
     <!-- Header -->
@@ -50,33 +43,30 @@
         <div class="logo"><img src="images/Logo.png" alt="SATurn Bound Logo"></div>
         <h2>Welcome to Your Dashboard</h2>
         <p class="user-greeting" id="userGreeting">Loading...</p>
-        <button id="logoutBtn">Log Out</button>
       </div>
     </section>
 
     <!-- Dashboard Content -->
-    <section id="wrapper">
-      <section class="wrapper spotlight style1">
-        <div class="inner">
-          <a href="#" class="image"><img src="images/books.webp" alt="" /></a>
-          <div class="content">
-            <h2 class="major">Practice Tests</h2>
-            <p>Start your skill-specific or full-length SAT practice tests below.</p>
-            <a href="#" class="special">View Tests</a>
-          </div>
+    <section class="wrapper spotlight style1">
+      <div class="inner">
+        <a href="#" class="image"><img src="images/books.webp" alt="Practice Tests" /></a>
+        <div class="content">
+          <h2 class="major">Practice Tests</h2>
+          <p>Start your skill-specific or full-length SAT practice tests below.</p>
+          <a href="#" class="special">View Tests</a>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <section class="wrapper alt spotlight style2">
-        <div class="inner">
-          <a href="#" class="image"><img src="images/ytlogo.webp" alt="" /></a>
-          <div class="content">
-            <h2 class="major">Explanations & Videos</h2>
-            <p>Access guided video solutions and step-by-step breakdowns.</p>
-            <a href="#" class="special">Watch Now</a>
-          </div>
+    <section class="wrapper alt spotlight style2">
+      <div class="inner">
+        <a href="#" class="image"><img src="images/ytlogo.webp" alt="Explanations & Videos" /></a>
+        <div class="content">
+          <h2 class="major">Explanations & Videos</h2>
+          <p>Access guided video solutions and step-by-step breakdowns.</p>
+          <a href="#" class="special">Watch Now</a>
         </div>
-      </section>
+      </div>
     </section>
 
     <!-- Footer -->
@@ -86,9 +76,9 @@
       </div>
     </section>
 
-  </div>
+  </div> <!-- end of #page-wrapper -->
 
-  <!-- ✅ Menu placed outside page-wrapper, inside wrapper -->
+  <!-- Menu (must be outside of page-wrapper to work) -->
   <nav id="menu">
     <div class="inner">
       <h2>Menu</h2>
@@ -99,15 +89,15 @@
       <a href="#" class="close">Close</a>
     </div>
   </nav>
-</div>
 
-<!-- Firebase Auth & App SDK -->
+</div> <!-- end of #wrapper -->
+
+<!-- Firebase Auth -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-app.js";
   import {
     getAuth,
-    onAuthStateChanged,
-    signOut
+    onAuthStateChanged
   } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-auth.js";
 
   const firebaseConfig = {
@@ -122,7 +112,6 @@
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
 
-  // Check if user is logged in
   onAuthStateChanged(auth, (user) => {
     if (!user) {
       window.location.href = "index.html";
@@ -131,16 +120,9 @@
         "Hello, " + (user.displayName || user.email) + "!";
     }
   });
-
-  // Logout functionality
-  document.getElementById("logoutBtn").addEventListener("click", async (e) => {
-    e.preventDefault();
-    await signOut(auth);
-    window.location.href = "index.html";
-  });
 </script>
 
-<!-- UI Scripts -->
+<!-- Scripts (must be at the end) -->
 <script src="assets/js/jquery.min.js"></script>
 <script src="assets/js/browser.min.js"></script>
 <script src="assets/js/breakpoints.min.js"></script>
