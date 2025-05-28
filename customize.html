@@ -6,6 +6,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
   <link rel="stylesheet" href="assets/css/main.css" />
   <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+  <style>
+    fieldset {
+      border: 1px solid #ccc;
+      padding: 1em;
+      margin-top: 1em;
+      border-radius: 8px;
+    }
+    legend {
+      font-weight: bold;
+      padding: 0 10px;
+    }
+    .checkbox-group label {
+      display: block;
+      margin-bottom: 0.4em;
+    }
+  </style>
 </head>
 <body class="is-preload">
 
@@ -51,30 +67,58 @@
             <input type="number" id="readingScore" name="readingScore" min="200" max="800" required />
           </div>
 
-          <!-- Interests: Math Subtopics -->
           <div class="field">
             <label>Interests: Math Subtopics</label>
-            <fieldset>
+            <fieldset class="checkbox-group">
               <legend>Algebra</legend>
-              <label><input type="checkbox" name="interests" value="Linear Equations in One Variable" /> Linear Equations in One Variable</label><br>
-              <label><input type="checkbox" name="interests" value="Linear Functions" /> Linear Functions</label><br>
-              <label><input type="checkbox" name="interests" value="Linear Equations in Two Variables" /> Linear Equations in Two Variables</label><br>
-              <label><input type="checkbox" name="interests" value="Systems of Two Linear Equations" /> Systems of Two Linear Equations</label><br>
+              <label><input type="checkbox" name="interests" value="Linear Equations in One Variable" /> Linear Equations in One Variable</label>
+              <label><input type="checkbox" name="interests" value="Linear Functions" /> Linear Functions</label>
+              <label><input type="checkbox" name="interests" value="Linear Equations in Two Variables" /> Linear Equations in Two Variables</label>
+              <label><input type="checkbox" name="interests" value="Systems of Two Linear Equations" /> Systems of Two Linear Equations</label>
               <label><input type="checkbox" name="interests" value="Linear Inequalities" /> Linear Inequalities</label>
             </fieldset>
-            <!-- Add fieldsets similarly for Advanced Math, PSDA, Geometry/Trig -->
+            <fieldset class="checkbox-group">
+              <legend>Advanced Math</legend>
+              <label><input type="checkbox" name="interests" value="Quadratics" /> Quadratics</label>
+              <label><input type="checkbox" name="interests" value="Polynomials" /> Polynomials</label>
+              <label><input type="checkbox" name="interests" value="Rational Expressions" /> Rational Expressions</label>
+            </fieldset>
+            <fieldset class="checkbox-group">
+              <legend>Problem Solving & Data Analysis</legend>
+              <label><input type="checkbox" name="interests" value="Ratios and Proportions" /> Ratios and Proportions</label>
+              <label><input type="checkbox" name="interests" value="Statistics" /> Statistics</label>
+            </fieldset>
+            <fieldset class="checkbox-group">
+              <legend>Geometry & Trigonometry</legend>
+              <label><input type="checkbox" name="interests" value="Angles and Circles" /> Angles and Circles</label>
+              <label><input type="checkbox" name="interests" value="Triangles" /> Triangles</label>
+              <label><input type="checkbox" name="interests" value="Trig Ratios" /> Trig Ratios</label>
+            </fieldset>
           </div>
 
-          <!-- Interests: English Subsections -->
           <div class="field">
             <label>Interests: English Subtopics</label>
-            <fieldset>
+            <fieldset class="checkbox-group">
               <legend>Information and Ideas</legend>
-              <label><input type="checkbox" name="interests" value="Central Ideas and Details" /> Central Ideas and Details</label><br>
-              <label><input type="checkbox" name="interests" value="Inferences" /> Inferences</label><br>
+              <label><input type="checkbox" name="interests" value="Central Ideas and Details" /> Central Ideas and Details</label>
+              <label><input type="checkbox" name="interests" value="Inferences" /> Inferences</label>
               <label><input type="checkbox" name="interests" value="Command of Evidence" /> Command of Evidence</label>
             </fieldset>
-            <!-- Add fieldsets for Craft and Structure, Expression of Ideas, Conventions -->
+            <fieldset class="checkbox-group">
+              <legend>Craft and Structure</legend>
+              <label><input type="checkbox" name="interests" value="Vocabulary in Context" /> Vocabulary in Context</label>
+              <label><input type="checkbox" name="interests" value="Text Structure and Purpose" /> Text Structure and Purpose</label>
+            </fieldset>
+            <fieldset class="checkbox-group">
+              <legend>Expression of Ideas</legend>
+              <label><input type="checkbox" name="interests" value="Clarity and Conciseness" /> Clarity and Conciseness</label>
+              <label><input type="checkbox" name="interests" value="Organization" /> Organization</label>
+            </fieldset>
+            <fieldset class="checkbox-group">
+              <legend>Standard English Conventions</legend>
+              <label><input type="checkbox" name="interests" value="Punctuation" /> Punctuation</label>
+              <label><input type="checkbox" name="interests" value="Sentence Structure" /> Sentence Structure</label>
+            </fieldset>
           </div>
         </div>
         <ul class="actions">
