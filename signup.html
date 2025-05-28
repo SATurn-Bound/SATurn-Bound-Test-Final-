@@ -93,8 +93,8 @@
 		try {
 			const userCredential = await createUserWithEmailAndPassword(auth, email, password);
 			await updateProfile(userCredential.user, { displayName: name });
-			alert('Account created successfully!');
-			document.getElementById('signupForm').reset();
+			window.location.href = "customize.html";
+
 		} catch (error) {
 			alert('Error: ' + error.message);
 		}
@@ -105,7 +105,7 @@
 		const provider = new GoogleAuthProvider();
 		try {
 			const result = await signInWithPopup(auth, provider);
-			alert('Signed up with Google: ' + result.user.displayName);
+			window.location.href = "customize.html";
 			// You can redirect or save extra info if needed
 		} catch (error) {
 			alert('Google Sign Up Error: ' + error.message);
