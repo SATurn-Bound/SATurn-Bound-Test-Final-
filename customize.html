@@ -6,35 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
   <link rel="stylesheet" href="assets/css/main.css" />
   <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
-  <style>
-    /* Fix input colors */
-    input[type="number"],
-    input[type="text"],
-    textarea {
-      background-color: #fff;
-      color: #000;
-    }
-
-    /* Style checkbox sections */
-    fieldset {
-      border: 1px solid #ccc;
-      padding: 1rem;
-      margin-bottom: 1.5rem;
-      border-radius: 0.5rem;
-      background-color: #f9f9f9;
-    }
-
-    fieldset legend {
-      font-weight: bold;
-      padding: 0 0.5rem;
-    }
-
-    .checkbox-group label {
-      display: block;
-      margin: 0.4rem 0;
-      cursor: pointer;
-    }
-  </style>
 </head>
 <body class="is-preload">
 
@@ -80,28 +51,30 @@
             <input type="number" id="readingScore" name="readingScore" min="200" max="800" required />
           </div>
 
-          <!-- Math Subtopics -->
-          <div class="field checkbox-group">
-            <label>Math Subtopics</label>
+          <!-- Interests: Math Subtopics -->
+          <div class="field">
+            <label>Interests: Math Subtopics</label>
             <fieldset>
               <legend>Algebra</legend>
-              <label><input type="checkbox" name="interests" value="Linear Equations in One Variable" /> Linear Equations in One Variable</label>
-              <label><input type="checkbox" name="interests" value="Linear Functions" /> Linear Functions</label>
-              <label><input type="checkbox" name="interests" value="Linear Equations in Two Variables" /> Linear Equations in Two Variables</label>
-              <label><input type="checkbox" name="interests" value="Systems of Two Linear Equations" /> Systems of Two Linear Equations</label>
+              <label><input type="checkbox" name="interests" value="Linear Equations in One Variable" /> Linear Equations in One Variable</label><br>
+              <label><input type="checkbox" name="interests" value="Linear Functions" /> Linear Functions</label><br>
+              <label><input type="checkbox" name="interests" value="Linear Equations in Two Variables" /> Linear Equations in Two Variables</label><br>
+              <label><input type="checkbox" name="interests" value="Systems of Two Linear Equations" /> Systems of Two Linear Equations</label><br>
               <label><input type="checkbox" name="interests" value="Linear Inequalities" /> Linear Inequalities</label>
             </fieldset>
+            <!-- Add fieldsets similarly for Advanced Math, PSDA, Geometry/Trig -->
           </div>
 
-          <!-- English Subtopics -->
-          <div class="field checkbox-group">
-            <label>English Subtopics</label>
+          <!-- Interests: English Subsections -->
+          <div class="field">
+            <label>Interests: English Subtopics</label>
             <fieldset>
               <legend>Information and Ideas</legend>
-              <label><input type="checkbox" name="interests" value="Central Ideas and Details" /> Central Ideas and Details</label>
-              <label><input type="checkbox" name="interests" value="Inferences" /> Inferences</label>
+              <label><input type="checkbox" name="interests" value="Central Ideas and Details" /> Central Ideas and Details</label><br>
+              <label><input type="checkbox" name="interests" value="Inferences" /> Inferences</label><br>
               <label><input type="checkbox" name="interests" value="Command of Evidence" /> Command of Evidence</label>
             </fieldset>
+            <!-- Add fieldsets for Craft and Structure, Expression of Ideas, Conventions -->
           </div>
         </div>
         <ul class="actions">
