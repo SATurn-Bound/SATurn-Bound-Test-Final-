@@ -23,52 +23,24 @@
       margin-right: 8px;
     }
 
-    /* Vertical layout for SAT scores */
-    .score-container {
-      display: flex;
-      flex-direction: column;
-      margin-bottom: 1.5rem;
-    }
-    
-    .score-line {
-      display: flex;
-      align-items: center;
-      margin-bottom: 0.5rem;
-    }
-    
-    .vertical-line {
-      border-left: 2px solid #000;
-      height: 40px;
-      margin: 0 15px;
-    }
-    
-    .score-input {
-      display: flex;
-      flex-direction: column;
+    fieldset {
+      margin-top: 1.5rem;
+      padding: 1rem;
+      border-radius: 6px;
+      background: #f2f2f2;
+      border: 1px solid #ccc;
     }
 
-    /* Math subtopics hierarchy */
-    .hierarchy-container {
-      margin-left: 20px;
+    legend {
+      font-weight: bold;
+      padding: 0 0.5rem;
     }
-    
-    .hierarchy-item {
+
+    .checkbox-group label {
       display: flex;
       align-items: center;
       margin: 0.4rem 0;
-      color: #000;
-    }
-    
-    .hierarchy-line {
-      border-left: 2px solid #000;
-      height: 20px;
-      margin-left: 10px;
-      margin-right: 10px;
-    }
-    
-    .hierarchy-title {
-      font-weight: bold;
-      margin: 1rem 0 0.5rem 0;
+      color: #000; /* force black text */
     }
 
     /* Make form field text visible on light bg */
@@ -101,8 +73,7 @@
   <!-- Main -->
   <section id="main" class="wrapper">
     <div class="inner">
-      <h1 class="major" style="text-align: center; margin-bottom: 2rem;">SATURN BOUND</h1>
-      
+      <h2 class="major">Customize Your Account</h2>
       <form id="customizeForm">
         <div class="fields">
           <div class="field">
@@ -113,68 +84,39 @@
             <label for="bio">Short Bio</label>
             <textarea id="bio" name="bio" rows="3" required></textarea>
           </div>
-          
-          <!-- SAT Scores Section -->
-          <div class="field score-container">
-            <div class="score-line">
-              <label for="mathScore" style="font-weight: bold;">SAT MATH SCORE</label>
-            </div>
+          <div class="field">
+            <label for="mathScore">SAT Math Score</label>
             <div class="score-line">
               <div class="vertical-line"></div>
             </div>
             <div class="score-line">
               <input type="number" id="mathScore" name="mathScore" min="200" max="800" required />
-            </div>
-            <div class="score-line">
-              <label for="readingScore" style="font-weight: bold;">SAT READING/WRITING SCORE</label>
-            </div>
-            <div class="score-line">
-              <div class="vertical-line"></div>
-            </div>
-            <div class="score-line">
-              <input type="number" id="readingScore" name="readingScore" min="200" max="800" required />
-            </div>
           </div>
-          
-          <!-- Math Subtopics Hierarchy -->
           <div class="field">
-            <div class="hierarchy-title">INTERESTS: MATH SUBTOPICS</div>
-            <div class="hierarchy-container">
-              <div class="hierarchy-item">
-                <input type="checkbox" id="algebra" name="interests" value="Algebra" />
-                <label for="algebra">Algebra</label>
-              </div>
-              <div class="hierarchy-line"></div>
-              <div class="hierarchy-item">
-                <input type="checkbox" id="linear-one" name="interests" value="Linear Equations in One Variable" />
-                <label for="linear-one">LINEAR EQUATIONS IN ONE VARIABLE</label>
-              </div>
-              <div class="hierarchy-line"></div>
-              <div class="hierarchy-item">
-                <input type="checkbox" id="linear-functions" name="interests" value="Linear Functions" />
-                <label for="linear-functions">LINEAR FUNCTIONS</label>
-              </div>
-              <div class="hierarchy-line"></div>
-              <div class="hierarchy-item">
-                <input type="checkbox" id="linear-two" name="interests" value="Linear Equations in Two Variables" />
-                <label for="linear-two">LINEAR EQUATIONS IN TWO VARIABLES</label>
-              </div>
-              <div class="hierarchy-line"></div>
-              <div class="hierarchy-item">
-                <input type="checkbox" id="systems" name="interests" value="Systems of Two Linear Equations" />
-                <label for="systems">SYSTEMS OF TWO LINEAR EQUATIONS</label>
-              </div>
-              <div class="hierarchy-line"></div>
-              <div class="hierarchy-item">
-                <input type="checkbox" id="inequalities" name="interests" value="Linear Inequalities" />
-                <label for="inequalities">LINEAR INEQUALITIES</label>
-              </div>
-              <div class="hierarchy-line"></div>
-              <div class="hierarchy-item">
-                <input type="checkbox" id="advanced-math" name="interests" value="Advanced Math" />
-                <label for="advanced-math">Advanced Math</label>
-              </div>
-            </div>
+            <label for="readingScore">SAT Reading/Writing Score</label>
+            <input type="number" id="readingScore" name="readingScore" min="200" max="800" required />
+          </div>
+
+          <!-- Math Subtopics -->
+          <div class="field checkbox-group">
+            <fieldset>
+              <legend>Math Subtopics</legend>
+              <label><input type="checkbox" name="interests" value="Linear Equations in One Variable" />Linear Equations in One Variable</label>
+              <label><input type="checkbox" name="interests" value="Linear Functions" />Linear Functions</label>
+              <label><input type="checkbox" name="interests" value="Linear Equations in Two Variables" />Linear Equations in Two Variables</label>
+              <label><input type="checkbox" name="interests" value="Systems of Two Linear Equations" />Systems of Two Linear Equations</label>
+              <label><input type="checkbox" name="interests" value="Linear Inequalities" />Linear Inequalities</label>
+            </fieldset>
+          </div>
+
+          <!-- English Subtopics -->
+          <div class="field checkbox-group">
+            <fieldset>
+              <legend>English Subtopics</legend>
+              <label><input type="checkbox" name="interests" value="Central Ideas and Details" />Central Ideas and Details</label>
+              <label><input type="checkbox" name="interests" value="Inferences" />Inferences</label>
+              <label><input type="checkbox" name="interests" value="Command of Evidence" />Command of Evidence</label>
+            </fieldset>
           </div>
         </div>
         <ul class="actions">
