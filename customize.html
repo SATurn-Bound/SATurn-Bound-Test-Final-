@@ -7,45 +7,32 @@
   <link rel="stylesheet" href="assets/css/main.css" />
   <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
   <style>
-    /* Force visible input and textarea text */
-    input[type="text"],
+    /* Fix input colors */
     input[type="number"],
+    input[type="text"],
     textarea {
-      background-color: #ffffff !important;
-      color: #000000 !important;
-      border: 1px solid #ccc;
+      background-color: #fff;
+      color: #000;
     }
 
-    /* Checkbox visibility and spacing */
-    input[type="checkbox"] {
-      appearance: auto !important;
-      transform: scale(1.2);
-      margin-right: 8px;
-    }
-
+    /* Style checkbox sections */
     fieldset {
-      margin-top: 1.5rem;
-      padding: 1rem;
-      border-radius: 6px;
-      background: #f2f2f2;
       border: 1px solid #ccc;
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+      border-radius: 0.5rem;
+      background-color: #f9f9f9;
     }
 
-    legend {
+    fieldset legend {
       font-weight: bold;
       padding: 0 0.5rem;
     }
 
     .checkbox-group label {
-      display: flex;
-      align-items: center;
+      display: block;
       margin: 0.4rem 0;
-      color: #000; /* force black text */
-    }
-
-    /* Make form field text visible on light bg */
-    label {
-      color: #000 !important;
+      cursor: pointer;
     }
   </style>
 </head>
@@ -95,23 +82,25 @@
 
           <!-- Math Subtopics -->
           <div class="field checkbox-group">
+            <label>Math Subtopics</label>
             <fieldset>
-              <legend>Math Subtopics</legend>
-              <label><input type="checkbox" name="interests" value="Linear Equations in One Variable" />Linear Equations in One Variable</label>
-              <label><input type="checkbox" name="interests" value="Linear Functions" />Linear Functions</label>
-              <label><input type="checkbox" name="interests" value="Linear Equations in Two Variables" />Linear Equations in Two Variables</label>
-              <label><input type="checkbox" name="interests" value="Systems of Two Linear Equations" />Systems of Two Linear Equations</label>
-              <label><input type="checkbox" name="interests" value="Linear Inequalities" />Linear Inequalities</label>
+              <legend>Algebra</legend>
+              <label><input type="checkbox" name="interests" value="Linear Equations in One Variable" /> Linear Equations in One Variable</label>
+              <label><input type="checkbox" name="interests" value="Linear Functions" /> Linear Functions</label>
+              <label><input type="checkbox" name="interests" value="Linear Equations in Two Variables" /> Linear Equations in Two Variables</label>
+              <label><input type="checkbox" name="interests" value="Systems of Two Linear Equations" /> Systems of Two Linear Equations</label>
+              <label><input type="checkbox" name="interests" value="Linear Inequalities" /> Linear Inequalities</label>
             </fieldset>
           </div>
 
           <!-- English Subtopics -->
           <div class="field checkbox-group">
+            <label>English Subtopics</label>
             <fieldset>
-              <legend>English Subtopics</legend>
-              <label><input type="checkbox" name="interests" value="Central Ideas and Details" />Central Ideas and Details</label>
-              <label><input type="checkbox" name="interests" value="Inferences" />Inferences</label>
-              <label><input type="checkbox" name="interests" value="Command of Evidence" />Command of Evidence</label>
+              <legend>Information and Ideas</legend>
+              <label><input type="checkbox" name="interests" value="Central Ideas and Details" /> Central Ideas and Details</label>
+              <label><input type="checkbox" name="interests" value="Inferences" /> Inferences</label>
+              <label><input type="checkbox" name="interests" value="Command of Evidence" /> Command of Evidence</label>
             </fieldset>
           </div>
         </div>
@@ -151,7 +140,7 @@
 
   onAuthStateChanged(auth, user => {
     if (!user) {
-      window.location.href = "signup.html";
+      window.location.href = "signup.html"; // Redirect if not logged in
     } else {
       document.getElementById("fullName").value = user.displayName || "";
     }
