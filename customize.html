@@ -185,5 +185,13 @@
   });
 </script>
 
+<script>
+  // Remove the 'is-preload' class after page load to enable interaction
+  window.addEventListener('load', () => {
+    document.body.classList.remove('is-preload');
+  });
+</script>
+
+
 </body>
 </html>
