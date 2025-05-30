@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-  <title>Dashboard | SATurn Bound</title>
+  <title>Practice Tests | SATurn Bound</title>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
   <link rel="stylesheet" href="assets/css/main.css" />
@@ -21,44 +21,46 @@
       margin-bottom: 1em;
       font-weight: bold;
     }
+    .practice-section {
+      margin-bottom: 3em;
+    }
+    .practice-section h2 {
+      border-bottom: 2px solid #4c5c96;
+      padding-bottom: 0.5em;
+      margin-bottom: 1em;
+    }
+    .practice-section h3 {
+      color: #4c5c96;
+    }
   </style>
 </head>
 <body class="is-preload">
 
-<!-- Wrapper required for menu to function -->
+<!-- Wrapper -->
 <div id="wrapper">
 
   <div id="page-wrapper">
-	<!-- Header -->
-	<header id="header">
-		<h1><a href="index.html">SATurn Bound</a></h1>
-		<nav><a href="#menu">Menu</a></nav>
-	</header>
+    <!-- Header -->
+    <header id="header">
+      <h1><a href="dashboard.html">SATurn Bound</a></h1>
+      <nav><a href="#menu">Menu</a></nav>
+    </header>
 
-	<!-- Menu -->
-	<nav id="menu">
-		<div class="inner">
-			<h2>Menu</h2>
-			<ul class="links">
-				<li><a href="index.html">Home</a></li>
-			</ul>
-			<a href="#" class="close">Close</a>
-		</div>
-	</nav>
-
-      <!-- Rest of your HTML remains the same -->
-
-      <!-- Menu -->
-      <nav id="menu">
+    <!-- Menu -->
+    <nav id="menu">
+      <div class="inner">
+        <h2>Menu</h2>
         <ul class="links">
           <li><a href="dashboard.html">Dashboard</a></li>
           <li><a href="practice-tests.html">Practice Tests</a></li>
           <li><a href="logout.html">Log Out</a></li>
         </ul>
-      </nav>
+        <a href="#" class="close">Close</a>
+      </div>
+    </nav>
 
-      <!-- Main -->
-      <section id="banner">
+    <!-- Banner -->
+    <section id="banner">
       <div class="inner">
         <div class="logo"><img src="images/Logo.png" alt="SATurn Bound Logo"></div>
         <h2>Practice Tests</h2>
@@ -66,10 +68,14 @@
       </div>
     </section>
 
+    <!-- Main Content -->
+    <section class="wrapper style1">
+      <div class="inner">
+        <div class="practice-section">
+          <!-- Math Section -->
+          <h2>Math</h2>
 
-            <!-- Math Section -->
-            <h2>Math</h2>
-
+          <div class="content">
             <h3>Algebra</h3>
             <ul>
               <li>Linear Equations in One Variable</li>
@@ -104,10 +110,14 @@
               <li>Right Triangles and Trigonometry</li>
               <li>Circles</li>
             </ul>
+          </div>
+        </div>
 
-            <!-- English Section -->
-            <h2>English</h2>
+        <div class="practice-section">
+          <!-- English Section -->
+          <h2>English</h2>
 
+          <div class="content">
             <h3>Information and Ideas</h3>
             <ul>
               <li>Central Ideas and Details</li>
@@ -133,28 +143,57 @@
               <li>Boundaries</li>
               <li>Form, Structure, and Sense</li>
             </ul>
-
           </div>
-        </section>
-      </div>
-
-      <!-- Footer -->
-      <footer id="footer">
-        <div class="inner">
-          <ul class="copyright">
-            <li>&copy; SATurn Bound</li>
-          </ul>
         </div>
-      </footer>
-    </div>
+      </div>
+    </section>
 
-    <!-- Scripts -->
-    <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/js/jquery.scrollex.min.js"></script>
-    <script src="assets/js/jquery.scrolly.min.js"></script>
-    <script src="assets/js/browser.min.js"></script>
-    <script src="assets/js/breakpoints.min.js"></script>
-    <script src="assets/js/util.js"></script>
-    <script src="assets/js/main.js"></script>
-  </body>
+    <!-- Footer -->
+    <section id="footer">
+      <div class="inner">
+        <p>&copy; SATurn Bound Inc. All rights reserved.</p>
+      </div>
+    </section>
+
+  </div> <!-- end of #page-wrapper -->
+</div> <!-- end of #wrapper -->
+
+<!-- Firebase Auth -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-app.js";
+  import {
+    getAuth,
+    onAuthStateChanged
+  } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyDedw_zEK-L-AoKO1WkeomLVztoRnYBXt4",
+    authDomain: "saturn-bound.firebaseapp.com",
+    projectId: "saturn-bound",
+    storageBucket: "saturn-bound.appspot.com",
+    messagingSenderId: "46027081851",
+    appId: "1:46027081851:web:8402230dc2ff241c6cfade"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  onAuthStateChanged(auth, (user) => {
+    if (!user) {
+      window.location.href = "index.html";
+    } else {
+      document.getElementById("userGreeting").textContent =
+        "Hello, " + (user.displayName || user.email) + "!";
+    }
+  });
+</script>
+
+<!-- Scripts -->
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/browser.min.js"></script>
+<script src="assets/js/breakpoints.min.js"></script>
+<script src="assets/js/util.js"></script>
+<script src="assets/js/main.js"></script>
+
+</body>
 </html>
