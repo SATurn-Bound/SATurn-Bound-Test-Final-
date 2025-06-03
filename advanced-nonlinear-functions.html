@@ -73,6 +73,7 @@
         <!-- Question 1 -->
         <div class="question-block">
   <h3>Question 1</h3>
+  <img src="images/Q2_Nonlinear.png" style="max-width: 100%; height: auto; border: 1px solid #ddd;" />
   <span class="question-placeholder">The graph shows the height above ground, in meters, of a ball x seconds after the ball was launched upward from a platform. Which statement is the best interpretation of the marked point (2.5, 6.3) in this context?</span>
   <label class="answer-choice" style="color: black;"><input type="radio" name="q1" /> A) 2.5 seconds after being launched, the ball's height above ground is 6.3 meters.</label>
   <label class="answer-choice" style="color: black;"><input type="radio" name="q1" /> B) 6.3 seconds after being launched, the ball's height above ground is 2.5 meters.</label>
@@ -82,21 +83,21 @@
 
   <div class="question-block">
   <h3>Question 2</h3>
-   <span class="question-placeholder">The graph shows the height above ground, in meters, of a ball x seconds after the ball was launched upward from a platform. Which statement is the best interpretation of the marked point (2.5, 6.3) in this context?</span>
+   <span class="question-placeholder">The x-intercept of the graph shown is (x,0). What is the value of x?</span>
   
   <!-- Replace with your graph image -->
-  <img src="images/Q2_Nonlinear.png" style="max-width: 100%; height: auto; border: 1px solid #ddd;" />
+  <img src="images/Q1_Nonlinear.png" style="max-width: 100%; height: auto; border: 1px solid #ddd;" />
   
   <div style="margin-top: 15px;">
     <label for="x-intercept-answer">X-intercept (seconds):</label>
     <input 
-      type="number" 
-      id="x-intercept-answer" 
-      name="x-intercept-answer" 
-      step="0.1" 
-      placeholder="Enter time in seconds"
-      style="padding: 8px; width: 200px;"
-    />
+  type="number" 
+  id="x-intercept-answer" 
+  name="x-intercept-answer" 
+  step="0.1" 
+  placeholder="Enter time in seconds"
+  style="padding: 8px; width: 200px; background-color: white; color: black;"
+/>
   </div>
 </div>
 
@@ -123,7 +124,7 @@
   <h3>Question 5</h3>
   <span class="question-placeholder">The graph shown models the number of residents of a certain city as years after 2010. 
 How many residents does this model estimate the city had in 2010?</span>
-  <img src="images/Q5_Nonlinear.png" style="max-width: 100%; height: auto; border: 1px solid #ddd;" />
+  <img src="images/Q6_Nonlinear.png" style="max-width: 100%; height: auto; border: 1px solid #ddd;" />
   <label class="answer-choice" style="color: black;"><input type="radio" name="q3" /> A) 0</label>
   <label class="answer-choice" style="color: black;"><input type="radio" name="q3" /> B) 5,000</label>
   <label class="answer-choice" style="color: black;"><input type="radio" name="q3" /> C) 30,000</label>
@@ -134,7 +135,6 @@ How many residents does this model estimate the city had in 2010?</span>
   <h3>Question 6</h3>
   <span class="question-placeholder">y = (8w)(w). 
   A rectangle has a length that is 8 times its width. The given function calculates the area of the rectangle in square meters, where y > 0. Which of the following is the best interpretation of 8w in this context?</span>
-  <img src="images/Q6_Nonlinear.png" style="max-width: 100%; height: auto; border: 1px solid #ddd;" />
   <label class="answer-choice" style="color: black;"><input type="radio" name="q3" /> A) The length of the rectangle, in meters</label>
   <label class="answer-choice" style="color: black;"><input type="radio" name="q3" /> B) The area of the rectangle, in square meters</label>
   <label class="answer-choice" style="color: black;"><input type="radio" name="q3" /> C) The difference between the length and the width of the rectangle, in meters</label>
@@ -145,23 +145,27 @@ How many residents does this model estimate the city had in 2010?</span>
   <h3>Question 7</h3>
   <span class="question-placeholder">The table shows the exponential relationship between the number of years, x, since Hans started training in pole vault, and the estimated height h(x), in meters, of her best pole vault for that year. Which of the following functions best represents this relationship, where x ≤ 5?</span>
 
-  <table border="1" style="border-collapse: collapse; text-align: center; margin-top: 10px; background-color: #ffffff; color: #000000;">
-    <tr style="background-color: #f2f2f2;">
-      <th>x</th>
-      <th>h(x)</th>
-    </tr>
-    <tr>
-      <td>0</td>
-      <td>1.25</td>
-    </tr>
-    <tr>
-      <td>2</td>
-      <td>2.18</td>
-    </tr>
-    <tr>
-      <td>4</td>
-      <td>3.80</td>
-    </tr>
+  <table style="border-collapse: collapse; margin-top: 10px; width: 50%; background-color: #ffffff; color: #000000;">
+    <thead>
+      <tr style="background-color: #d9d9d9;">
+        <th style="border: 1px solid #999; padding: 8px;">x</th>
+        <th style="border: 1px solid #999; padding: 8px;">h(x)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="border: 1px solid #999; padding: 8px; text-align: center;">0</td>
+        <td style="border: 1px solid #999; padding: 8px; text-align: center;">1.25</td>
+      </tr>
+      <tr>
+        <td style="border: 1px solid #999; padding: 8px; text-align: center;">2</td>
+        <td style="border: 1px solid #999; padding: 8px; text-align: center;">2.18</td>
+      </tr>
+      <tr>
+        <td style="border: 1px solid #999; padding: 8px; text-align: center;">4</td>
+        <td style="border: 1px solid #999; padding: 8px; text-align: center;">3.80</td>
+      </tr>
+    </tbody>
   </table>
 
   <label class="answer-choice" style="color: black;"><input type="radio" name="q7" /> A) h(x) = 1.25(0.32)^x</label><br />
