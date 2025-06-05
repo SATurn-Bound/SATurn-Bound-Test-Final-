@@ -522,64 +522,79 @@ How many residents does this model estimate the city had in 2010?</span>
   }
   
   // Show results
-  function showResults(score, totalQuestions) {
-    const percentage = Math.round((score/totalQuestions)*100);
-    const resultsHTML = `
-      <div class="test-results">
-        <h2 class="results-header">
-          Test Results: ${score}/${totalQuestions} (${percentage}%)
-        </h2>
-        <h3>Correct Answers:</h3>
-        <ol class="answer-list">
-          ${Object.keys(correctAnswers).map(q => `
-            <li style="margin-bottom: 8px;">
-              <strong>${q.toUpperCase()}:</strong> 
-              <span class="correct-value">${correctAnswers[q]}</span>
-            </li>
-          `).join('')}
-        </ol>
-      </div>
-    `;
-    
-    document.getElementById('results-container').innerHTML = resultsHTML;
-    window.scrollTo(0, 0);
+ // Show results
+function showResults(score, totalQuestions) {
+  const percentage = Math.round((score/totalQuestions)*100);
+  const resultsHTML = `
+    <div class="test-results">
+      <h2 class="results-header">
+        Test Results: ${score}/${totalQuestions} (${percentage}%)
+      </h2>
+      <h3>Correct Answers:</h3>
+      <ol class="answer-list">
+        ${Object.keys(correctAnswers).map(q => `
+          <li style="margin-bottom: 8px;">
+            <strong>${q.toUpperCase()}:</strong> 
+            <span class="correct-value">${correctAnswers[q]}</span>
+          </li>
+        `).join('')}
+      </ol>
+    </div>
+  `;
+  
+  // Create or update results container
+  const resultsContainer = document.getElementById('results-container');
+  if (!resultsContainer) {
+    const newContainer = document.createElement('div');
+    newContainer.id = 'results-container';
+    document.querySelector('.inner').prepend(newContainer);
+    newContainer.innerHTML = resultsHTML;
+  } else {
+    resultsContainer.innerHTML = resultsHTML;
   }
   
-  // Submit handler
-  document.getElementById('submitTest').addEventListener('click', async function() {
-    // Score the test
-    const { score, totalQuestions } = scoreTest();
-    
-    // Save results
-    localStorage.setItem('practiceTest1Results', JSON.stringify({
-      score,
-      totalQuestions,
-      timestamp: new Date().toISOString()
-    }));
-    
-    // Save to Firebase if authenticated
-    if (user) {
-      const db = getFirestore();
-      try {
-        await setDoc(doc(db, "users", user.uid, "testAttempts", "practiceTest1"), {
-          answers: userAnswers,
-          score,
-          totalQuestions,
-          timestamp: new Date()
-        });
-      } catch (error) {
-        console.error("Error saving to Firebase:", error);
-      }
-    }
-    
-    // Show results
-    showResults(score, totalQuestions);
-    
-    // Disable submit button
-    this.disabled = true;
-    this.style.opacity = "0.7";
-    this.style.cursor = "not-allowed";
+  // Scroll to top smoothly
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
   });
+}
+
+// Submit handler
+document.getElementById('submitTest').addEventListener('click', async function() {
+  // Score the test
+  const { score, totalQuestions } = scoreTest();
+  
+  // Save results
+  localStorage.setItem('practiceTest1Results', JSON.stringify({
+    score,
+    totalQuestions,
+    timestamp: new Date().toISOString()
+  }));
+  
+  // Save to Firebase if authenticated
+  if (user) {
+    const db = getFirestore();
+    try {
+      await setDoc(doc(db, "users", user.uid, "testAttempts", "practiceTest1"), {
+        answers: userAnswers,
+        score,
+        totalQuestions,
+        timestamp: new Date()
+      });
+    } catch (error) {
+      console.error("Error saving to Firebase:", error);
+    }
+  }
+  
+  // Show results
+  showResults(score, totalQuestions);
+  
+  // Disable submit button
+  this.disabled = true;
+  this.style.opacity = "0.7";
+  this.style.cursor = "not-allowed";
+});
   
   // Initialize when page loads
   document.addEventListener('DOMContentLoaded', setupAnswerTracking);
