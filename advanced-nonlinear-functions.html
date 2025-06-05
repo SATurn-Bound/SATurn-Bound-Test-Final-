@@ -7,6 +7,60 @@
   <link rel="stylesheet" href="assets/css/main.css" />
   <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 
+    <style>
+    /* Add these new styles along with your existing ones */
+    .answer-choice {
+      display: block;
+      margin: 0.5em 0;
+      padding: 5px;
+      border-radius: 4px;
+      transition: all 0.3s ease;
+    }
+    .selected-answer {
+      background-color: #e6f7ff;
+      border-left: 4px solid #1890ff;
+      padding-left: 10px;
+    }
+    .correct-answer {
+      background-color: #e6ffe6;
+      border-left: 4px solid #4CAF50;
+      padding-left: 10px;
+    }
+    .incorrect-selection {
+      background-color: #ffebee;
+      border-left: 4px solid #f44336;
+      padding-left: 10px;
+    }
+    .test-results {
+      background: white;
+      padding: 2em;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      margin-bottom: 2em;
+    }
+    .results-header {
+      color: #4c5c96;
+      border-bottom: 2px solid #4c5c96;
+      padding-bottom: 10px;
+    }
+    .answer-list {
+      column-count: 2;
+      column-gap: 2em;
+    }
+    .correct-value {
+      color: #4CAF50;
+      font-weight: bold;
+    }
+    .correct-answer-text {
+      color: #4CAF50;
+      font-weight: bold;
+      margin-top: 5px;
+    }
+    input[type="radio"]:checked + span {
+      font-weight: bold;
+    }
+  </style>
+
   <style>
     .user-greeting {
       font-size: 1.25em;
@@ -82,6 +136,7 @@
 </div>
 
   <div class="question-block">
+  <div id="results-container"></div>
   <h3>Question 2</h3>
   <span class="question-placeholder">The x-intercept of the graph shown is (x,0). What is the value of x?</span>
 
@@ -126,9 +181,9 @@
 How many residents does this model estimate the city had in 2010?</span>
   <img src="images/Q6_Nonlinear.png" style="max-width: 100%; height: auto; border: 1px solid #ddd;" />
   <label class="answer-choice" style="color: black;"><input type="radio" name="q3" /> A) 0</label>
-  <label class="answer-choice" style="color: black;"><input type="radio" name="q3" /> B) 5,000</label>
-  <label class="answer-choice" style="color: black;"><input type="radio" name="q3" /> C) 30,000</label>
-  <label class="answer-choice" style="color: black;"><input type="radio" name="q3" /> D) 35,000</label>
+  <label class="answer-choice" style="color: black;"><input type="radio" name="q3" /> B) 50</label>
+  <label class="answer-choice" style="color: black;"><input type="radio" name="q3" /> C) 100</label>
+  <label class="answer-choice" style="color: black;"><input type="radio" name="q3" /> D) 1,000</label>
 </div>
 
 <div class="question-block">
@@ -250,10 +305,10 @@ How many residents does this model estimate the city had in 2010?</span>
 <div class="question-block">
   <h3>Question 16</h3>
   <span class="question-placeholder">The function f is defined by f(x) = a^x + b, where a and b are constants and a > 0. In the xy-plane, the graph of y = f(x) has a y-intercept at (0, -30) and passes through the point (3, 34). What is the value of a + b?</span>
-  <label class="answer-choice" style="color: black;"><input type="radio" name="q16" /> A) 2</label>
-  <label class="answer-choice" style="color: black;"><input type="radio" name="q16" /> B) 4</label>
-  <label class="answer-choice" style="color: black;"><input type="radio" name="q16" /> C) 6</label>
-  <label class="answer-choice" style="color: black;"><input type="radio" name="q16" /> D) 8</label>
+  <label class="answer-choice" style="color: black;"><input type="radio" name="q16" /> A) -26.98</label>
+  <label class="answer-choice" style="color: black;"><input type="radio" name="q16" /> B) -27</label>
+  <label class="answer-choice" style="color: black;"><input type="radio" name="q16" /> C) 4.02</label>
+  <label class="answer-choice" style="color: black;"><input type="radio" name="q16" /> D) -31</label>
 </div>
 
 <div class="question-block">
@@ -322,10 +377,8 @@ How many residents does this model estimate the city had in 2010?</span>
 
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-app.js";
-  import {
-    getAuth,
-    onAuthStateChanged
-  } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-auth.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-auth.js";
+  import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/9.6.0/firebase-firestore.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyDedw_zEK-L-AoKO1WkeomLVztoRnYBXt4",
@@ -338,15 +391,198 @@ How many residents does this model estimate the city had in 2010?</span>
 
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
+  let user;
 
-  onAuthStateChanged(auth, (user) => {
-    if (!user) {
+  onAuthStateChanged(auth, (authUser) => {
+    if (!authUser) {
       window.location.href = "index.html";
     } else {
+      user = authUser;
       document.getElementById("userGreeting").textContent =
         "Hello, " + (user.displayName || user.email) + "!";
     }
   });
+
+  // Correct answers
+  const correctAnswers = {
+    q1: "A", q2: "8", q3: "B", q4: "B", q5: "C",
+    q6: "A", q7: "B", q8: "A", q9: "B", q10: "D",
+    q11: "D", q12: "B", q13: "A", q14: "B", q15: "A",
+    q16: "A", q17: "A", q18: "B", q19: "B", q20: "D"
+  };
+
+  // Initialize user answers
+  const userAnswers = JSON.parse(localStorage.getItem('practiceTest1Answers')) || {};
+  
+  // Setup answer tracking
+  function setupAnswerTracking() {
+    // Radio buttons
+    document.querySelectorAll('input[type="radio"]').forEach(radio => {
+      radio.addEventListener('change', function() {
+        const questionName = this.name;
+        const answerText = this.parentElement.textContent.trim();
+        userAnswers[questionName] = answerText.charAt(0);
+        
+        // Update UI
+        document.querySelectorAll(`input[name="${questionName}"]`).forEach(r => {
+          r.parentElement.classList.remove('selected-answer');
+        });
+        this.parentElement.classList.add('selected-answer');
+        
+        // Save to storage
+        localStorage.setItem('practiceTest1Answers', JSON.stringify(userAnswers));
+      });
+    });
+    
+    // Text input for Q2
+    const q2Input = document.getElementById('x-intercept-answer');
+    q2Input.addEventListener('input', function() {
+      userAnswers['q2'] = this.value.trim();
+      localStorage.setItem('practiceTest1Answers', JSON.stringify(userAnswers));
+    });
+    
+    // Load saved answers
+    loadSavedAnswers();
+  }
+  
+  function loadSavedAnswers() {
+    // Radio buttons
+    Object.keys(userAnswers).forEach(question => {
+      if (question === 'q2') {
+        document.getElementById('x-intercept-answer').value = userAnswers[question];
+        return;
+      }
+      
+      const answerLetter = userAnswers[question];
+      document.querySelectorAll(`input[name="${question}"]`).forEach(radio => {
+        if (radio.parentElement.textContent.trim().charAt(0) === answerLetter) {
+          radio.checked = true;
+          radio.parentElement.classList.add('selected-answer');
+        }
+      });
+    });
+  }
+  
+  // Score the test
+  function scoreTest() {
+    let score = 0;
+    const totalQuestions = 20;
+    
+    // Check answers and highlight
+    for (let i = 1; i <= totalQuestions; i++) {
+      const questionKey = `q${i}`;
+      
+      // Special handling for Q2 (text input)
+      if (i === 2) {
+        const userAnswer = userAnswers[questionKey] || '';
+        const correctAnswer = correctAnswers[questionKey];
+        const answerElement = document.getElementById('x-intercept-answer');
+        
+        if (userAnswer === correctAnswer) {
+          score++;
+          answerElement.style.backgroundColor = "#e6ffe6";
+          answerElement.style.border = "2px solid #4CAF50";
+        } else {
+          answerElement.style.backgroundColor = "#ffebee";
+          answerElement.style.border = "2px solid #f44336";
+          // Show correct answer
+          const correctDisplay = document.createElement('div');
+          correctDisplay.className = 'correct-answer-text';
+          correctDisplay.textContent = `Correct answer: ${correctAnswer}`;
+          answerElement.parentNode.appendChild(correctDisplay);
+        }
+        continue;
+      }
+      
+      // For radio questions
+      const selectedOption = document.querySelector(`input[name="${questionKey}"]:checked`);
+      const allOptions = document.querySelectorAll(`input[name="${questionKey}"]`);
+      
+      allOptions.forEach(option => {
+        const label = option.parentElement;
+        const optionText = label.textContent.trim().charAt(0);
+        
+        // Highlight correct answer
+        if (optionText === correctAnswers[questionKey]) {
+          label.classList.add('correct-answer');
+        }
+        
+        // Highlight incorrect selection
+        if (selectedOption && option === selectedOption && optionText !== correctAnswers[questionKey]) {
+          label.classList.add('incorrect-selection');
+        }
+      });
+      
+      if (selectedOption && selectedOption.parentElement.textContent.trim().charAt(0) === correctAnswers[questionKey]) {
+        score++;
+      }
+    }
+    
+    return { score, totalQuestions };
+  }
+  
+  // Show results
+  function showResults(score, totalQuestions) {
+    const percentage = Math.round((score/totalQuestions)*100);
+    const resultsHTML = `
+      <div class="test-results">
+        <h2 class="results-header">
+          Test Results: ${score}/${totalQuestions} (${percentage}%)
+        </h2>
+        <h3>Correct Answers:</h3>
+        <ol class="answer-list">
+          ${Object.keys(correctAnswers).map(q => `
+            <li style="margin-bottom: 8px;">
+              <strong>${q.toUpperCase()}:</strong> 
+              <span class="correct-value">${correctAnswers[q]}</span>
+            </li>
+          `).join('')}
+        </ol>
+      </div>
+    `;
+    
+    document.getElementById('results-container').innerHTML = resultsHTML;
+    window.scrollTo(0, 0);
+  }
+  
+  // Submit handler
+  document.getElementById('submitTest').addEventListener('click', async function() {
+    // Score the test
+    const { score, totalQuestions } = scoreTest();
+    
+    // Save results
+    localStorage.setItem('practiceTest1Results', JSON.stringify({
+      score,
+      totalQuestions,
+      timestamp: new Date().toISOString()
+    }));
+    
+    // Save to Firebase if authenticated
+    if (user) {
+      const db = getFirestore();
+      try {
+        await setDoc(doc(db, "users", user.uid, "testAttempts", "practiceTest1"), {
+          answers: userAnswers,
+          score,
+          totalQuestions,
+          timestamp: new Date()
+        });
+      } catch (error) {
+        console.error("Error saving to Firebase:", error);
+      }
+    }
+    
+    // Show results
+    showResults(score, totalQuestions);
+    
+    // Disable submit button
+    this.disabled = true;
+    this.style.opacity = "0.7";
+    this.style.cursor = "not-allowed";
+  });
+  
+  // Initialize when page loads
+  document.addEventListener('DOMContentLoaded', setupAnswerTracking);
 </script>
 
 <script src="assets/js/jquery.min.js"></script>
