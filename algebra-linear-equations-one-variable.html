@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-  <title>Practice Test 1 | SATurn Bound</title>
+  <title>Practice Test 2 | SATurn Bound</title>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
   <link rel="stylesheet" href="assets/css/main.css" />
@@ -115,7 +115,7 @@
 
     <section id="banner">
       <div class="inner">
-        <h2>Practice Test 1</h2>
+        <h2>Practice Test 2</h2>
         <p class="user-greeting" id="userGreeting">Loading...</p>
       </div>
     </section>
@@ -380,92 +380,91 @@
     }
   });
 
-  // Correct answers
-  // Correct answers - update with your actual correct answers
-const correctAnswers = {
-  q1: "B", q2: "A", q3: "B", q4: "A", q5: "A",
-  q6: "A", q7: "A", q8: "C", q9: "D", q10: "C",
-  q11: "C", q12: "C", q13: "A", q14: "A", q15: "B",
-  q16: "B", q17: "D", q18: "D", q19: "C", q20: "D"
-};
+  // Correct answers - CHANGED FOR PRACTICE TEST 2
+  const correctAnswers = {
+    q1: "A", q2: "A", q3: "B", q4: "A", q5: "A",
+    q6: "B", q7: "A", q8: "B", q9: "D", q10: "C",
+    q11: "C", q12: "D", q13: "A", q14: "A", q15: "A",
+    q16: "B", q17: "B", q18: "D", q19: "C", q20: "A"
+  };
 
-// Initialize user answers
-const userAnswers = JSON.parse(localStorage.getItem('practiceTest1Answers')) || {};
-
-// Setup answer tracking
-function setupAnswerTracking() {
-  // Radio buttons
-  document.querySelectorAll('input[type="radio"]').forEach(radio => {
-    radio.addEventListener('change', function() {
-      const questionName = this.name;
-      const answerText = this.parentElement.textContent.trim();
-      userAnswers[questionName] = answerText.charAt(0);
-      
-      // Update UI
-      document.querySelectorAll(`input[name="${questionName}"]`).forEach(r => {
-        r.parentElement.classList.remove('selected-answer');
+  // Initialize user answers - CHANGED TO PRACTICE TEST 2
+  const userAnswers = JSON.parse(localStorage.getItem('practiceTest2Answers')) || {};
+  
+  // Setup answer tracking
+  function setupAnswerTracking() {
+    // Radio buttons
+    document.querySelectorAll('input[type="radio"]').forEach(radio => {
+      radio.addEventListener('change', function() {
+        const questionName = this.name;
+        const answerText = this.parentElement.textContent.trim();
+        userAnswers[questionName] = answerText.charAt(0);
+        
+        // Update UI
+        document.querySelectorAll(`input[name="${questionName}"]`).forEach(r => {
+          r.parentElement.classList.remove('selected-answer');
+        });
+        this.parentElement.classList.add('selected-answer');
+        
+        // Save to storage - CHANGED TO PRACTICE TEST 2
+        localStorage.setItem('practiceTest2Answers', JSON.stringify(userAnswers));
       });
-      this.parentElement.classList.add('selected-answer');
-      
-      // Save to storage
-      localStorage.setItem('practiceTest1Answers', JSON.stringify(userAnswers));
-    });
-  });
-  
-  // Load saved answers
-  loadSavedAnswers();
-}
-
-function loadSavedAnswers() {
-  // Radio buttons
-  Object.keys(userAnswers).forEach(question => {
-    const answerLetter = userAnswers[question];
-    document.querySelectorAll(`input[name="${question}"]`).forEach(radio => {
-      if (radio.parentElement.textContent.trim().charAt(0) === answerLetter) {
-        radio.checked = true;
-        radio.parentElement.classList.add('selected-answer');
-      }
-    });
-  });
-}
-
-// Score the test
-function scoreTest() {
-  let score = 0;
-  const totalQuestions = 20;
-  
-  // Check answers and highlight
-  for (let i = 1; i <= totalQuestions; i++) {
-    const questionKey = `q${i}`;
-    
-    // For radio questions
-    const selectedOption = document.querySelector(`input[name="${questionKey}"]:checked`);
-    const allOptions = document.querySelectorAll(`input[name="${questionKey}"]`);
-    
-    allOptions.forEach(option => {
-      const label = option.parentElement;
-      const optionText = label.textContent.trim().charAt(0);
-      
-      // Highlight correct answer
-      if (optionText === correctAnswers[questionKey]) {
-        label.classList.add('correct-answer');
-      }
-      
-      // Highlight incorrect selection
-      if (selectedOption && option === selectedOption && optionText !== correctAnswers[questionKey]) {
-        label.classList.add('incorrect-selection');
-      }
     });
     
-    if (selectedOption && selectedOption.parentElement.textContent.trim().charAt(0) === correctAnswers[questionKey]) {
-      score++;
-    }
+    // Load saved answers
+    loadSavedAnswers();
   }
   
-  return { score, totalQuestions };
-}
-
-// Show results
+  function loadSavedAnswers() {
+    // Radio buttons
+    Object.keys(userAnswers).forEach(question => {
+      const answerLetter = userAnswers[question];
+      document.querySelectorAll(`input[name="${question}"]`).forEach(radio => {
+        if (radio.parentElement.textContent.trim().charAt(0) === answerLetter) {
+          radio.checked = true;
+          radio.parentElement.classList.add('selected-answer');
+        }
+      });
+    });
+  }
+  
+  // Score the test
+  function scoreTest() {
+    let score = 0;
+    const totalQuestions = 20;
+    
+    // Check answers and highlight
+    for (let i = 1; i <= totalQuestions; i++) {
+      const questionKey = `q${i}`;
+      
+      // For radio questions
+      const selectedOption = document.querySelector(`input[name="${questionKey}"]:checked`);
+      const allOptions = document.querySelectorAll(`input[name="${questionKey}"]`);
+      
+      allOptions.forEach(option => {
+        const label = option.parentElement;
+        const optionText = label.textContent.trim().charAt(0);
+        
+        // Highlight correct answer
+        if (optionText === correctAnswers[questionKey]) {
+          label.classList.add('correct-answer');
+        }
+        
+        // Highlight incorrect selection
+        if (selectedOption && option === selectedOption && optionText !== correctAnswers[questionKey]) {
+          label.classList.add('incorrect-selection');
+        }
+      });
+      
+      if (selectedOption && selectedOption.parentElement.textContent.trim().charAt(0) === correctAnswers[questionKey]) {
+        score++;
+      }
+    }
+    
+    return { score, totalQuestions };
+  }
+  
+  // Show results
 function showResults(score, totalQuestions) {
   const percentage = Math.round((score/totalQuestions)*100);
   const resultsHTML = `
@@ -508,18 +507,18 @@ document.getElementById('submitTest').addEventListener('click', async function()
   // Score the test
   const { score, totalQuestions } = scoreTest();
   
-  // Save results
-  localStorage.setItem('practiceTest1Results', JSON.stringify({
+  // Save results - CHANGED TO PRACTICE TEST 2
+  localStorage.setItem('practiceTest2Results', JSON.stringify({
     score,
     totalQuestions,
     timestamp: new Date().toISOString()
   }));
   
-  // Save to Firebase if authenticated
+  // Save to Firebase if authenticated - CHANGED TO PRACTICE TEST 2
   if (user) {
     const db = getFirestore();
     try {
-      await setDoc(doc(db, "users", user.uid, "testAttempts", "practiceTest1"), {
+      await setDoc(doc(db, "users", user.uid, "testAttempts", "practiceTest2"), {
         answers: userAnswers,
         score,
         totalQuestions,
@@ -538,9 +537,9 @@ document.getElementById('submitTest').addEventListener('click', async function()
   this.style.opacity = "0.7";
   this.style.cursor = "not-allowed";
 });
-
-// Initialize when page loads
-document.addEventListener('DOMContentLoaded', setupAnswerTracking);
+  
+  // Initialize when page loads
+  document.addEventListener('DOMContentLoaded', setupAnswerTracking);
 </script>
 
 <script src="assets/js/jquery.min.js"></script>
@@ -551,4 +550,3 @@ document.addEventListener('DOMContentLoaded', setupAnswerTracking);
 
 </body>
 </html>
-
