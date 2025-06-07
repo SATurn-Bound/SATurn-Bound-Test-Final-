@@ -189,11 +189,11 @@
   <h3>Question 7</h3>
   <span class="question-placeholder">An agricultural scientist studying the growth of corn plants recorded the height of a corn plant at the beginning of a study and the height of the plant each day for the next 15 days. The scientist found that the height of the plant increased by an average of 1.50 centimeters per day for the 15 days. If the height of the plant on the last day of the study was 42.5 centimeters, what was the height, in centimeters, of the corn plant at the beginning of the study?</span>
   <div style="margin-top: 15px; background-color: #e0e0e0; padding: 15px; border-radius: 8px; width: fit-content;">
-  <label for="x-intercept-answer1" style="font-weight: bold; color: #000000;">X-intercept (seconds):</label><br />
+  <label for="numba7" style="font-weight: bold; color: #000000;">Centimeters:</label><br />
   <input 
     type="text" 
-    id="x-intercept-answer1" 
-    name="x-intercept-answer1" 
+    id="numba7" 
+    name="numba7" 
     placeholder="Enter Answer"
     style="padding: 8px; width: 200px; background-color: #ffffff; color: #000000; border: 1px solid #666; border-radius: 4px; box-shadow: 2px 2px 5px rgba(0,0,0,0.1);"
   />
@@ -431,8 +431,17 @@ q7Input.addEventListener('input', function() {
   }
   
   function loadSavedAnswers() {
+    
     // Radio buttons
+
+
     Object.keys(userAnswers).forEach(question => {
+      if (question === 'q7') {
+        document.getElementById('numba7').value = userAnswers[question];
+        return;
+      }
+
+      
       const answerLetter = userAnswers[question];
       document.querySelectorAll(`input[name="${question}"]`).forEach(radio => {
         if (radio.parentElement.textContent.trim().charAt(0) === answerLetter) {
