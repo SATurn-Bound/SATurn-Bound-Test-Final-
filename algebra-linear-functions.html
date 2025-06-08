@@ -464,6 +464,8 @@
   };
 
   // Initialize user answers
+ 
+
   function setupAnswerTracking() {
   // Radio buttons
   document.querySelectorAll('input[type="radio"]').forEach(radio => {
@@ -479,7 +481,7 @@
       this.parentElement.classList.add('selected-answer');
       
       // Save to storage
-      localStorage.setItem('practiceTest1Answers', JSON.stringify(userAnswers));
+      localStorage.setItem('practiceTest3Answers', JSON.stringify(userAnswers));
     });
   });
   
@@ -489,7 +491,7 @@
     if (input) {
       input.addEventListener('input', function() {
         userAnswers[q] = this.value.trim();
-        localStorage.setItem('practiceTest1Answers', JSON.stringify(userAnswers));
+        localStorage.setItem('practiceTest3Answers', JSON.stringify(userAnswers));
       });
     }
   });
@@ -643,7 +645,7 @@ function showResults(score, totalQuestions) {
 // Submit handler (unchanged)
 document.getElementById('submitTest').addEventListener('click', function() {
   const { score, totalQuestions } = scoreTest();
-  localStorage.setItem('practiceTest1Results', JSON.stringify({
+  localStorage.setItem('practiceTest3Results', JSON.stringify({
     score,
     totalQuestions,
     timestamp: new Date().toISOString()
