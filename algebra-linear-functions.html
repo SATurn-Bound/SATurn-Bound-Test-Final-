@@ -464,151 +464,182 @@
   };
 
   // Initialize user answers
- 
-   const userAnswers = JSON.parse(localStorage.getItem('practiceTest3Answers')) || {};
-
+  const userAnswers = JSON.parse(localStorage.getItem('practiceTest3Answers')) || {};
   
+  // Setup answer tracking
   function setupAnswerTracking() {
-  // Radio buttons
-  document.querySelectorAll('input[type="radio"]').forEach(radio => {
-    radio.addEventListener('change', function() {
-      const questionName = this.name;
-      const answerText = this.parentElement.textContent.trim();
-      userAnswers[questionName] = answerText.charAt(0);
-      
-      // Update UI
-      document.querySelectorAll(`input[name="${questionName}"]`).forEach(r => {
-        r.parentElement.classList.remove('selected-answer');
-      });
-      this.parentElement.classList.add('selected-answer');
-      
-      // Save to storage
-      localStorage.setItem('practiceTest3Answers', JSON.stringify(userAnswers));
-    });
-  });
-  
-  // Text inputs for Q5, Q6, Q13
-  ['q5', 'q6', 'q13'].forEach(q => {
-    const input = document.getElementById(`${q}-answer`);
-    if (input) {
-      input.addEventListener('input', function() {
-        userAnswers[q] = this.value.trim();
+    // Radio buttons
+    document.querySelectorAll('input[type="radio"]').forEach(radio => {
+      radio.addEventListener('change', function() {
+        const questionName = this.name;
+        const answerText = this.parentElement.textContent.trim();
+        userAnswers[questionName] = answerText.charAt(0);
+        
+        // Update UI
+        document.querySelectorAll(`input[name="${questionName}"]`).forEach(r => {
+          r.parentElement.classList.remove('selected-answer');
+        });
+        this.parentElement.classList.add('selected-answer');
+        
+        // Save to storage
         localStorage.setItem('practiceTest3Answers', JSON.stringify(userAnswers));
       });
-    }
-  });
-  
-  // Load saved answers
-  loadSavedAnswers();
-}
-
-function loadSavedAnswers() {
-  Object.keys(userAnswers).forEach(question => {
-    // Handle text inputs
-    if (['q5', 'q6', 'q13'].includes(question)) {
-      const input = document.getElementById(`${question}-answer`);
-      if (input) input.value = userAnswers[question];
-      return;
-    }
-    
-    const answerLetter = userAnswers[question];
-    document.querySelectorAll(`input[name="${question}"]`).forEach(radio => {
-      if (radio.parentElement.textContent.trim().charAt(0) === answerLetter) {
-        radio.checked = true;
-        radio.parentElement.classList.add('selected-answer');
-      }
-    });
-  });
-}
-
-function scoreTest() {
-  let score = 0;
-  const totalQuestions = 20;
-  
-  // Check answers and highlight
-  for (let i = 1; i <= totalQuestions; i++) {
-    const questionKey = `q${i}`;
-    
-    // Special handling for text input questions (Q5, Q6, Q13)
-    if (['q5', 'q6', 'q13'].includes(questionKey)) {
-      const userAnswer = userAnswers[questionKey] || '';
-      const correctAnswer = correctAnswers[questionKey];
-      const answerElement = document.getElementById(`${questionKey}-answer`);
-      
-      if (!answerElement) continue;
-      
-      // Clear previous feedback
-      const oldFeedback = answerElement.parentNode.querySelector('.question-feedback');
-      if (oldFeedback) oldFeedback.remove();
-      
-      if (userAnswer === correctAnswer) {
-        score++;
-        answerElement.style.backgroundColor = "#e6ffe6";
-        answerElement.style.border = "2px solid #4CAF50";
-      } else {
-        answerElement.style.backgroundColor = "#ffebee";
-        answerElement.style.border = "2px solid #f44336";
-        
-        // Add detailed feedback
-        const feedback = document.createElement('div');
-        feedback.className = 'question-feedback';
-        feedback.style.marginTop = '8px';
-        feedback.style.color = '#d32f2f';
-        
-        if (questionKey === 'q5') {
-          feedback.innerHTML = `
-            <strong>Feedback:</strong> For g(x) = 7x, set 7x = 63 and solve for x.<br>
-            Calculation: 63 ÷ 7 = 9<br>
-            Correct answer: 9
-          `;
-        } else if (questionKey === 'q6') {
-          feedback.innerHTML = `
-            <strong>Feedback:</strong> Head width = 0.8 + 5 × body weight<br>
-            Calculation: 0.8 + (5 × 0.6) = 0.8 + 3 = 3.8<br>
-            Correct answer: 3.8
-          `;
-        } else if (questionKey === 'q13') {
-          feedback.innerHTML = `
-            <strong>Feedback:</strong><br>
-            1. Combine functions: h(x) = (1/4)x - 9 + (3/4)x + 21 = x + 12<br>
-            2. Find x-intercept: set h(x) = 0 → x + 12 = 0 → x = -12<br>
-            Correct answer: -12
-          `;
-        }
-        
-        answerElement.parentNode.appendChild(feedback);
-      }
-      continue;
-    }
-    
-    // For radio questions
-    const selectedOption = document.querySelector(`input[name="${questionKey}"]:checked`);
-    const allOptions = document.querySelectorAll(`input[name="${questionKey}"]`);
-    
-    allOptions.forEach(option => {
-      const label = option.parentElement;
-      const optionText = label.textContent.trim().charAt(0);
-      
-      // Highlight correct answer
-      if (optionText === correctAnswers[questionKey]) {
-        label.classList.add('correct-answer');
-      }
-      
-      // Highlight incorrect selection
-      if (selectedOption && option === selectedOption && optionText !== correctAnswers[questionKey]) {
-        label.classList.add('incorrect-selection');
-      }
     });
     
-    if (selectedOption && selectedOption.parentElement.textContent.trim().charAt(0) === correctAnswers[questionKey]) {
-      score++;
-    }
+    // Text input for Q2
+    const q5Input = document.getElementById('q5-answer');
+    q5Input.addEventListener('input', function() {
+      userAnswers['q5'] = this.value.trim();
+      localStorage.setItem('practiceTest3Answers', JSON.stringify(userAnswers));
+    });
+
+    const q6Input = document.getElementById('q6-answer');
+    q5Input.addEventListener('input', function() {
+      userAnswers['q6'] = this.value.trim();
+      localStorage.setItem('practiceTest3Answers', JSON.stringify(userAnswers));
+    });
+
+    const q13Input = document.getElementById('q13-answer');
+    q5Input.addEventListener('input', function() {
+      userAnswers['q13'] = this.value.trim();
+      localStorage.setItem('practiceTest3Answers', JSON.stringify(userAnswers));
+    });
+    
+    // Load saved answers
+    loadSavedAnswers();
   }
   
-  return { score, totalQuestions };
-}
+  function loadSavedAnswers() {
+    // Radio buttons
+    Object.keys(userAnswers).forEach(question => {
+      if (question === 'q5') {
+        document.getElementById('q5-correct-answer').value = userAnswers[question];
+        return;
+      }
 
-// Show results (unchanged)
+       if (question === 'q6') {
+        document.getElementById('q6-correct-answer').value = userAnswers[question];
+        return;
+      }
+
+       if (question === 'q13') {
+        document.getElementById('q13-correct-answer').value = userAnswers[question];
+        return;
+      }
+      
+      const answerLetter = userAnswers[question];
+      document.querySelectorAll(`input[name="${question}"]`).forEach(radio => {
+        if (radio.parentElement.textContent.trim().charAt(0) === answerLetter) {
+          radio.checked = true;
+          radio.parentElement.classList.add('selected-answer');
+        }
+      });
+    });
+  }
+  
+  // Score the test
+  function scoreTest() {
+    let score = 0;
+    const totalQuestions = 20;
+    
+    // Check answers and highlight
+    for (let i = 1; i <= totalQuestions; i++) {
+      const questionKey = `q${i}`;
+      
+      // Special handling for Q2 (text input)
+      if (i === 5) {
+        const userAnswer = userAnswers[questionKey] || '';
+        const correctAnswer = correctAnswers[questionKey];
+        const answerElement = document.getElementById('q5-answer');
+        const correctDisplay = document.getElementById('q5-correct-answer');
+        
+        if (userAnswer === correctAnswer) {
+          score++;
+          answerElement.style.backgroundColor = "#e6ffe6";
+          answerElement.style.border = "2px solid #4CAF50";
+          correctDisplay.style.display = "none";
+        } else {
+          answerElement.style.backgroundColor = "#ffebee";
+          answerElement.style.border = "2px solid #f44336";
+          // Show correct answer
+          correctDisplay.textContent = `Correct answer: ${correctAnswer}`;
+          correctDisplay.style.display = "block";
+        }
+        continue;
+      }
+
+      if (i === 6) {
+        const userAnswer = userAnswers[questionKey] || '';
+        const correctAnswer = correctAnswers[questionKey];
+        const answerElement = document.getElementById('q6-answer');
+        const correctDisplay = document.getElementById('q6-correct-answer');
+        
+        if (userAnswer === correctAnswer) {
+          score++;
+          answerElement.style.backgroundColor = "#e6ffe6";
+          answerElement.style.border = "2px solid #4CAF50";
+          correctDisplay.style.display = "none";
+        } else {
+          answerElement.style.backgroundColor = "#ffebee";
+          answerElement.style.border = "2px solid #f44336";
+          // Show correct answer
+          correctDisplay.textContent = `Correct answer: ${correctAnswer}`;
+          correctDisplay.style.display = "block";
+        }
+        continue;
+      }
+
+      if (i === 6) {
+        const userAnswer = userAnswers[questionKey] || '';
+        const correctAnswer = correctAnswers[questionKey];
+        const answerElement = document.getElementById('q13-answer');
+        const correctDisplay = document.getElementById('q13-correct-answer');
+        
+        if (userAnswer === correctAnswer) {
+          score++;
+          answerElement.style.backgroundColor = "#e6ffe6";
+          answerElement.style.border = "2px solid #4CAF50";
+          correctDisplay.style.display = "none";
+        } else {
+          answerElement.style.backgroundColor = "#ffebee";
+          answerElement.style.border = "2px solid #f44336";
+          // Show correct answer
+          correctDisplay.textContent = `Correct answer: ${correctAnswer}`;
+          correctDisplay.style.display = "block";
+        }
+        continue;
+      }
+      
+      
+      // For radio questions
+      const selectedOption = document.querySelector(`input[name="${questionKey}"]:checked`);
+      const allOptions = document.querySelectorAll(`input[name="${questionKey}"]`);
+      
+      allOptions.forEach(option => {
+        const label = option.parentElement;
+        const optionText = label.textContent.trim().charAt(0);
+        
+        // Highlight correct answer
+        if (optionText === correctAnswers[questionKey]) {
+          label.classList.add('correct-answer');
+        }
+        
+        // Highlight incorrect selection
+        if (selectedOption && option === selectedOption && optionText !== correctAnswers[questionKey]) {
+          label.classList.add('incorrect-selection');
+        }
+      });
+      
+      if (selectedOption && selectedOption.parentElement.textContent.trim().charAt(0) === correctAnswers[questionKey]) {
+        score++;
+      }
+    }
+    
+    return { score, totalQuestions };
+  }
+  
+  // Show results
+ // Show results
 function showResults(score, totalQuestions) {
   const percentage = Math.round((score/totalQuestions)*100);
   const resultsHTML = `
@@ -628,6 +659,7 @@ function showResults(score, totalQuestions) {
     </div>
   `;
   
+  // Create or update results container
   const resultsContainer = document.getElementById('results-container');
   if (!resultsContainer) {
     const newContainer = document.createElement('div');
@@ -638,29 +670,51 @@ function showResults(score, totalQuestions) {
     resultsContainer.innerHTML = resultsHTML;
   }
   
+  // Scroll to top smoothly
   window.scrollTo({
     top: 0,
     behavior: 'smooth'
   });
 }
 
-// Submit handler (unchanged)
-document.getElementById('submitTest').addEventListener('click', function() {
+// Submit handler
+document.getElementById('submitTest').addEventListener('click', async function() {
+  // Score the test
   const { score, totalQuestions } = scoreTest();
+  
+  // Save results
   localStorage.setItem('practiceTest3Results', JSON.stringify({
     score,
     totalQuestions,
     timestamp: new Date().toISOString()
   }));
   
+  // Save to Firebase if authenticated
+  if (user) {
+    const db = getFirestore();
+    try {
+      await setDoc(doc(db, "users", user.uid, "testAttempts", "practiceTest3"), {
+        answers: userAnswers,
+        score,
+        totalQuestions,
+        timestamp: new Date()
+      });
+    } catch (error) {
+      console.error("Error saving to Firebase:", error);
+    }
+  }
+  
+  // Show results
   showResults(score, totalQuestions);
+  
+  // Disable submit button
   this.disabled = true;
   this.style.opacity = "0.7";
   this.style.cursor = "not-allowed";
 });
-
-// Initialize when page loads
-document.addEventListener('DOMContentLoaded', setupAnswerTracking);
+  
+  // Initialize when page loads
+  document.addEventListener('DOMContentLoaded', setupAnswerTracking);
 </script>
 
 <script src="assets/js/jquery.min.js"></script>
