@@ -465,7 +465,9 @@
 
   // Initialize user answers
  
+   const userAnswers = JSON.parse(localStorage.getItem('practiceTest3Answers')) || {};
 
+  
   function setupAnswerTracking() {
   // Radio buttons
   document.querySelectorAll('input[type="radio"]').forEach(radio => {
