@@ -461,13 +461,13 @@
   // Correct answers
   const correctAnswers = {
     q1: "A", q2: "C", q3: "A", q4: "C", q5: "9",
-    q6: "3.8", q7: "C", q8: "C", q9: "A", q10: "D",
-    q11: "B", q12: "D", q13: "-15", q14: "B", q15: "C",
-    q16: "A", q17: "B", q18: "B", q19: "B", q20: "C"
+    q6: "3.8", q7: "B", q8: "C", q9: "A", q10: "D",
+    q11: "B", q12: "C", q13: "-15", q14: "A", q15: "D",
+    q16: "A", q17: "A", q18: "B", q19: "B", q20: "C"
   };
 
-  // Initialize user answers
-  const userAnswers = JSON.parse(localStorage.getItem('practiceTest3Answers')) || {};
+  // Initialize user answers (removed localStorage conflict)
+  const userAnswers = {};
   
   // Setup answer tracking
   function setupAnswerTracking() {
@@ -483,30 +483,32 @@
           r.parentElement.classList.remove('selected-answer');
         });
         this.parentElement.classList.add('selected-answer');
-        
-        // Save to storage
-        localStorage.setItem('practiceTest3Answers', JSON.stringify(userAnswers));
       });
     });
     
-    // Text input for Q2
+    // Text input for Q5 - FIXED
     const q5Input = document.getElementById('q5-answer');
-    q5Input.addEventListener('input', function() {
-      userAnswers['q5'] = this.value.trim();
-      localStorage.setItem('practiceTest3Answers', JSON.stringify(userAnswers));
-    });
+    if (q5Input) {
+      q5Input.addEventListener('input', function() {
+        userAnswers['q5'] = this.value.trim();
+      });
+    }
 
+    // Text input for Q6 - FIXED
     const q6Input = document.getElementById('q6-answer');
-    q5Input.addEventListener('input', function() {
-      userAnswers['q6'] = this.value.trim();
-      localStorage.setItem('practiceTest3Answers', JSON.stringify(userAnswers));
-    });
+    if (q6Input) {
+      q6Input.addEventListener('input', function() {
+        userAnswers['q6'] = this.value.trim();
+      });
+    }
 
+    // Text input for Q13 - FIXED
     const q13Input = document.getElementById('q13-answer');
-    q5Input.addEventListener('input', function() {
-      userAnswers['q13'] = this.value.trim();
-      localStorage.setItem('practiceTest3Answers', JSON.stringify(userAnswers));
-    });
+    if (q13Input) {
+      q13Input.addEventListener('input', function() {
+        userAnswers['q13'] = this.value.trim();
+      });
+    }
     
     // Load saved answers
     loadSavedAnswers();
@@ -516,17 +518,20 @@
     // Radio buttons
     Object.keys(userAnswers).forEach(question => {
       if (question === 'q5') {
-        document.getElementById('q5-correct-answer').value = userAnswers[question];
+        const q5Input = document.getElementById('q5-answer');
+        if (q5Input) q5Input.value = userAnswers[question];
         return;
       }
 
-       if (question === 'q6') {
-        document.getElementById('q6-correct-answer').value = userAnswers[question];
+      if (question === 'q6') {
+        const q6Input = document.getElementById('q6-answer');
+        if (q6Input) q6Input.value = userAnswers[question];
         return;
       }
 
-       if (question === 'q13') {
-        document.getElementById('q13-correct-answer').value = userAnswers[question];
+      if (question === 'q13') {
+        const q13Input = document.getElementById('q13-answer');
+        if (q13Input) q13Input.value = userAnswers[question];
         return;
       }
       
@@ -557,14 +562,20 @@
         
         if (userAnswer === correctAnswer) {
           score++;
-          answerElement.style.backgroundColor = "#e6ffe6";
-          answerElement.style.border = "2px solid #4CAF50";
-          correctDisplay.style.display = "none";
+          if (answerElement) {
+            answerElement.style.backgroundColor = "#e6ffe6";
+            answerElement.style.border = "2px solid #4CAF50";
+          }
+          if (correctDisplay) correctDisplay.style.display = "none";
         } else {
-          answerElement.style.backgroundColor = "#ffebee";
-          answerElement.style.border = "2px solid #f44336";
-          correctDisplay.textContent = `Correct answer: ${correctAnswer}`;
-          correctDisplay.style.display = "block";
+          if (answerElement) {
+            answerElement.style.backgroundColor = "#ffebee";
+            answerElement.style.border = "2px solid #f44336";
+          }
+          if (correctDisplay) {
+            correctDisplay.textContent = `Correct answer: ${correctAnswer}`;
+            correctDisplay.style.display = "block";
+          }
         }
       } else {
         // Handle radio questions (all others)
@@ -615,15 +626,13 @@ function showResults(score, totalQuestions) {
   `;
   
   // Create or update results container
-  const resultsContainer = document.getElementById('results-container');
+  let resultsContainer = document.getElementById('results-container');
   if (!resultsContainer) {
-    const newContainer = document.createElement('div');
-    newContainer.id = 'results-container';
-    document.querySelector('.inner').prepend(newContainer);
-    newContainer.innerHTML = resultsHTML;
-  } else {
-    resultsContainer.innerHTML = resultsHTML;
+    resultsContainer = document.createElement('div');
+    resultsContainer.id = 'results-container';
+    document.querySelector('.inner').prepend(resultsContainer);
   }
+  resultsContainer.innerHTML = resultsHTML;
   
   // Scroll to top smoothly
   window.scrollTo({
@@ -637,18 +646,11 @@ document.getElementById('submitTest').addEventListener('click', async function()
   // Score the test
   const { score, totalQuestions } = scoreTest();
   
-  // Save results
-  localStorage.setItem('practiceTest3Results', JSON.stringify({
-    score,
-    totalQuestions,
-    timestamp: new Date().toISOString()
-  }));
-  
   // Save to Firebase if authenticated
   if (user) {
     const db = getFirestore();
     try {
-      await setDoc(doc(db, "users", user.uid, "testAttempts", "practiceTest3"), {
+      await setDoc(doc(db, "users", user.uid, "testAttempts", "practiceTest1"), {
         answers: userAnswers,
         score,
         totalQuestions,
@@ -680,4 +682,3 @@ document.getElementById('submitTest').addEventListener('click', async function()
 
 </body>
 </html>
-
