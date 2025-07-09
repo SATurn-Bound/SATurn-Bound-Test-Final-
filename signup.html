@@ -23,6 +23,7 @@
 			<ul class="links">
 				<li><a href="index.html">Home</a></li>
 				<li><a href="signup.html">Sign Up</a></li>
+				<li><a href="aboutus.html">Our Team</a></li>
 			</ul>
 			<a href="#" class="close">Close</a>
 		</div>
@@ -93,7 +94,7 @@
 		try {
 			const userCredential = await createUserWithEmailAndPassword(auth, email, password);
 			await updateProfile(userCredential.user, { displayName: name });
-			window.location.href = "customize.html";
+			
 
 		} catch (error) {
 			alert('Error: ' + error.message);
@@ -105,7 +106,6 @@
 		const provider = new GoogleAuthProvider();
 		try {
 			const result = await signInWithPopup(auth, provider);
-			window.location.href = "customize.html";
 			// You can redirect or save extra info if needed
 		} catch (error) {
 			alert('Google Sign Up Error: ' + error.message);
