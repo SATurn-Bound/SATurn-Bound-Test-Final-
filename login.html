@@ -82,19 +82,20 @@
 	const auth = getAuth(app);
 
 	// Email/Password Login
-	document.getElementById('loginForm').addEventListener('submit', async function (e) {
-		e.preventDefault();
-		const email = document.getElementById('email').value;
-		const password = document.getElementById('password').value;
+	// Email/Password Login
+document.getElementById('loginForm').addEventListener('submit', async function (e) {
+	e.preventDefault();
+	const email = document.getElementById('email').value;
+	const password = document.getElementById('password').value;
 
-		try {
-			const userCredential = await signInWithEmailAndPassword(auth, email, password);
-			alert('Logged in successfully! Welcome, ' + (userCredential.user.displayName || 'User') + '.');
-			window.location.href = 'dashboard.html';
-		} catch (error) {
-			alert('Login failed: ' + error.message);
-		}
-	});
+	try {
+		const userCredential = await signInWithEmailAndPassword(auth, email, password);
+		window.location.href = 'dashboard.html'; // Redirect directly, no alert
+	} catch (error) {
+		alert('Login failed: ' + error.message);
+	}
+});
+
 
 	// Google Login
 	document.getElementById('googleLogin').addEventListener('click', async function () {
