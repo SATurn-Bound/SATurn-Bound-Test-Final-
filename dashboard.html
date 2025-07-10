@@ -1,54 +1,76 @@
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
-  <title>SATurn Bound | Home</title>
+  <title>SATurn Bound | Dashboard</title>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 
-  <!-- Original template CSS -->
+  <!-- Theme CSS -->
   <link rel="stylesheet" href="assets/css/main.css" />
   <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 
-  <!-- Page-specific overrides: new top nav bar -->
+  <!-- ---------- Dashboard overrides ---------- -->
   <style>
-    /* ---------- Fixed nav bar ---------- */
-    #main-nav{
-      position:fixed; top:0; left:0; width:100%; z-index:1000;
-      background:#0e1e4d;             /* deep navy */
-      box-shadow:0 2px 8px rgba(0,0,0,.4);
-    }
-    #main-nav .nav-inner{
-      max-width:1200px; margin:auto; padding:.75rem 1.25rem;
-      display:flex; align-items:center; justify-content:space-between;
-      flex-wrap:wrap;
-    }
-    #main-nav h1{margin:0; font-size:1.25rem; letter-spacing:.02em;}
-    #main-nav h1 a{color:#fff; text-decoration:none; font-weight:600;}
-    .nav-links{display:flex; gap:1.5rem; flex-wrap:wrap;}
-    .nav-links a{
-      color:#dfe9ff; text-decoration:none; font-size:.95rem; font-weight:500;
-      transition:opacity .2s;
-    }
+    /* ---------- Fixed nav bar (unchanged) ---------- */
+    #main-nav{position:fixed;top:0;left:0;width:100%;z-index:1000;background:#0e1e4d;
+      box-shadow:0 2px 8px rgba(0,0,0,.4);}
+    #main-nav .nav-inner{max-width:1200px;margin:auto;padding:.75rem 1.25rem;
+      display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;}
+    #main-nav h1{margin:0;font-size:1.25rem;}
+    #main-nav h1 a{color:#fff;text-decoration:none;font-weight:600;}
+    .nav-links{display:flex;gap:1.5rem;flex-wrap:wrap;}
+    .nav-links a{color:#dfe9ff;text-decoration:none;font-size:.95rem;font-weight:500;
+      transition:opacity .2s;}
     .nav-links a:hover{opacity:.75;}
+    body{padding-top:66px;} /* push content below the bar */
 
-    /* Push main content below fixed bar */
-    body{padding-top:66px;}
+    /* ---------- One-screen dashboard grid ---------- */
+    .dash-grid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;         /* banner | features */
+      grid-template-rows: 1fr;                /* full height */
+      height:calc(100vh - 66px);              /* minus nav bar */
+      overflow:hidden;
+    }
+    /* Left column = hero banner */
+    .dash-banner{
+      background:#1a2560 url("images/banner-bg.webp") center/cover no-repeat;
+      color:#fff;display:flex;flex-direction:column;justify-content:center;
+      padding:2rem;text-align:center;
+    }
+    .dash-banner h2{margin:0 0 .5rem;font-size:2.2rem;}
+    .dash-banner p{margin:0 0 1.5rem;font-size:1.1rem;}
 
-    /* Small-screen tweak */
-    @media(max-width:600px){
-      #main-nav .nav-inner{justify-content:center;}
-      .nav-links{justify-content:center;}
-      #main-nav h1{width:100%; text-align:center; margin-bottom:.5rem;}
+    /* Right column = two stacked tiles */
+    .dash-tiles{
+      display:flex;flex-direction:column;justify-content:space-evenly;
+      padding:2rem;background:#f6f8ff;
+    }
+    .tile{
+      display:flex;align-items:center;gap:1.25rem;border-radius:1rem;
+      background:#fff;box-shadow:0 4px 16px rgba(0,0,0,.15);padding:1rem;
+      transition:transform .25s;
+    }
+    .tile:hover{transform:translateY(-4px);}
+    .tile img{width:100px;height:100px;object-fit:cover;border-radius:1rem;}
+    .tile h3{margin:.25rem 0;font-size:1.3rem;}
+    .tile p{margin:0 0 .75rem;font-size:.9rem;color:#333;}
+    .tile a.button{padding:.45rem 1rem;font-size:.9rem;}
+
+    /* ---------- Responsive: stack on ≤ 900 px ---------- */
+    @media(max-width:900px){
+      .dash-grid{grid-template-columns:1fr;grid-template-rows:auto auto;height:auto;}
+      .dash-banner{min-height:40vh;}
+      .dash-tiles{padding:1.5rem;}
     }
   </style>
 </head>
 <body class="is-preload">
 
-<!-- ******** Fixed top navigation bar ******** -->
+<!-- --------- Fixed navigation bar --------- -->
 <header id="main-nav">
   <div class="nav-inner">
     <h1><a href="index.html">SATurn&nbsp;Bound</a></h1>
-
     <nav class="nav-links">
       <a href="index.html">Home</a>
       <a href="about.html">About</a>
@@ -59,55 +81,41 @@
   </div>
 </header>
 
-<!-- ******* Wrapper (required by template) ******* -->
-<div id="wrapper">
-  <div id="page-wrapper">
+<!-- ========= One-screen dashboard ========= -->
+<main class="dash-grid">
 
-    <!-- ===== Hero / Banner ===== -->
-    <section id="banner">
-      <div class="inner">
-        <h2>SATurn Bound</h2>
-        <p>The smarter, personalized way to prepare for the SAT.</p>
-        <ul class="actions stacked">
-          <li><a href="practice-tests.html" class="button primary">Get Started</a></li>
-        </ul>
+  <!-- Left column: hero  -->
+  <section class="dash-banner">
+    <h2>SATurn Bound</h2>
+    <p>The smarter, personalized way to prepare for the SAT.</p>
+    <a href="practice-tests.html" class="button primary">Get Started</a>
+  </section>
+
+  <!-- Right column: two feature tiles -->
+  <section class="dash-tiles">
+    <!-- Tile 1 -->
+    <article class="tile">
+      <img src="images/books.webp" alt="Practice Tests">
+      <div>
+        <h3>Practice Tests</h3>
+        <p>Skill-specific drills and full-length exams that adapt to you.</p>
+        <a href="practice-tests.html" class="button small">Explore Tests</a>
       </div>
-    </section>
+    </article>
 
-    <!-- ===== Feature panels ===== -->
-    <section class="wrapper spotlight style1">
-      <div class="inner">
-        <a href="practice-tests.html" class="image"><img src="images/books.webp" alt="Practice Tests"></a>
-        <div class="content">
-          <h2 class="major">Practice Tests</h2>
-          <p>Skill-specific drills and full-length practice exams that adapt to your strengths and weaknesses.</p>
-          <a href="practice-tests.html" class="special">Explore Tests</a>
-        </div>
+    <!-- Tile 2 -->
+    <article class="tile">
+      <img src="images/ytlogo.webp" alt="Video Explanations">
+      <div>
+        <h3>Video Explanations</h3>
+        <p>Step-by-step solution videos from top scorers.</p>
+        <a href="#" class="button small">Watch Now</a>
       </div>
-    </section>
+    </article>
+  </section>
+</main>
 
-    <section class="wrapper alt spotlight style2">
-      <div class="inner">
-        <a href="#" class="image"><img src="images/ytlogo.webp" alt="Video Explanations"></a>
-        <div class="content">
-          <h2 class="major">Video Explanations</h2>
-          <p>Step-by-step solutions and strategy breakdowns from top scorers to boost your understanding.</p>
-          <a href="#" class="special">Watch Now</a>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===== Footer ===== -->
-    <section id="footer">
-      <div class="inner">
-        <p>&copy; </p>
-      </div>
-    </section>
-
-  </div><!-- /#page-wrapper -->
-</div><!-- /#wrapper -->
-
-<!-- (Optional) Template JS files -->
+<!-- -------- Optional template JS -------- -->
 <script src="assets/js/jquery.min.js"></script>
 <script src="assets/js/browser.min.js"></script>
 <script src="assets/js/breakpoints.min.js"></script>
