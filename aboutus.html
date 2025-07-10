@@ -46,8 +46,8 @@
       background:var(--card-bg);
       border-radius:1rem;
       padding:1rem;
-      flex:1 1 300px;   /* stays narrow enough for wrapping  */
-      max-width:420px;  /* was 350px – a bit wider            */
+      flex:1 1 300px;
+      max-width:420px;
       box-shadow:0 4px 20px rgba(0,0,0,.35);
       transition:transform .3s;
     }
@@ -55,13 +55,17 @@
       transform:translateY(-4px);
     }
 
-    /* ---------- Image ---------- */
+    /* ---------- Images ---------- */
     .profile-card img{
       width:100%;
-      height:260px;     /* was 200px – shows more of the photo */
-      object-fit:cover; /* crops evenly                         */
+      height:260px;
+      object-fit:cover;      /* default behaviour */
       border-radius:1rem;
       margin-bottom:1rem;
+    }
+    /* Just the Shrianz photo gets “contain” so the whole face fits */
+    .profile-card img.shrink{
+      object-fit:contain;
     }
 
     /* ---------- Text ---------- */
@@ -79,7 +83,8 @@
     @media(max-width:768px){
       h1{font-size:1.6rem;}
       .container{padding:1rem;}
-      .profile-card img{height:220px;}  /* scale down slightly for phones */
+      .profile-card img{height:220px;}
+      .profile-card img.shrink{height:220px;}
     }
   </style>
 </head>
@@ -97,7 +102,8 @@
       </div>
 
       <div class="profile-card">
-        <img src="images/shrianzimage" alt="Shrianz Bambi">
+        <!-- added class="profile-img shrink" -->
+        <img src="images/shrianzimage" alt="Shrianz Bambi" class="shrink">
         <div class="name">Shrianz Bambi (Vice President)</div>
         <div class="bio">
           Tech enthusiast and co-founder of Saturn Bound. Loves building tools that inspire students and making education more accessible to all.
