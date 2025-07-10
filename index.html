@@ -1,189 +1,213 @@
 <!DOCTYPE HTML>
 <!--
-	Solid State by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+  Solid State by HTML5 UP
+  html5up.net | @ajlkn
+  Free for personal & commercial use under the CCA 3.0 license.
 -->
-<html>
-	<head>
-		<title>SAturn Bound</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="assets/css/main.css" />
-		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+<html lang="en">
+<head>
+  <title>SATurn Bound</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 
+  <!-- Theme styles -->
+  <link rel="stylesheet" href="assets/css/main.css" />
+  <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 
-		<style>
-        .logo img {
-            max-width: 180px; /* Adjust this to your preferred size */
-            height: auto;
-            display: block;
-            margin: 0 auto;
-            border-radius: 50%; /* Makes the logo circular if you want */
-            border: 3px solid #fff;
-			 box-shadow: 0 0 10px rgba(0,0,0,0.3) /* Optional white border */
-        }
-    </style>
-	</head>
-	<body class="is-preload">
+  <!-- Page-specific overrides -->
+  <style>
+    /* ---------- Logo in hero ---------- */
+    .logo img{
+      max-width:180px;
+      height:auto;
+      display:block;
+      margin:0 auto;
+      border-radius:50%;
+      border:3px solid #fff;
+      box-shadow:0 0 10px rgba(0,0,0,.3);
+    }
 
-		<!-- Page Wrapper -->
-			<div id="page-wrapper">
+    /* ---------- Fixed top nav bar ---------- */
+    #main-nav{
+      position:fixed; top:0; left:0; width:100%; z-index:1000;
+      background:#0e1e4d;               /* deep navy */
+      box-shadow:0 2px 8px rgba(0,0,0,.4);
+    }
+    #main-nav .inner{
+      max-width:1200px; margin:auto; padding:.75rem 1.25rem;
+      display:flex; align-items:center; justify-content:space-between;
+      flex-wrap:wrap;
+    }
+    #main-nav h1{margin:0; font-size:1.25rem; letter-spacing:.02em;}
+    #main-nav h1 a{color:#fff; text-decoration:none; font-weight:600;}
+    .nav-links{display:flex; gap:1.5rem; flex-wrap:wrap;}
+    .nav-links a{
+      color:#dfe9ff; text-decoration:none; font-size:.95rem; font-weight:500;
+      transition:opacity .2s;
+    }
+    .nav-links a:hover{opacity:.75;}
 
-				<!-- Header -->
-					<header id="header" class="alt">
-						<h1><a href="index.html">SATurn Bound</a></h1>
-						<nav>
-							<a href="#menu">Menu</a>
-						</nav>
-					</header>
+    /* Push page content under the fixed bar */
+    body{padding-top:66px;}
 
-				<!-- Menu -->
-					<nav id="menu">
-						<div class="inner">
-							<h2>Menu</h2>
-							<ul class="links">
-								<li><a href="index.html">Home</a></li>
-								<li><a href="login.html">Log In</a></li>
-								<li><a href="signup.html">Sign Up</a></li>
-								<li><a href="aboutus.html">Our Team</a></li>
-							</ul>
-							<a href="#" class="close">Close</a>
-						</div>
-					</nav>
+    /* Small-screen tweak */
+    @media(max-width:600px){
+      #main-nav .inner{justify-content:center;}
+      .nav-links{justify-content:center;}
+      #main-nav h1{width:100%; text-align:center; margin-bottom:.5rem;}
+    }
+  </style>
+</head>
+<body class="is-preload">
 
-				<!-- Banner -->
-					<section id="banner">
-						<div class="inner">
-							<div class="logo"><img class="logo-image" src="images/Logo.png" alt="SATurn Bound Logo"></div>
-							<h2>SATurn Bound</h2>
-							<p>The new way to prepare for the SAT - Smarter, Faster, and Personalized. </p>
-						</div>
-					</section>
+  <!-- ********  Fixed navigation bar  ******** -->
+  <header id="main-nav">
+    <div class="inner">
+      <h1><a href="index.html">SATurn&nbsp;Bound</a></h1>
 
-				<!-- Wrapper -->
-					<section id="wrapper">
+      <nav class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="login.html">Log&nbsp;In</a>
+        <a href="signup.html">Sign&nbsp;Up</a>
+        <a href="aboutus.html">Our&nbsp;Team</a>
+      </nav>
+    </div>
+  </header>
 
-						<!-- One -->
-							<section id="one" class="wrapper spotlight style1">
-								<div class="inner">
-									<a href="#" class="image"><img src="images/books.webp" alt="" /></a>
-									<div class="content">
-										<h2 class="major">Comprehensive Practice Tests</h2>
-										<p>Access 40+ targeted skill practice tests and 5+ full-length SAT exams. </p>
-										<a href="login.html" class="special">Start Now</a>
-									</div>
-								</div>
-							</section>
+  <!-- ********  Page Wrapper  ******** -->
+  <div id="page-wrapper">
 
-						<!-- Two -->
-							<section id="two" class="wrapper alt spotlight style2">
-								<div class="inner">
-									<a href="#" class="image"><img src="images/ytlogo.webp" alt="" /></a>
-									<div class="content">
-										<h2 class="major"> Guided Explanations and Videos </h2>
-										<p>Get step-by-step video solutions for every question in our 40+ practice tests, plus in-depth tutorials covering all SAT topics. </p>
-										<a href="https://www.youtube.com/@SATurn-Bound" class="special" target="_blank" rel="noopener noreferrer">Watch Now!</a>
-									</div>
-								</div>
-							</section>
+    <!-- Banner ------------------------------------------------------------ -->
+    <section id="banner">
+      <div class="inner">
+        <div class="logo">
+          <img src="images/Logo.png" alt="SATurn Bound Logo">
+        </div>
+        <h2>SATurn Bound</h2>
+        <p>The new way to prepare for the SAT&nbsp;&mdash; smarter, faster, and personalized.</p>
+      </div>
+    </section>
 
-						<!-- Three -->
-							<section id="three" class="wrapper spotlight style3">
-								<div class="inner">
-									<a href="#" class="image"><img src="images/tutoring.jpg" alt="" /></a>
-									<div class="content">
-										<h2 class="major">Join SATurn Bound</h2>
-										<p>Willing to tutor? 
-											We are currently looking for people to help us! </p>
-										<a href="#" class="special">Learn more</a>
-									</div>
-								</div>
-							</section>
+    <!-- Wrapper ----------------------------------------------------------- -->
+    <section id="wrapper">
 
-						<!-- Four -->
-							<section id="four" class="wrapper alt style1">
-								<div class="inner">
-									<h2 class="major">Follow us!</h2>
-									<p>Follow us on social media to stay up to date with SAT concepts, practice tests, tips, and helpful videos. Don’t miss out on the tools you need to boost your score.</p>
-									<section class="features">
-										<article>
-											<a href="#" class="image"><img src="images/ytlogo.webp" alt="" /></a>
-											<h3 class="major">Youtube</h3>
-											<p>Video walkthroughs, tips, and tricks.</p>
-											<a href="https://www.youtube.com/@SATurn-Bound" class="special" target="_blank" rel="noopener noreferrer">Learn more</a>
+      <!-- One -->
+      <section id="one" class="wrapper spotlight style1">
+        <div class="inner">
+          <a href="#" class="image"><img src="images/books.webp" alt="" /></a>
+          <div class="content">
+            <h2 class="major">Comprehensive Practice Tests</h2>
+            <p>Access 40+ targeted skill practice tests and 5+ full-length SAT exams.</p>
+            <a href="login.html" class="special">Start Now</a>
+          </div>
+        </div>
+      </section>
 
-										</article>
-										<article>
-											<a href="#" class="image"><img src="images/discord.png" alt="" /></a>
-											<h3 class="major">Discord</h3>
-											<p>Join a community of dedicated learners and tutors who are actively pursuing their SAT goals and taking charge.</p>
-											<a href="https://discord.gg/5c96YHx8" class="special" target="_blank" rel="noopener noreferrer">Join!</a>
-										</article>
-										<article>
-											<a href="#" class="image"><img src="images/insta.jpg" alt="" /></a>
-											<h3 class="major">Instagram</h3>
-											<p>Follow us on Instagram for frequent updates, tips, tricks, and advice.</p>
-											<a href="https://www.instagram.com/saturn.bound_/" class="special" target="_blank" rel="noopener noreferrer">Learn more</a>
-										</article>
-										<article>
-											<a href="#" class="image"><img src="images/Tiktok.jpg" alt="" /></a>
-											<h3 class="major">Tiktok</h3>
-											<p>Follow us on Tiktok for tips, tricks, and advice.</p>
-											<a href="https://www.tiktok.com/@saturn.bound" class="special" target="_blank" rel="noopener noreferrer">Learn more</a>
-										</article>
-									</section>
-									<ul class="actions">
-							
-									</ul>
-								</div>
-							</section>
+      <!-- Two -->
+      <section id="two" class="wrapper alt spotlight style2">
+        <div class="inner">
+          <a href="#" class="image"><img src="images/ytlogo.webp" alt="" /></a>
+          <div class="content">
+            <h2 class="major">Guided Explanations and Videos</h2>
+            <p>Step-by-step video solutions for every question, plus in-depth tutorials covering all SAT topics.</p>
+            <a href="https://www.youtube.com/@SATurn-Bound" class="special" target="_blank" rel="noopener noreferrer">Watch Now!</a>
+          </div>
+        </div>
+      </section>
 
-					</section>
+      <!-- Three -->
+      <section id="three" class="wrapper spotlight style3">
+        <div class="inner">
+          <a href="#" class="image"><img src="images/tutoring.jpg" alt="" /></a>
+          <div class="content">
+            <h2 class="major">Join SATurn Bound</h2>
+            <p>Willing to tutor? We’re looking for passionate people to help students succeed!</p>
+            <a href="#" class="special">Learn More</a>
+          </div>
+        </div>
+      </section>
 
-				<!-- Footer -->
-					<section id="footer">
-						<div class="inner">
-							<h2 class="major">Get in touch</h2>
-							<p></p>
-							<form method="post" action="#">
-								<div class="fields">
-									<div class="field">
-										<label for="name">Name</label>
-										<input type="text" name="name" id="name" />
-									</div>
-									<div class="field">
-										<label for="email">Email</label>
-										<input type="email" name="email" id="email" />
-									</div>
-									<div class="field">
-										<label for="message">Message</label>
-										<textarea name="message" id="message" rows="4"></textarea>
-									</div>
-								</div>
-								<ul class="actions">
-									<li><input type="submit" value="Send Message" /></li>
-								</ul>
-							</form>
-							<ul class="contact">
-								<li class="icon solid fa-envelope"><a href="#">satturnbound@gmail.com</a></li>
-								<li class="icon brands fa-instagram"><a href="#">https://www.instagram.com/saturn.bound_/</a></li>
-							</ul>
-							<ul class="copyright">
-								<li>&copy; SATurn Bound Inc. All rights reserved.</li><li>
-							</ul>
-						</div>
-					</section>
+      <!-- Four -->
+      <section id="four" class="wrapper alt style1">
+        <div class="inner">
+          <h2 class="major">Follow us!</h2>
+          <p>Stay up-to-date with practice tests, tips, and helpful videos.</p>
+          <section class="features">
+            <article>
+              <a href="#" class="image"><img src="images/ytlogo.webp" alt="" /></a>
+              <h3 class="major">YouTube</h3>
+              <p>Video walkthroughs, tips & tricks.</p>
+              <a href="https://www.youtube.com/@SATurn-Bound" class="special" target="_blank" rel="noopener noreferrer">Learn More</a>
+            </article>
 
-			</div>
+            <article>
+              <a href="#" class="image"><img src="images/discord.png" alt="" /></a>
+              <h3 class="major">Discord</h3>
+              <p>Join a community of dedicated learners and tutors.</p>
+              <a href="https://discord.gg/5c96YHx8" class="special" target="_blank" rel="noopener noreferrer">Join!</a>
+            </article>
 
-		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/jquery.scrollex.min.js"></script>
-			<script src="assets/js/browser.min.js"></script>
-			<script src="assets/js/breakpoints.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
+            <article>
+              <a href="#" class="image"><img src="images/insta.jpg" alt="" /></a>
+              <h3 class="major">Instagram</h3>
+              <p>Frequent updates, tips, and advice.</p>
+              <a href="https://www.instagram.com/saturn.bound_/" class="special" target="_blank" rel="noopener noreferrer">Learn More</a>
+            </article>
 
-	</body>
+            <article>
+              <a href="#" class="image"><img src="images/Tiktok.jpg" alt="" /></a>
+              <h3 class="major">TikTok</h3>
+              <p>Quick tips and score-boosting hacks.</p>
+              <a href="https://www.tiktok.com/@saturn.bound" class="special" target="_blank" rel="noopener noreferrer">Learn More</a>
+            </article>
+          </section>
+        </div>
+      </section>
+    </section><!-- /#wrapper -->
+
+    <!-- Footer ------------------------------------------------------------ -->
+    <section id="footer">
+      <div class="inner">
+        <h2 class="major">Get in touch</h2>
+
+        <form method="post" action="#">
+          <div class="fields">
+            <div class="field">
+              <label for="name">Name</label>
+              <input type="text" name="name" id="name" />
+            </div>
+            <div class="field">
+              <label for="email">Email</label>
+              <input type="email" name="email" id="email" />
+            </div>
+            <div class="field">
+              <label for="message">Message</label>
+              <textarea name="message" id="message" rows="4"></textarea>
+            </div>
+          </div>
+          <ul class="actions">
+            <li><input type="submit" value="Send Message" /></li>
+          </ul>
+        </form>
+
+        <ul class="contact">
+          <li class="icon solid fa-envelope"><a href="mailto:satturnbound@gmail.com">satturnbound@gmail.com</a></li>
+          <li class="icon brands fa-instagram"><a href="https://www.instagram.com/saturn.bound_/" target="_blank" rel="noopener noreferrer">@saturn.bound_</a></li>
+        </ul>
+
+        <ul class="copyright">
+          <li>&copy; SATurn Bound Inc. All rights reserved.</li>
+        </ul>
+      </div>
+    </section>
+  </div><!-- /#page-wrapper -->
+
+  <!-- Scripts -->
+  <script src="assets/js/jquery.min.js"></script>
+  <script src="assets/js/jquery.scrollex.min.js"></script>
+  <script src="assets/js/browser.min.js"></script>
+  <script src="assets/js/breakpoints.min.js"></script>
+  <script src="assets/js/util.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
 </html>
