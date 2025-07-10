@@ -3,83 +3,65 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>About Us | Saturn Bound</title>
+  <title>Our Team | SATurn Bound</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
 
   <style>
-    :root {
-      --bg: #0a0a23;
-      --card-bg: #161639;
-      --accent: #00ffe5;
-      --text: #e8eeed;
+    :root{
+      --bg:#0a0a23;
+      --card-bg:#161639;
+      --accent:#00ffe5;
+      --text:#e8eeed;
     }
 
-    /* ---------- Page ---------- */
-    body{
-      margin:0;
+    /* ---------- Fixed top nav ---------- */
+    #main-nav{
+      position:fixed;top:0;left:0;width:100%;z-index:1000;
+      background:#0e1e4d;box-shadow:0 2px 8px rgba(0,0,0,.4);
       font-family:'Inter',sans-serif;
-      background:var(--bg);
-      color:#fff;
     }
-    .container{
-      max-width:1200px;
-      margin:auto;
-      padding:1.5rem;
+    #main-nav .inner{
+      max-width:1200px;margin:auto;padding:.75rem 1.25rem;
+      display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;
     }
+    #main-nav h1{margin:0;font-size:1.25rem;}
+    #main-nav h1 a{color:#fff;text-decoration:none;font-weight:600;}
+    .nav-links{display:flex;gap:1.5rem;flex-wrap:wrap;}
+    .nav-links a{
+      color:#dfe9ff;text-decoration:none;font-size:.95rem;font-weight:500;
+      transition:opacity .2s;
+    }
+    .nav-links a:hover{opacity:.75;}
 
-    /* ---------- Heading ---------- */
-    h1{
-      text-align:center;
-      font-size:2rem;
-      margin:0 0 2rem;
-      color:var(--text);
-    }
+    /* Space so content isn’t hidden under fixed bar */
+    body{margin:0;padding-top:66px;font-family:'Inter',sans-serif;background:var(--bg);color:#fff;}
+
+    /* ---------- Layout ---------- */
+    .container{max-width:1200px;margin:auto;padding:1.5rem;}
+    h1{text-align:center;font-size:2rem;margin:0 0 2rem;color:var(--text);}
 
     /* ---------- Cards ---------- */
-    .about-grid{
-      display:flex;
-      flex-wrap:wrap;
-      gap:1.5rem;
-      justify-content:center;
-    }
+    .about-grid{display:flex;flex-wrap:wrap;gap:1.5rem;justify-content:center;}
     .profile-card{
-      background:var(--card-bg);
-      border-radius:1rem;
-      padding:1rem;
-      flex:1 1 300px;
-      max-width:420px;
-      box-shadow:0 4px 20px rgba(0,0,0,.35);
+      background:var(--card-bg);border-radius:1rem;padding:1rem;
+      flex:1 1 300px;max-width:420px;box-shadow:0 4px 20px rgba(0,0,0,.35);
       transition:transform .3s;
     }
-    .profile-card:hover{
-      transform:translateY(-4px);
-    }
-
-    /* ---------- Images ---------- */
+    .profile-card:hover{transform:translateY(-4px);}
     .profile-card img{
-      width:100%;
-      height:260px;
-      object-fit:cover;      /* default behaviour */
-      border-radius:1rem;
-      margin-bottom:1rem;
+      width:100%;height:260px;object-fit:cover;border-radius:1rem;margin-bottom:1rem;
     }
-    /* Just the Shrianz photo gets “contain” so the whole face fits */
-    .profile-card img.shrink{
-      object-fit:contain;
-    }
+    .profile-card img.shrink{object-fit:contain;}
 
-    /* ---------- Text ---------- */
-    .name{
-      font-size:1.25rem;
-      color:var(--accent);
-      margin:0 0 .4rem;
-    }
-    .bio{
-      font-size:.9rem;
-      line-height:1.5;
-    }
+    .name{font-size:1.25rem;color:var(--accent);margin:0 0 .4rem;}
+    .bio{font-size:.9rem;line-height:1.5;}
 
     /* ---------- Small screens ---------- */
+    @media(max-width:600px){
+      #main-nav .inner{justify-content:center;}
+      .nav-links{justify-content:center;}
+      #main-nav h1{width:100%;text-align:center;margin-bottom:.5rem;}
+    }
     @media(max-width:768px){
       h1{font-size:1.6rem;}
       .container{padding:1rem;}
@@ -89,6 +71,21 @@
   </style>
 </head>
 <body>
+
+  <!-- -------- Fixed navigation bar -------- -->
+  <header id="main-nav">
+    <div class="inner">
+      <h1><a href="index.html">SATurn&nbsp;Bound</a></h1>
+      <nav class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="login.html">Log&nbsp;In</a>
+        <a href="signup.html">Sign&nbsp;Up</a>
+        <a href="aboutus.html">Our&nbsp;Team</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- -------- Page content -------- -->
   <div class="container">
     <h1>Our Team</h1>
 
@@ -97,19 +94,19 @@
         <img src="images/IMG_1780.jpg" alt="Vedanth Sreeprakash">
         <div class="name">Vedanth Sreeprakash (President)</div>
         <div class="bio">
-          Aspiring software engineer, entrepreneur, and co-founder of Saturn Bound. Passionate about making learning smarter through technology and design.
+          Aspiring software engineer, entrepreneur, and co-founder of SATurn Bound. Passionate about making learning smarter through technology and design.
         </div>
       </div>
 
       <div class="profile-card">
-        <!-- added class="profile-img shrink" -->
         <img src="images/shrianzimage" alt="Shrianz Bambi" class="shrink">
         <div class="name">Shrianz Bambi (Vice President)</div>
         <div class="bio">
-          Tech enthusiast and co-founder of Saturn Bound. Loves building tools that inspire students and making education more accessible to all.
+          Tech enthusiast and co-founder of SATurn Bound. Loves building tools that inspire students and making education more accessible to all.
         </div>
       </div>
     </div>
   </div>
+
 </body>
 </html>
