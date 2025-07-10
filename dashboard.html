@@ -9,61 +9,59 @@
   <link rel="stylesheet" href="assets/css/main.css" />
   <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 
-  <!-- ===== Single-screen dashboard overrides ===== -->
+  <!-- ---------- Overrides ---------- -->
   <style>
   :root{
     --navy:#081b49;
-    --navy-lite:#102968;
+    --navy-lite:#0f2967;
     --cream:#fff8e6;
-    --glass:rgba(255,255,255,0.08);
-    --glass-brd:rgba(255,255,255,0.22);
   }
 
-  /* --- Fixed nav --- */
-  #main-nav{position:fixed;top:0;left:0;width:100%;z-index:999;background:var(--navy);
-    box-shadow:0 2px 8px rgba(0,0,0,.55);}
+  /* Fixed nav */
+  #main-nav{position:fixed;top:0;left:0;width:100%;z-index:999;
+    background:var(--navy);box-shadow:0 2px 8px rgba(0,0,0,.55);}
   #main-nav .inner{max-width:1200px;margin:auto;padding:.8rem 1.2rem;
     display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;}
   #main-nav h1{margin:0;font-size:1.2rem;letter-spacing:.04em;}
   #main-nav h1 a{color:#fff;text-decoration:none;font-weight:600;}
   .nav-links{display:flex;gap:1.4rem;flex-wrap:wrap;}
-  .nav-links a{color:#cfd7ff;text-decoration:none;font-size:.92rem;
-    transition:opacity .25s;}
+  .nav-links a{color:#cfd7ff;text-decoration:none;font-size:.92rem;transition:opacity .2s;}
   .nav-links a:hover{opacity:.78;}
-  body{margin:0;font-family:'Inter',sans-serif;background:var(--navy);color:#fff;padding-top:66px;}
 
-  /* --- Full-viewport flex column --- */
-  .dash-wrap{display:flex;flex-direction:column;align-items:center;
-    height:calc(100vh - 66px);overflow:hidden;
-    background:radial-gradient(circle at 30% -10%,var(--navy-lite) 0%,var(--navy) 70%);
+  /* Layout */
+  body{margin:0;font-family:'Inter',sans-serif;background:var(--navy);color:#fff;padding-top:66px;}
+  .grid{
+    display:grid;height:calc(100vh - 66px);
+    grid-template-columns:42% 1fr;overflow:hidden;
+    background:radial-gradient(circle at 30% -10%,var(--navy-lite) 0%,var(--navy) 75%);
   }
 
-  /* --- HERO --- */
-  .dash-hero{flex:0 0 42%;display:flex;flex-direction:column;align-items:center;
-    justify-content:center;text-align:center;padding:1.5rem;position:relative;}
-  .dash-hero h2{margin:0 0 .65rem;font-size:2.5rem;font-weight:700;letter-spacing:.03em;}
-  .dash-hero p{max-width:360px;margin:0 0 1.8rem;font-size:1.05rem;color:#d9e1ff;}
-  .dash-hero .btn{display:inline-block;background:var(--cream);color:#00162f;
-    font-weight:600;padding:.65rem 1.9rem;border-radius:8px;text-decoration:none;}
+  /* Hero column */
+  .hero{display:flex;flex-direction:column;justify-content:center;align-items:center;
+    text-align:center;padding:2rem;}
+  .hero h2{margin:0 0 .6rem;font-size:2.6rem;font-weight:700;}
+  .hero p{max-width:360px;margin:0 0 1.8rem;font-size:1.05rem;color:#d6e0ff;}
+  .btn{display:inline-block;background:var(--cream);color:#00162f;
+    font-weight:600;padding:.7rem 2rem;border-radius:8px;text-decoration:none;}
 
-  /* --- CARDS CONTAINER --- */
-  .card-zone{flex:1;width:100%;max-width:1100px;display:flex;gap:2rem;
-    padding:0 2rem 2.5rem;box-sizing:border-box;}
-  .card{flex:1;display:flex;gap:1.25rem;background:var(--glass);
-    border:1px solid var(--glass-brd);backdrop-filter:blur(8px);
-    border-radius:1.2rem;padding:1.3rem;align-items:center;
-    box-shadow:0 6px 18px rgba(0,0,0,.42);transition:transform .25s,box-shadow .25s;}
-  .card:hover{transform:translateY(-4px);box-shadow:0 10px 24px rgba(0,0,0,.6);}
-  .card-icon{flex-shrink:0;width:84px;height:84px;border-radius:18px;overflow:hidden;}
-  .card-icon img{width:100%;height:100%;object-fit:cover;}
-  .card h3{margin:.1rem 0 .4rem;font-size:1.35rem;font-weight:600;}
-  .card p{margin:0 0 1rem;font-size:.94rem;color:#d4deff;}
-  .card .btn{background:var(--cream);color:#00162f;font-size:.82rem;
-    padding:.45rem 1.3rem;border-radius:6px;text-decoration:none;font-weight:600;}
+  /* Feature column */
+  .features{display:flex;flex-direction:column;justify-content:center;gap:3.2rem;padding:2.5rem;}
+  .feat{
+    display:flex;align-items:center;gap:1.4rem;
+    /* no border, no card, sits directly on background */
+  }
+  .feat img{width:88px;height:88px;border-radius:20px;object-fit:cover;flex-shrink:0;}
+  .feat h3{margin:.05rem 0 .45rem;font-size:1.45rem;font-weight:600;}
+  .feat p{margin:0 0 1rem;font-size:.96rem;color:#d4deff;}
 
-  /* --- Responsive --- */
-  @media(max-width:950px){
-    .card-zone{flex-direction:column;gap:1.5rem;overflow-y:auto;padding:0 1.5rem 2rem;}
+  /* Button inside feat (same style) */
+  .feat .btn{font-size:.82rem;padding:.5rem 1.3rem;}
+
+  /* Responsive: stack */
+  @media(max-width:900px){
+    .grid{grid-template-columns:1fr;grid-template-rows:auto auto;height:auto;}
+    .features{padding:2rem 1.3rem;}
+    .feat{gap:1rem;}
   }
   </style>
 </head>
@@ -83,43 +81,43 @@
   </div>
 </header>
 
-<!-- DASHBOARD (one viewport) -->
-<main class="dash-wrap">
+<!-- DASHBOARD -->
+<main class="grid">
 
-  <!-- HERO SECTION -->
-  <section class="dash-hero">
+  <!-- HERO -->
+  <section class="hero">
     <h2>SATurn Bound</h2>
     <p>The smarter, personalized way to prepare for the SAT.</p>
     <a href="practice-tests.html" class="btn">Get Started</a>
   </section>
 
-  <!-- FEATURE CARDS -->
-  <section class="card-zone">
+  <!-- FEATURES -->
+  <section class="features">
 
     <!-- Practice Tests -->
-    <article class="card">
-      <div class="card-icon"><img src="images/books.webp" alt="Practice Tests"></div>
+    <div class="feat">
+      <img src="images/books.webp" alt="Practice Tests">
       <div>
         <h3>Practice Tests</h3>
         <p>Skill-specific drills and full-length exams that adapt to you.</p>
         <a href="practice-tests.html" class="btn">Explore Tests</a>
       </div>
-    </article>
+    </div>
 
     <!-- Video Explanations -->
-    <article class="card">
-      <div class="card-icon"><img src="images/ytlogo.webp" alt="Video Explanations"></div>
+    <div class="feat">
+      <img src="images/ytlogo.webp" alt="Video Explanations">
       <div>
         <h3>Video Explanations</h3>
         <p>Step-by-step solution videos from top scorers.</p>
-        <a href="#" class="btn">Watch Now</a>
+        <a href="#" class="btn">Watch&nbsp;Now</a>
       </div>
-    </article>
+    </div>
 
   </section>
 </main>
 
-<!-- Optional JS from template -->
+<!-- Optional template JS -->
 <script src="assets/js/jquery.min.js"></script>
 <script src="assets/js/browser.min.js"></script>
 <script src="assets/js/breakpoints.min.js"></script>
