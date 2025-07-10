@@ -5,71 +5,88 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 
-  <!-- Theme CSS -->
+  <!-- Base theme (Solid State) -->
   <link rel="stylesheet" href="assets/css/main.css" />
   <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 
-  <!-- ---------- Dashboard overrides ---------- -->
+  <!-- ===== Dashboard overrides ===== -->
   <style>
-    /* ---------- Fixed nav bar (unchanged) ---------- */
-    #main-nav{position:fixed;top:0;left:0;width:100%;z-index:1000;background:#0e1e4d;
-      box-shadow:0 2px 8px rgba(0,0,0,.4);}
-    #main-nav .nav-inner{max-width:1200px;margin:auto;padding:.75rem 1.25rem;
-      display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;}
-    #main-nav h1{margin:0;font-size:1.25rem;}
-    #main-nav h1 a{color:#fff;text-decoration:none;font-weight:600;}
-    .nav-links{display:flex;gap:1.5rem;flex-wrap:wrap;}
-    .nav-links a{color:#dfe9ff;text-decoration:none;font-size:.95rem;font-weight:500;
-      transition:opacity .2s;}
-    .nav-links a:hover{opacity:.75;}
-    body{padding-top:66px;} /* push content below the bar */
+  /* ---------- Brand colors ---------- */
+  :root{
+    --navy:#071742;
+    --navy-light:#11256b;
+    --cyan:#00ffe5;
+    --glass-bg:rgba(255,255,255,0.08);
+    --glass-border:rgba(255,255,255,0.25);
+  }
 
-    /* ---------- One-screen dashboard grid ---------- */
-    .dash-grid{
-      display:grid;
-      grid-template-columns: 1fr 1fr;         /* banner | features */
-      grid-template-rows: 1fr;                /* full height */
-      height:calc(100vh - 66px);              /* minus nav bar */
-      overflow:hidden;
-    }
-    /* Left column = hero banner */
-    .dash-banner{
-      background:#1a2560 url("images/banner-bg.webp") center/cover no-repeat;
-      color:#fff;display:flex;flex-direction:column;justify-content:center;
-      padding:2rem;text-align:center;
-    }
-    .dash-banner h2{margin:0 0 .5rem;font-size:2.2rem;}
-    .dash-banner p{margin:0 0 1.5rem;font-size:1.1rem;}
+  /* ---------- Fixed nav ---------- */
+  #main-nav{
+    position:fixed;top:0;left:0;width:100%;z-index:1000;
+    background:var(--navy);box-shadow:0 2px 8px rgba(0,0,0,.55);
+  }
+  #main-nav .inner{
+    max-width:1200px;margin:auto;padding:.75rem 1.25rem;
+    display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;
+  }
+  #main-nav h1{margin:0;font-size:1.2rem;letter-spacing:.03em;}
+  #main-nav h1 a{color:#fff;text-decoration:none;font-weight:600;}
+  .nav-links{display:flex;gap:1.4rem;flex-wrap:wrap;}
+  .nav-links a{color:#d2dcff;text-decoration:none;font-size:.93rem;font-weight:500;transition:opacity .2s;}
+  .nav-links a:hover{opacity:.78;}
 
-    /* Right column = two stacked tiles */
-    .dash-tiles{
-      display:flex;flex-direction:column;justify-content:space-evenly;
-      padding:2rem;background:#f6f8ff;
-    }
-    .tile{
-      display:flex;align-items:center;gap:1.25rem;border-radius:1rem;
-      background:#fff;box-shadow:0 4px 16px rgba(0,0,0,.15);padding:1rem;
-      transition:transform .25s;
-    }
-    .tile:hover{transform:translateY(-4px);}
-    .tile img{width:100px;height:100px;object-fit:cover;border-radius:1rem;}
-    .tile h3{margin:.25rem 0;font-size:1.3rem;}
-    .tile p{margin:0 0 .75rem;font-size:.9rem;color:#333;}
-    .tile a.button{padding:.45rem 1rem;font-size:.9rem;}
+  /* ---------- Grid layout ---------- */
+  body{margin:0;font-family:'Inter',sans-serif;background:var(--navy);color:#fff;padding-top:66px;}
+  .dash-grid{
+    display:grid;height:calc(100vh - 66px);
+    grid-template-columns:1fr 1fr;grid-template-rows:1fr;overflow:hidden;
+  }
 
-    /* ---------- Responsive: stack on ≤ 900 px ---------- */
-    @media(max-width:900px){
-      .dash-grid{grid-template-columns:1fr;grid-template-rows:auto auto;height:auto;}
-      .dash-banner{min-height:40vh;}
-      .dash-tiles{padding:1.5rem;}
-    }
+  /* ---------- Left: hero ---------- */
+  .dash-banner{
+    position:relative;display:flex;flex-direction:column;justify-content:center;align-items:center;
+    padding:2rem;text-align:center;overflow:hidden;
+    background:radial-gradient(circle at top left, var(--navy-light) 0%, var(--navy) 70%);
+  }
+  .dash-banner::after{content:"";position:absolute;inset:-40% -20%;background:url('images/starfield.webp') repeat;
+    opacity:.07;filter:blur(1px);}
+  .dash-banner>*{position:relative;} /* lift text above overlay */
+  .dash-banner h2{margin:0 0 .6rem;font-size:2.4rem;font-weight:700;letter-spacing:.03em;}
+  .dash-banner p{max-width:330px;margin:0 0 2rem;font-size:1.05rem;color:#c6d1ff;}
+  .dash-banner a.button{background:var(--cyan);color:#001428;border:none;font-weight:600;}
+
+  /* ---------- Right: glass cards ---------- */
+  .dash-tiles{display:flex;flex-direction:column;justify-content:space-evenly;padding:2.5rem;gap:2rem;
+    background:linear-gradient(180deg, var(--navy) 0%, var(--navy-light) 100%);}
+  .card{
+    display:flex;align-items:center;gap:1.4rem;padding:1.3rem 1.6rem;border-radius:1.2rem;
+    background:var(--glass-bg);backdrop-filter:blur(8px);
+    border:1px solid var(--glass-border);box-shadow:0 6px 18px rgba(0,0,0,.45);
+    transition:transform .25s,box-shadow .25s;
+  }
+  .card:hover{transform:translateY(-4px);box-shadow:0 10px 22px rgba(0,0,0,.55);}
+  .card-icon{
+    flex-shrink:0;width:78px;height:78px;border-radius:16px;display:grid;place-items:center;
+    background:#fff1;padding:0;overflow:hidden;
+  }
+  .card-icon img{width:100%;height:100%;object-fit:cover;}
+  .card h3{margin:.1rem 0;font-size:1.35rem;font-weight:600;}
+  .card p{margin:.15rem 0 .9rem;font-size:.92rem;color:#d0dcff;}
+  .card a.button{background:var(--cyan);color:#001428;border:none;font-size:.8rem;font-weight:600;padding:.45rem 1.2rem;}
+
+  /* ---------- Responsive ---------- */
+  @media(max-width:900px){
+    .dash-grid{grid-template-columns:1fr;grid-template-rows:auto auto;height:auto;}
+    .dash-banner{min-height:45vh;padding:2rem 1.2rem;}
+    .dash-tiles{padding:2rem 1.2rem;}
+  }
   </style>
 </head>
 <body class="is-preload">
 
-<!-- --------- Fixed navigation bar --------- -->
+<!-- NAVBAR -->
 <header id="main-nav">
-  <div class="nav-inner">
+  <div class="inner">
     <h1><a href="index.html">SATurn&nbsp;Bound</a></h1>
     <nav class="nav-links">
       <a href="index.html">Home</a>
@@ -81,32 +98,37 @@
   </div>
 </header>
 
-<!-- ========= One-screen dashboard ========= -->
+<!-- DASHBOARD GRID -->
 <main class="dash-grid">
 
-  <!-- Left column: hero  -->
+  <!-- HERO -->
   <section class="dash-banner">
     <h2>SATurn Bound</h2>
     <p>The smarter, personalized way to prepare for the SAT.</p>
     <a href="practice-tests.html" class="button primary">Get Started</a>
   </section>
 
-  <!-- Right column: two feature tiles -->
+  <!-- FEATURE CARDS -->
   <section class="dash-tiles">
-    <!-- Tile 1 -->
-    <article class="tile">
-      <img src="images/books.webp" alt="Practice Tests">
-      <div>
+
+    <!-- Card 1 -->
+    <article class="card">
+      <div class="card-icon">
+        <img src="images/books.webp" alt="Practice Tests">
+      </div>
+      <div class="text">
         <h3>Practice Tests</h3>
         <p>Skill-specific drills and full-length exams that adapt to you.</p>
         <a href="practice-tests.html" class="button small">Explore Tests</a>
       </div>
     </article>
 
-    <!-- Tile 2 -->
-    <article class="tile">
-      <img src="images/ytlogo.webp" alt="Video Explanations">
-      <div>
+    <!-- Card 2 -->
+    <article class="card">
+      <div class="card-icon">
+        <img src="images/ytlogo.webp" alt="Video Explanations">
+      </div>
+      <div class="text">
         <h3>Video Explanations</h3>
         <p>Step-by-step solution videos from top scorers.</p>
         <a href="#" class="button small">Watch Now</a>
@@ -115,7 +137,7 @@
   </section>
 </main>
 
-<!-- -------- Optional template JS -------- -->
+<!-- Optional template JS -->
 <script src="assets/js/jquery.min.js"></script>
 <script src="assets/js/browser.min.js"></script>
 <script src="assets/js/breakpoints.min.js"></script>
