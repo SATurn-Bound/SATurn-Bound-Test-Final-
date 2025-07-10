@@ -1,52 +1,106 @@
 <!DOCTYPE HTML>
-<html>
+<html lang="en">
 <head>
   <title>Dashboard | SATurn Bound</title>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+
+  <!-- Original template CSS -->
   <link rel="stylesheet" href="assets/css/main.css" />
   <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 
+  <!-- Page-specific overrides -->
   <style>
-    .logo img {
-      max-width: 150px;
-      height: auto;
-      border-radius: 50%;
-      border: 3px solid #fff;
-      box-shadow: 0 0 10px rgba(0,0,0,0.3);
-      margin-bottom: 20px;
+    /* ------------ Logo in banner ------------- */
+    .logo img{
+      max-width:150px;
+      height:auto;
+      border-radius:50%;
+      border:3px solid #fff;
+      box-shadow:0 0 10px rgba(0,0,0,.3);
+      margin-bottom:20px;
     }
-    .user-greeting {
-      font-size: 1.25em;
-      margin-bottom: 1em;
-      font-weight: bold;
+    .user-greeting{
+      font-size:1.25em;
+      margin-bottom:1em;
+      font-weight:bold;
+    }
+
+    /* ------------ New top nav bar ------------ */
+    #main-nav{
+      position:fixed;
+      top:0;
+      left:0;
+      width:100%;
+      z-index:1000;
+      background:#0e1e4d;           /* deep navy */
+      box-shadow:0 2px 8px rgba(0,0,0,.4);
+    }
+    #main-nav .nav-inner{
+      max-width:1200px;
+      margin:auto;
+      padding:.75rem 1.25rem;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      flex-wrap:wrap;               /* allows wrapping on phones */
+    }
+    #main-nav h1{
+      margin:0;
+      font-size:1.25rem;
+      letter-spacing:.02em;
+    }
+    #main-nav h1 a{
+      color:#fff;
+      text-decoration:none;
+      font-weight:600;
+    }
+    .nav-links{
+      display:flex;
+      gap:1.5rem;
+      flex-wrap:wrap;
+    }
+    .nav-links a{
+      color:#dfe9ff;
+      text-decoration:none;
+      font-size:.95rem;
+      font-weight:500;
+      transition:opacity .2s;
+    }
+    .nav-links a:hover{opacity:.75;}
+
+    /* Push the rest of the page down so it doesn’t hide behind fixed nav */
+    body{padding-top:66px;}  /* ~ (nav height + a little) */
+
+    /* Responsive tweak */
+    @media(max-width:600px){
+      #main-nav .nav-inner{justify-content:center;}
+      .nav-links{justify-content:center;}
+      h1{width:100%;text-align:center;margin-bottom:.5rem;}
     }
   </style>
 </head>
 <body class="is-preload">
 
-<!-- Wrapper required for menu to function -->
+<!-- ----------- Fixed header bar ----------- -->
+<header id="main-nav">
+  <div class="nav-inner">
+    <h1><a href="index.html">SATurn&nbsp;Bound</a></h1>
+
+    <nav class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="practice-tests.html">Tests</a>
+      <a href="#">Videos</a>
+      <a href="signup.html">Sign&nbsp;Up</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ---------- Wrapper needed by template ---------- -->
 <div id="wrapper">
-
   <div id="page-wrapper">
-	<!-- Header -->
-	<header id="header">
-		<h1><a href="index.html">SATurn Bound</a></h1>
-		<nav><a href="#menu">Menu</a></nav>
-	</header>
 
-	<!-- Menu -->
-	<nav id="menu">
-		<div class="inner">
-			<h2>Menu</h2>
-			<ul class="links">
-				<li><a href="index.html">Home</a></li>
-			</ul>
-			<a href="#" class="close">Close</a>
-		</div>
-	</nav>
-
-    <!-- Banner -->
+    <!-- Banner ------------------------------------------------------------ -->
     <section id="banner">
       <div class="inner">
         <div class="logo"><img src="images/Logo.png" alt="SATurn Bound Logo"></div>
@@ -55,7 +109,7 @@
       </div>
     </section>
 
-    <!-- Dashboard Content -->
+    <!-- Dashboard Content -------------------------------------------------- -->
     <section class="wrapper spotlight style1">
       <div class="inner">
         <a href="#" class="image"><img src="images/books.webp" alt="Practice Tests" /></a>
@@ -78,36 +132,20 @@
       </div>
     </section>
 
-    <!-- Footer -->
+    <!-- Footer ------------------------------------------------------------- -->
     <section id="footer">
       <div class="inner">
         <p>&copy; SATurn Bound Inc. All rights reserved.</p>
       </div>
     </section>
 
-  </div> <!-- end of #page-wrapper -->
+  </div><!-- /#page-wrapper -->
+</div><!-- /#wrapper -->
 
-  <!-- Menu (must be outside of page-wrapper to work) -->
-  <nav id="menu">
-    <div class="inner">
-      <h2>Menu</h2>
-      <ul class="links">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="signup.html">Sign Up</a></li>
-      </ul>
-      <a href="#" class="close">Close</a>
-    </div>
-  </nav>
-
-</div> <!-- end of #wrapper -->
-
-<!-- Firebase Auth -->
+<!-- ---------------- Firebase Auth ---------------- -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-app.js";
-  import {
-    getAuth,
-    onAuthStateChanged
-  } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-auth.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-auth.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyDedw_zEK-L-AoKO1WkeomLVztoRnYBXt4",
@@ -118,11 +156,11 @@
     appId: "1:46027081851:web:8402230dc2ff241c6cfade"
   };
 
-  const app = initializeApp(firebaseConfig);
+  const app  = initializeApp(firebaseConfig);
   const auth = getAuth(app);
 
   onAuthStateChanged(auth, (user) => {
-    if (!user) {
+    if (!user){
       window.location.href = "index.html";
     } else {
       document.getElementById("userGreeting").textContent =
@@ -131,12 +169,11 @@
   });
 </script>
 
-<!-- Scripts (must be at the end) -->
+<!-- ------------- Original template JS -------------- -->
 <script src="assets/js/jquery.min.js"></script>
 <script src="assets/js/browser.min.js"></script>
 <script src="assets/js/breakpoints.min.js"></script>
 <script src="assets/js/util.js"></script>
 <script src="assets/js/main.js"></script>
-
 </body>
 </html>
