@@ -4,123 +4,130 @@
   <meta charset="utf-8">
   <title>SATurn Bound</title>
   <link rel="icon" href="images/logo.png" type="image/png">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
 
-  <!-- -------- Base theme (optional) -------- -->
+  <!-- Base theme -->
   <link rel="stylesheet" href="assets/css/main.css">
   <noscript><link rel="stylesheet" href="assets/css/noscript.css"></noscript>
 
-  <!-- -------- Cluely-style overrides -------- -->
+  <!-- ========= CUSTOM STYLES ========= -->
   <style>
-    :root{
-      /* Colour palette */
-      --bg-top: #e8f1ff;
-      --bg-mid: #c9e0ff;
-      --bg-btm: #b1d0ff;
-      --text:   #0d1117;    /* near-black */
-      --cream:  #fffaf0;    /* subtle accent */
-      --brand:  #2156ff;    /* button accent */
-    }
+  :root{
+    --bg-top:#e9f2ff;--bg-mid:#cfe2ff;--bg-btm:#b7d4ff;
+    --text:#0d1117;--brand:#2156ff;--cream:#fff7e9;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:Inter,Helvetica,Arial,sans-serif;background:linear-gradient(180deg,var(--bg-top)0%,var(--bg-mid)45%,var(--bg-btm)100%);color:var(--text);scroll-behavior:smooth}
+  a{text-decoration:none;color:inherit}
 
-    /* ---------- Global ---------- */
-    *{box-sizing:border-box;margin:0;padding:0}
-    body{
-      font-family: "Inter", Helvetica, Arial, sans-serif;
-      background:linear-gradient(180deg,var(--bg-top) 0%,var(--bg-mid) 50%,var(--bg-btm) 100%);
-      color:var(--text);
-      scroll-behavior:smooth;
-    }
-    a{text-decoration:none;color:inherit}
+  /* ===== Top bar ===== */
+  header{position:fixed;top:0;left:0;width:100%;z-index:1000;padding:.9rem 1.5rem;display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,.55);backdrop-filter:saturate(180%) blur(14px);transition:box-shadow .3s}
+  header.scrolled{box-shadow:0 2px 8px rgba(0,0,0,.12)}
+  .logo{font-weight:700;font-size:1.1rem}
+  nav{display:flex;gap:1.4rem;font-size:.95rem;font-weight:500}
+  nav a:hover{opacity:.6}
+  @media(max-width:680px){nav{display:none}}
 
-    /* ---------- Transparent top bar ---------- */
-    header{
-      position:fixed;top:0;left:0;width:100%;z-index:1000;
-      padding:.9rem 1.5rem;display:flex;align-items:center;justify-content:space-between;
-      backdrop-filter:saturate(180%) blur(14px);
-      background:rgba(255,255,255,0.55);
-      transition:box-shadow .3s;
-    }
-    header.scrolled{box-shadow:0 2px 8px rgba(0,0,0,.12);}
-    header .logo{font-weight:700;font-size:1.1rem;letter-spacing:.02em;}
-    nav{display:flex;gap:1.4rem;font-size:.95rem;font-weight:500;}
-    nav a:hover{opacity:.6;}
+  /* ===== Hero ===== */
+  .hero{min-height:90vh;padding:1.5rem;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}
+  .hero h1{font-size:clamp(2.4rem,5vw,4rem);font-weight:700;line-height:1.1;animation:zoomIn .9s ease-out both}
+  .hero p{max-width:540px;margin:1.2rem 0 2.2rem;font-size:1.1rem;color:#333;animation:fadeUp .9s .2s ease-out both}
+  .btn{display:inline-block;background:var(--brand);color:#fff;padding:.9rem 2.1rem;border-radius:32px;font-weight:600;animation:fadeUp .9s .3s ease-out both}
 
-    /* ---------- Hero ---------- */
-    .hero{
-      min-height:90vh;display:flex;flex-direction:column;align-items:center;justify-content:center;
-      text-align:center;padding:1.5rem;position:relative;overflow:hidden;
-    }
-    .hero h1{
-      font-size:clamp(2.4rem,5vw,4rem);
-      font-weight:700;line-height:1.1;
-      animation:zoomIn .9s ease-out both;
-    }
-    .hero p{
-      margin:1.2rem 0 2.2rem;font-size:1.1rem;color:#333;max-width:540px;
-      animation:fadeUp .9s .2s ease-out both;
-    }
-    .hero .btn{
-      padding:.9rem 2.1rem;font-size:1rem;font-weight:600;border-radius:32px;
-      background:var(--brand);color:#fff;display:inline-block;
-      animation:fadeUp .9s .3s ease-out both;
-    }
+  @keyframes zoomIn{0%{transform:scale(.92);opacity:0}100%{transform:none;opacity:1}}
+  @keyframes fadeUp{0%{transform:translateY(30px);opacity:0}100%{transform:none;opacity:1}}
 
-    /* ---------- Feature section ---------- */
-    .features{
-      max-width:1080px;margin:auto;display:grid;gap:4rem;padding:3rem 1rem;
-    }
-    .feature{
-      display:flex;flex-wrap:wrap;align-items:center;gap:2rem;
-    }
-    .feature:nth-child(even){flex-direction:row-reverse;}
-    .feature img{
-      width:100%;max-width:440px;border-radius:22px;flex:1 1 300px;object-fit:cover;
-      box-shadow:0 12px 30px rgba(33,86,255,.15);
-    }
-    .feature .text{flex:1 1 280px;}
-    .feature h2{font-size:1.8rem;margin-bottom:.8rem;}
-    .feature p{font-size:1rem;max-width:440px;line-height:1.55;}
+  /* ===== Features grid ===== */
+  .features{max-width:1100px;margin:auto;padding:3rem 1rem;display:grid;gap:4rem}
+  .feature{display:flex;flex-wrap:wrap;align-items:center;gap:2rem;opacity:0;transform:translateY(60px);transition:.8s}
+  .feature.visible{opacity:1;transform:none}
+  .feature:nth-child(even){flex-direction:row-reverse}
+  .feature img{flex:1 1 300px;max-width:440px;border-radius:22px;object-fit:cover;box-shadow:0 12px 30px rgba(33,86,255,.15)}
+  .text{flex:1 1 280px}
+  .text h2{font-size:1.8rem;margin-bottom:.8rem}
+  .text p{max-width:440px;font-size:1rem;line-height:1.55}
 
-    /* ---------- Reveal animations ---------- */
-    .reveal{opacity:0;transform:translateY(60px);transition:.8s ease;will-change:opacity,transform;}
-    .reveal.visible{opacity:1;transform:none;}
+  /* ===== Study-plan wizard ===== */
+  .wizard{background:#fff;border-radius:22px;box-shadow:0 10px 28px rgba(0,0,0,.08);padding:2rem;display:flex;flex-direction:column;gap:1rem}
+  .wizard input{padding:.7rem 1rem;font-size:1rem;border:1px solid #ccc;border-radius:8px;width:100%}
+  .wizard button{align-self:flex-start;padding:.7rem 1.4rem;background:var(--brand);color:#fff;border:none;border-radius:8px;font-weight:600;cursor:pointer}
+  .wizard h3{margin-bottom:.5rem;font-size:1.4rem}
 
-    @keyframes zoomIn{0%{transform:scale(.92);opacity:0;}100%{transform:none;opacity:1}}
-    @keyframes fadeUp{0%{transform:translateY(30px);opacity:0;}100%{transform:none;opacity:1}}
+  /* Modal */
+  .modal{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;z-index:2000}
+  .modal-box{background:#fff;padding:2rem 1.5rem;border-radius:18px;max-width:520px;max-height:80vh;overflow:auto}
+  .modal-box pre{white-space:pre-wrap;font-family:inherit;font-size:.95rem}
+  .modal-close{position:absolute;top:14px;right:18px;font-size:1.4rem;cursor:pointer}
 
-    /* ---------- Chat styles (keep existing) ---------- */
-    #sb-chat{position:fixed;bottom:24px;right:24px;font-family:inherit}
+  /* ===== Dashboard teaser ===== */
+  .teaser{background:#fff;border-radius:22px;box-shadow:0 10px 28px rgba(0,0,0,.08);padding:2rem;text-align:center}
+  .teaser h3{font-size:1.6rem;margin-bottom:1rem}
+  .teaser img{width:100%;max-width:540px;border-radius:10px;margin-bottom:1rem}
+  .teaser a{display:inline-block;margin-top:.7rem;padding:.6rem 1.6rem;background:var(--brand);color:#fff;border-radius:30px;font-size:.9rem;font-weight:600}
 
-    /* ---------- Responsive tweaks ---------- */
-    @media(max-width:680px){
-      nav{display:none;}/* hide links on small (add a burger if needed) */
-      .features{gap:2.5rem}
-      .feature{flex-direction:column!important;text-align:center}
-      .feature img{max-width:90%;order:-1}
-    }
+  /* ===== Webinar banner ===== */
+  .webinar{margin:5rem 0;background:linear-gradient(90deg,#88b2ff 0%,#bad4ff 100%);text-align:center;padding:2.2rem 1rem;border-radius:26px}
+  .webinar h3{font-size:1.7rem;margin-bottom:.6rem}
+  .webinar a{display:inline-block;padding:.65rem 1.8rem;background:#000;color:#fff;border-radius:28px;font-weight:600;font-size:.92rem}
+
+  /* ===== Footer ===== */
+  footer{padding:3rem 1rem;text-align:center;font-size:.9rem;color:#555}
+  footer nav{margin-bottom:.7rem;font-weight:500}
+  footer nav a{margin:0 .7rem}
+  footer nav a:hover{opacity:.6}
+
+  /* ===== Question of the Day ===== */
+  #qod{position:fixed;bottom:20px;left:20px;max-width:240px;padding:1rem 1.2rem;background:#000;color:#fff;border-radius:16px;box-shadow:0 6px 18px rgba(0,0,0,.4);cursor:pointer;font-size:.9rem;z-index:1200}
+  #qod.revealed{white-space:pre-wrap}
+
+  /* ===== Responsive tweaks ===== */
+  @media(max-width:900px){
+    .feature{flex-direction:column!important;text-align:center}
+    .feature img{order:-1;max-width:90%}
+  }
   </style>
 </head>
 <body>
 
-<!-- ================= Header ================= -->
+<!-- ---------- Top bar ---------- -->
 <header id="topbar">
   <div class="logo">SATurn&nbsp;Bound</div>
   <nav>
+    <a href="#wizard">Study&nbsp;Plan</a>
     <a href="#features">Features</a>
     <a href="signup.html">Sign&nbsp;Up</a>
     <a href="login.html">Log&nbsp;In</a>
-    <a href="aboutus.html">Our&nbsp;Team</a>
   </nav>
 </header>
 
-<!-- ================= Hero ================= -->
+<!-- ---------- Hero ---------- -->
 <section class="hero">
-  <h1>AI-powered SAT prep <br>that thinks ahead for you.</h1>
+  <h1>AI-powered SAT prep<br>that thinks ahead for you.</h1>
   <p>SATurn Bound watches your progress and serves up practice, explanations, and strategy tips before you even ask.</p>
   <a href="signup.html" class="btn">Get Started</a>
 </section>
 
-<!-- ================= Features ================= -->
+<!-- ---------- ➋ Study-plan wizard ---------- -->
+<section id="wizard" class="features" style="max-width:700px">
+  <div class="wizard">
+    <h3>Create your study schedule</h3>
+    <input id="curScore" type="number" min="200" max="1600" placeholder="Current score (e.g. 1150)">
+    <input id="targetScore" type="number" min="200" max="1600" placeholder="Target score (e.g. 1450)">
+    <input id="testDate" type="date">
+    <button id="planBtn">Generate Plan</button>
+  </div>
+</section>
+
+<!-- ---------- ➌ Analytics teaser ---------- -->
+<section class="features" style="padding-top:0">
+  <div class="teaser">
+    <h3>Your progress, visualized</h3>
+    <img src="images/analytics_mock.png" alt="Analytics preview">
+    <a href="dashboard.html">Open Dashboard</a>
+  </div>
+</section>
+
+<!-- ---------- Core features ---------- -->
 <section id="features" class="features">
 
   <div class="feature reveal">
@@ -140,7 +147,7 @@
   </div>
 
   <div class="feature reveal">
-    <img src="images/tutoring.jpg" alt="Join Us">
+    <img src="images/tutoring.jpg" alt="Tutoring">
     <div class="text">
       <h2>Community Tutors</h2>
       <p>Prefer human help? Tap into our volunteer tutoring network and get 1-on-1 guidance whenever you’re stuck.</p>
@@ -148,28 +155,91 @@
   </div>
 </section>
 
-<!-- ================= Footer (simple) ================= -->
-<footer style="padding:3rem 1rem;text-align:center;font-size:.9rem;color:#555">
-  &copy; SATurn Bound 2025.  All rights reserved.
+<!-- ---------- ➍ Webinar banner ---------- -->
+<section class="webinar reveal">
+  <h3>Monthly SAT Strategy Webinar – Live Q&A</h3>
+  <a href="https://your-event-url.com" target="_blank">Register Free</a>
+</section>
+
+<!-- ---------- Footer ---------- -->
+<footer>
+  <nav>
+    <a href="#top">Top</a> •
+    <a href="roadmap.html">Public Roadmap</a> •
+    <a href="aboutus.html">Our Team</a>
+  </nav>
+  &copy; SATurn Bound 2025. All rights reserved.
 </footer>
 
-<!-- ================= Scroll reveal JS ================= -->
-<script>
-  /* Top-bar shadow on scroll */
-  const topbar=document.getElementById('topbar');
-  window.addEventListener('scroll',()=>topbar.classList.toggle('scrolled',window.scrollY>20));
+<!-- ---------- Question of the Day ---------- -->
+<div id="qod"></div>
 
-  /* Reveal animation */
-  const obs=new IntersectionObserver(entries=>{
-    entries.forEach(e=>{
-      if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}
-    });
-  },{threshold:.4});
-  document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
-</script>
+<!-- ---------- Study-plan modal ---------- -->
+<div class="modal" id="planModal">
+  <div class="modal-box">
+    <span class="modal-close" id="closePlan">&times;</span>
+    <h3 style="margin-bottom:1rem">Your custom study plan</h3>
+    <pre id="planText">Generating…</pre>
+  </div>
+</div>
 
+<!-- ====================  JS  ==================== -->
+<script type="module">
+/* ===== nav shadow ===== */
+const topbar=document.getElementById('topbar');
+window.addEventListener('scroll',()=>topbar.classList.toggle('scrolled',window.scrollY>20));
 
+/* ===== reveal on scroll ===== */
+const IO=new IntersectionObserver(e=>e.forEach(i=>{if(i.isIntersecting){i.target.classList.add('visible');IO.unobserve(i.target)}}),{threshold:.35});
+document.querySelectorAll('.reveal').forEach(el=>IO.observe(el));
+
+/* ===== Question of Day ===== */
+const qArr=[
+  {q:"What is the value of x if 2x + 5 = 17?",a:"6"},
+  {q:"Define 'irony' in one sentence.",a:"When the opposite of what you expect happens for effect."},
+  {q:"If f(x)=x² and g(x)=2x, what is f(g(3))?",a:"36"}
+];
+const box=document.getElementById('qod');
+const pick=qArr[Math.floor(Math.random()*qArr.length)];
+box.textContent="QOD: "+pick.q;
+let revealed=false;
+box.onclick=()=>{if(!revealed){box.textContent="QOD Answer: "+pick.a;box.classList.add('revealed');revealed=true;}};
+
+/* ===== Study-plan wizard w/ Gemini ===== */
+const GEMINI_KEY='AIzaSyC4oQ6M1__mHhqhJZqC1yBZqVyic2GA7Ko';
+const GEMINI_URL='https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key='+GEMINI_KEY;
+const btn=document.getElementById('planBtn');
+const modal=document.getElementById('planModal');
+const planText=document.getElementById('planText');
+document.getElementById('closePlan').onclick=()=>modal.style.display='none';
+
+btn.onclick=async()=>{
+  const cur=document.getElementById('curScore').value||'1100';
+  const tar=document.getElementById('targetScore').value||'1400';
+  const date=document.getElementById('testDate').value||'';
+  modal.style.display='flex';
+  planText.textContent='Generating…';
+  const prompt=`Create a dated weekly SAT study schedule from today to ${date||'my next test date'}, starting at ${cur} aiming for ${tar}. Include practice, review, rest days.`;
+  const payload={contents:[{role:'user',parts:[{text:prompt}]}],generationConfig:{maxOutputTokens:320,temperature:.7}};
+  try{
+    const r=await fetch(GEMINI_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+    const j=await r.json();
+    planText.textContent=j.candidates?.[0]?.content?.parts?.[0]?.text||'Sorry, error.';
+  }catch(e){planText.textContent='Network error.'}
+};
+
+/* ===== Float Chat widget (your existing code trimmed) ===== */
+const toggle=document.getElementById('sb-chat-toggle'),win=document.getElementById('sb-chat-window'),send=document.getElementById('sb-chat-send'),txt=document.getElementById('sb-chat-text'),msgs=document.getElementById('sb-chat-messages');
+toggle.onclick=()=>{win.style.display=win.style.display==='flex'?'none':'flex';txt.focus()}
+send.onclick=sendMsg;txt.addEventListener('keydown',e=>{if(e.key==='Enter')sendMsg()});
+async function sendMsg(){
+  const q=txt.value.trim();if(!q)return;b('user',q);txt.value='';b('bot','…');
+  try{
+    const res=await fetch(GEMINI_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({contents:[{role:'user',parts:[{text:q}]}]})});
+    const j=await res.json();msgs.lastChild.textContent=j.candidates?.[0]?.content?.parts?.[0]?.text||'error';
+  }catch{msgs.lastChild.textContent='Network error.'}
 }
+function b(r,t){const d=document.createElement('div');d.className=r;d.textContent=t;msgs.appendChild(d);msgs.scrollTop=msgs.scrollHeight;}
 </script>
 </body>
 </html>
