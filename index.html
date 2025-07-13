@@ -168,46 +168,7 @@
   document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
 </script>
 
-<!-- ================= Chat widget + Gemini (unchanged) ================= -->
-<div id="sb-chat">
-  <div id="sb-chat-window">
-    <div id="sb-chat-messages"></div>
-    <div id="sb-chat-input">
-      <input id="sb-chat-text" placeholder="Ask me anything…" autocomplete="off">
-      <button id="sb-chat-send">➤</button>
-    </div>
-  </div>
-  <div id="sb-chat-toggle">
-    <img src="images/bot.jpg" alt="Chat Saturn">
-  </div>
-</div>
 
-<script type="module">
-/* Simple Gemini Flash call (same logic as before) */
-const GEMINI_KEY   = 'AIzaSyC4oQ6M1__mHhqhJZqC1yBZqVyic2GA7Ko';
-const GEMINI_URL   = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key='+GEMINI_KEY;
-const toggle       = document.getElementById('sb-chat-toggle');
-const win          = document.getElementById('sb-chat-window');
-const sendBtn      = document.getElementById('sb-chat-send');
-const txt          = document.getElementById('sb-chat-text');
-const msgs         = document.getElementById('sb-chat-messages');
-
-toggle.onclick=()=>{win.style.display=win.style.display==='flex'?'none':'flex';txt.focus();}
-sendBtn.onclick=ask;txt.addEventListener('keydown',e=>{if(e.key==='Enter')ask();});
-async function ask(){
-  const q=txt.value.trim();if(!q)return;
-  bubble('user',q);txt.value='';bubble('bot','⏳ thinking…');
-  try{
-    const r=await fetch(GEMINI_URL,{method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({contents:[{role:'user',parts:[{text:q}]}]})});
-    const j=await r.json();
-    const a=j.candidates?.[0]?.content?.parts?.[0]?.text||'Sorry, error.';
-    msgs.lastChild.textContent=a;
-  }catch{msgs.lastChild.textContent='Network error.';}
-}
-function bubble(role,text){
-  const d=document.createElement('div');d.className=role;d.textContent=text;msgs.appendChild(d);
-  msgs.scrollTop=msgs.scrollHeight;
 }
 </script>
 </body>
