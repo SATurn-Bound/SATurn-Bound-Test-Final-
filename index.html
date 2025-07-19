@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <title>SATurn Bound</title>
-  <link rel="icon" href="images/logo.png" type="image/png">
+  <link rel="icon" href="images/Logo.png" type="image/png">
   <meta name="viewport" content="width=device-width,initial-scale=1">
 
   <!-- Base theme -->
@@ -21,28 +21,22 @@
   a{text-decoration:none;color:inherit}
 
   /* ===== Top bar ===== */
-  header{position:fixed;top:0;left:0;width:100%;z-index:1000;padding:.9rem 1.5rem;display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,.55);backdrop-filter:saturate(180%) blur(14px);transition:box-shadow .3s}
+  header{position:fixed;top:0;left:0;width:100%;z-index:1000;padding:.6rem 1.4rem;display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,.55);backdrop-filter:saturate(180%) blur(14px);transition:box-shadow .3s}
   header.scrolled{box-shadow:0 2px 8px rgba(0,0,0,.12)}
-  .logo{font-weight:700;font-size:1.1rem}
+  .brand{display:flex;align-items:center;gap:.65rem;font-weight:700;font-size:1rem;letter-spacing:.02em}
+  .brand img{width:44px;height:44px;border-radius:50%;object-fit:cover;border:2px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.2);animation:fadeUp .6s ease-out both}
   nav{display:flex;gap:1.4rem;font-size:.95rem;font-weight:500}
   nav a:hover{opacity:.6}
   @media(max-width:680px){nav{display:none}}
 
   /* ===== Hero ===== */
   .hero{min-height:90vh;padding:1.5rem;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}
-  .hero h1 {
-  font-size: clamp(2.4rem, 5vw, 4rem);
-  font-weight: 700;
-  line-height: 1.1;
-  animation: zoomIn .9s ease-out both;
-  color: #444; /* medium gray */
-}
+  .hero .hero-logo{width:120px;height:120px;border-radius:50%;object-fit:cover;border:4px solid #fff;box-shadow:0 6px 20px rgba(0,0,0,.18);margin-bottom:1.4rem;animation:zoomIn .8s ease-out both}
+  .hero h1{font-size:clamp(2.4rem,5vw,4rem);font-weight:700;line-height:1.1;animation:zoomIn .9s .1s ease-out both}
+  .hero p{max-width:540px;margin:1.2rem 0 2.2rem;font-size:1.1rem;color:#333;animation:fadeUp .9s .25s ease-out both}
+  .btn{display:inline-block;background:var(--brand);color:#fff;padding:.9rem 2.1rem;border-radius:32px;font-weight:600;animation:fadeUp .9s .35s ease-out both}
 
-
-  .hero p{max-width:540px;margin:1.2rem 0 2.2rem;font-size:1.1rem;color:#333;animation:fadeUp .9s .2s ease-out both}
-  .btn{display:inline-block;background:var(--brand);color:#fff;padding:.9rem 2.1rem;border-radius:32px;font-weight:600;animation:fadeUp .9s .3s ease-out both}
-
-  @keyframes zoomIn{0%{transform:scale(.92);opacity:0}100%{transform:none;opacity:1}}
+  @keyframes zoomIn{0%{transform:scale(.9);opacity:0}100%{transform:none;opacity:1}}
   @keyframes fadeUp{0%{transform:translateY(30px);opacity:0}100%{transform:none;opacity:1}}
 
   /* ===== Features grid ===== */
@@ -63,7 +57,7 @@
 
   /* Modal */
   .modal{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;z-index:2000}
-  .modal-box{background:#fff;padding:2rem 1.5rem;border-radius:18px;max-width:520px;max-height:80vh;overflow:auto}
+  .modal-box{background:#fff;padding:2rem 1.5rem;border-radius:18px;max-width:520px;max-height:80vh;overflow:auto;position:relative}
   .modal-box pre{white-space:pre-wrap;font-family:inherit;font-size:.95rem}
   .modal-close{position:absolute;top:14px;right:18px;font-size:1.4rem;cursor:pointer}
 
@@ -97,9 +91,12 @@
 </head>
 <body>
 
-<!-- ---------- Top bar ---------- -->
+<!-- ---------- Top bar with logo ---------- -->
 <header id="topbar">
-  <div class="logo">SATurn&nbsp;Bound</div>
+  <div class="brand">
+    <img src="images/Logo.png" alt="SATurn Bound logo">
+    <span>SATurn&nbsp;Bound</span>
+  </div>
   <nav>
     <a href="#wizard">Study&nbsp;Plan</a>
     <a href="#features">Features</a>
@@ -108,14 +105,15 @@
   </nav>
 </header>
 
-<!-- ---------- Hero ---------- -->
+<!-- ---------- Hero (logo + headline) ---------- -->
 <section class="hero">
-  <h1>AI-powered SAT prep<br>that thinks ahead for you</h1>
+  <img class="hero-logo" src="images/Logo.png" alt="SATurn Bound Logo Large">
+  <h1>AI-powered SAT prep<br>that thinks ahead for you.</h1>
   <p>SATurn Bound watches your progress and serves up practice, explanations, and strategy tips before you even ask.</p>
   <a href="signup.html" class="btn">Get Started</a>
 </section>
 
-<!-- ---------- ➋ Study-plan wizard ---------- -->
+<!-- ---------- Study-plan wizard ---------- -->
 <section id="wizard" class="features" style="max-width:700px">
   <div class="wizard">
     <h3>Create your study schedule</h3>
@@ -126,7 +124,7 @@
   </div>
 </section>
 
-<!-- ---------- ➌ Analytics teaser ---------- -->
+<!-- ---------- Analytics teaser ---------- -->
 <section class="features" style="padding-top:0">
   <div class="teaser">
     <h3>Your progress, visualized</h3>
@@ -163,7 +161,7 @@
   </div>
 </section>
 
-<!-- ---------- ➍ Webinar banner ---------- -->
+<!-- ---------- Webinar banner ---------- -->
 <section class="webinar reveal">
   <h3>Monthly SAT Strategy Webinar – Live Q&A</h3>
   <a href="https://your-event-url.com" target="_blank">Register Free</a>
@@ -172,7 +170,7 @@
 <!-- ---------- Footer ---------- -->
 <footer>
   <nav>
-    <a href="#top">Top</a> •
+    <a href="#topbar">Top</a> •
     <a href="roadmap.html">Public Roadmap</a> •
     <a href="aboutus.html">Our Team</a>
   </nav>
@@ -204,17 +202,17 @@ document.querySelectorAll('.reveal').forEach(el=>IO.observe(el));
 /* ===== Question of Day ===== */
 const qArr=[
   {q:"What is the value of x if 2x + 5 = 17?",a:"6"},
-  {q:"Define 'irony' in one sentence.",a:"When the opposite of what you expect happens for effect."},
-  {q:"If f(x)=x² and g(x)=2x, what is f(g(3))?",a:"36"}
+  {q:"If f(x)=x² and g(x)=2x, what is f(g(3))?",a:"36"},
+  {q:"Define 'irony' in one sentence.",a:"When the opposite of expectations occurs for effect."}
 ];
 const box=document.getElementById('qod');
 const pick=qArr[Math.floor(Math.random()*qArr.length)];
 box.textContent="QOD: "+pick.q;
 let revealed=false;
-box.onclick=()=>{if(!revealed){box.textContent="QOD Answer: "+pick.a;box.classList.add('revealed');revealed=true;}};
+box.onclick=()=>{if(!revealed){box.textContent="Answer: "+pick.a;box.classList.add('revealed');revealed=true;}};
 
-/* ===== Study-plan wizard w/ Gemini ===== */
-const GEMINI_KEY='AIzaSyC4oQ6M1__mHhqhJZqC1yBZqVyic2GA7Ko';
+/* ===== Study-plan wizard (Gemini) ===== */
+const GEMINI_KEY='AIzaSyC4oQ6M1__mHhqhJZqC1yBZqVyic2GA7Ko';  /* <-- Replace with your real key */
 const GEMINI_URL='https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key='+GEMINI_KEY;
 const btn=document.getElementById('planBtn');
 const modal=document.getElementById('planModal');
@@ -227,7 +225,7 @@ btn.onclick=async()=>{
   const date=document.getElementById('testDate').value||'';
   modal.style.display='flex';
   planText.textContent='Generating…';
-  const prompt=`Create a dated weekly SAT study schedule from today to ${date||'my next test date'}, starting at ${cur} aiming for ${tar}. Include practice, review, rest days.`;
+  const prompt=`Create a dated weekly SAT study schedule from today to ${date||'the test date'}, starting at score ${cur} aiming for ${tar}. Include practice focus, review, rest days. Format with week headers.`;
   const payload={contents:[{role:'user',parts:[{text:prompt}]}],generationConfig:{maxOutputTokens:320,temperature:.7}};
   try{
     const r=await fetch(GEMINI_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
@@ -236,18 +234,33 @@ btn.onclick=async()=>{
   }catch(e){planText.textContent='Network error.'}
 };
 
-/* ===== Float Chat widget (your existing code trimmed) ===== */
+/* ===== Minimal chat widget (reuse Gemini) ===== */
 const toggle=document.getElementById('sb-chat-toggle'),win=document.getElementById('sb-chat-window'),send=document.getElementById('sb-chat-send'),txt=document.getElementById('sb-chat-text'),msgs=document.getElementById('sb-chat-messages');
 toggle.onclick=()=>{win.style.display=win.style.display==='flex'?'none':'flex';txt.focus()}
 send.onclick=sendMsg;txt.addEventListener('keydown',e=>{if(e.key==='Enter')sendMsg()});
 async function sendMsg(){
-  const q=txt.value.trim();if(!q)return;b('user',q);txt.value='';b('bot','…');
+  const q=txt.value.trim();if(!q)return;add('user',q);txt.value='';add('bot','…');
   try{
     const res=await fetch(GEMINI_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({contents:[{role:'user',parts:[{text:q}]}]})});
     const j=await res.json();msgs.lastChild.textContent=j.candidates?.[0]?.content?.parts?.[0]?.text||'error';
   }catch{msgs.lastChild.textContent='Network error.'}
 }
-function b(r,t){const d=document.createElement('div');d.className=r;d.textContent=t;msgs.appendChild(d);msgs.scrollTop=msgs.scrollHeight;}
+function add(role,text){const d=document.createElement('div');d.className=role;d.textContent=text;msgs.appendChild(d);msgs.scrollTop=msgs.scrollHeight;}
 </script>
+
+<!-- Existing chat DOM (kept from earlier) -->
+<div id="sb-chat" style="position:fixed;bottom:24px;right:24px;font-family:inherit">
+  <div id="sb-chat-window" style="display:none;flex-direction:column;width:320px;height:400px;background:#f5f7ff;padding:12px;border-radius:12px;box-shadow:0 6px 24px rgba(0,0,0,.45)">
+    <div id="sb-chat-messages" style="flex:1;overflow-y:auto;font-size:.9rem;margin-bottom:8px"></div>
+    <div id="sb-chat-input" style="display:flex">
+      <input id="sb-chat-text" placeholder="Ask me anything…" autocomplete="off" style="flex:1;padding:6px 8px;border-radius:6px;border:1px solid #999;font-size:.9rem;">
+      <button id="sb-chat-send" style="margin-left:6px;background:#2156ff;color:#fff;border:none;padding:6px 12px;border-radius:6px;cursor:pointer;font-weight:600;">➤</button>
+    </div>
+  </div>
+  <div id="sb-chat-toggle" style="width:56px;height:56px;border-radius:50%;overflow:hidden;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.4)">
+    <img src="images/Logo.png" alt="Chat" style="width:100%;height:100%;object-fit:cover">
+  </div>
+</div>
+
 </body>
 </html>
