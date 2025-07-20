@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>saturnbound | Dashboard</title>
+<title>SATurnbound | Dashboard</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="icon" href="images/Logo.png" type="image/png">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
@@ -673,6 +673,139 @@ document.getElementById('ringInfo').innerHTML = `
   Next Ring at: ${ringStatus.rings===7?'MAX': ringStatus.nextThreshold} | Segment ${(ringStatus.progressSegment*100).toFixed(0)}%<br>
   <span style="opacity:.8">Perf (P) ${(ringStatus.P).toFixed(0)} • Volume (V) ${(ringStatus.V).toFixed(0)} • Attempts ${ringStatus.totalAttempts}</span>
 `;
+<style>
+/* === THEME OVERRIDES FOR DARK GRADIENT + BRAND HEADER === */
+:root{
+  /* Keep any other custom variables you introduced earlier */
+  --bg-grad: radial-gradient(circle at 30% 20%, #102457 0%, #081433 55%, #051027 85%);
+  --panel: rgba(255,255,255,0.08);
+  --panel-solid:#13294b;
+  --border: rgba(255,255,255,0.12);
+  --accent:#2f62ff;
+  --accent-alt:#f27891;
+  --muted:#b5c3d6;
+  --badge-bg: rgba(255,255,255,0.14);
+  --ring:#2f62ff;
+  --ring-glow:rgba(47,98,255,.5);
+  --font-stack:'Inter',system-ui,Arial,sans-serif;
+}
+
+body{
+  font-family:var(--font-stack);
+  background:var(--bg-grad);
+  color:#ffffff;
+  min-height:100vh;
+  -webkit-font-smoothing:antialiased;
+  padding-top:72px;
+  line-height:1.35;
+  margin:0;
+}
+
+/* Header / Nav */
+header{
+  position:fixed;top:0;left:0;width:100%;z-index:800;
+  background:rgba(8,20,51,0.85);
+  backdrop-filter:blur(18px) saturate(180%);
+  border-bottom:1px solid rgba(255,255,255,0.1);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:.65rem 1.3rem;
+}
+.brand{display:flex;align-items:center;gap:.65rem;font-weight:700;font-size:1.05rem;letter-spacing:.5px}
+.brand img{width:46px;height:46px;border-radius:50%;object-fit:cover;border:2px solid #fff;box-shadow:0 4px 10px rgba(0,0,0,.3)}
+.brand span{color:#fff;}
+nav{display:flex;gap:1.2rem;font-size:.85rem;font-weight:500;flex-wrap:wrap}
+nav a{
+  padding:.45rem .85rem;border-radius:999px;
+  transition:background .25s,color .25s;
+  color:#d6e0ef;
+}
+nav a:hover{background:rgba(255,255,255,0.15);color:#fff;}
+nav a.active{background:#2f62ff;color:#fff;}
+
+/* Panels / cards */
+.panel{
+  background:var(--panel);
+  backdrop-filter:blur(24px) saturate(180%);
+  border:1px solid var(--border);
+  border-radius:24px;
+  box-shadow:0 8px 26px -10px rgba(0,0,0,.55);
+  color:#ffffff;
+}
+.panel h3{color:#fff;}
+.small-label{color:var(--muted);}
+
+/* Metrics */
+.metric{
+  background:rgba(255,255,255,0.06);
+  border:1px solid rgba(255,255,255,0.12);
+  color:#e8f1ff;
+  border-radius:18px;
+}
+.metric span{color:var(--muted);}
+
+/* Progress bars */
+.progress-bar{background:rgba(255,255,255,0.18);}
+.progress-bar span{background:linear-gradient(90deg,#54a6ff,#f27891);}
+
+/* Badges */
+.badge{
+  background:var(--badge-bg);
+  border:1px solid rgba(255,255,255,0.25);
+  color:#fff;
+}
+.badge.good{background:#1c9c55cc;border-color:#2ad072;}
+.badge.warn{background:#e9ab17cc;border-color:#ffd46b;color:#231a00;}
+.badge.perf{background:#f27891cc;border-color:#ffb6c5;}
+
+/* Focus pills */
+.focus-pill{
+  background:rgba(255,255,255,0.12);
+  border:1px solid rgba(255,255,255,0.2);
+  color:#fff;
+}
+.focus-pill.low{background:#d63838cc;border-color:#ff8a8a;}
+.focus-pill.mid{background:#e9ab17cc;border-color:#ffd46b;color:#2b1b00;}
+.focus-pill.good{background:#1a9852cc;border-color:#2ad072;}
+
+/* Skill bars */
+.skill-bar{background:rgba(255,255,255,.15);}
+.skill-bar span{background:linear-gradient(90deg,#54a6ff,#f27891);}
+
+/* Attempts table */
+table thead{background:rgba(255,255,255,0.12);}
+tbody tr:nth-child(even){background:rgba(255,255,255,0.05);}
+tbody tr:hover{background:rgba(255,255,255,0.12);}
+table th, table td{color:#e8f1ff;}
+table th{font-weight:600;}
+
+/* Study plan */
+#studyPlanEditor{
+  background:rgba(255,255,255,0.08);
+  border:1px solid rgba(255,255,255,0.18);
+  color:#e8f1ff;
+  border-radius:18px;
+}
+#studyPlanEditor:empty:before{color:#b5c3d6;}
+.plan-actions button{
+  background:rgba(255,255,255,0.12);
+  border:1px solid rgba(255,255,255,0.22);
+  color:#e8f1ff;
+}
+.plan-actions button:hover{background:rgba(255,255,255,0.22);}
+
+/* Planet (ensure rings contrast) */
+#planetCanvas circle{stroke:#d89f49;}
+.ring-progress-bar{background:rgba(255,255,255,0.15);}
+.ring-progress-bar span{background:linear-gradient(90deg,#54a6ff,#f27891);}
+
+/* Gauges */
+.gauge-bg{stroke:#304467;}
+/* .gauge-val stroke already gradient from existing defs */
+
+/* Misc text colors if needed */
+.skill-label span{color:#fff;}
+footer{color:#b5c3d6;}
+</style>
 
 /* ---------- Badges ---------- */
 function evaluateBadges(){
