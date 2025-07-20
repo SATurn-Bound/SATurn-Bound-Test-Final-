@@ -1,123 +1,517 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>SATurn Bound | Dashboard</title>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+<meta charset="UTF-8">
+<title>SATurn Bound | Dashboard</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" href="images/Logo.png" type="image/png">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
-  <!-- Base theme -->
-  <link rel="stylesheet" href="assets/css/main.css" />
-  <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+<style>
+:root{
+  --bg-top:#e9f2ff;
+  --bg-mid:#cfe2ff;
+  --bg-btm:#b7d4ff;
+  --text:#0d1117;
+  --muted:#536272;
+  --brand:#2156ff;
+  --brand-dark:#133aa5;
+  --panel:rgba(255,255,255,0.58);
+  --panel-solid:#ffffff;
+  --danger:#d43b3b;
+  --ok:#2d7c32;
+  --warn:#d27d14;
+}
 
-  <!-- ---------- Gradient-tile dashboard ---------- -->
-  <style>
-  :root{
-    --navy:#061a48;
-    --navy-dk:#041230;
-    --grad1:linear-gradient(135deg,#54a6ff 0%,#f27891 100%);
-    --grad2:linear-gradient(135deg,#f27891 0%,#54a6ff 100%);
-    --cream:#fff8e6;
-  }
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:"Inter",Helvetica,Arial,sans-serif;
+  background:linear-gradient(180deg,var(--bg-top)0%,var(--bg-mid)45%,var(--bg-btm)100%);
+  color:var(--text);
+  -webkit-font-smoothing:antialiased;
+  scroll-behavior:smooth;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+}
 
-  /* NAVBAR (unchanged style) */
-  #main-nav{position:fixed;top:0;left:0;width:100%;z-index:999;background:var(--navy);
-    box-shadow:0 2px 8px rgba(0,0,0,.55);}
-  #main-nav .inner{max-width:1200px;margin:auto;padding:.8rem 1.2rem;
-    display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;}
-  #main-nav h1{margin:0;font-size:1.2rem;letter-spacing:.04em;}
-  #main-nav h1 a{color:#fff;text-decoration:none;font-weight:600;}
-  .nav-links{display:flex;gap:1.4rem;flex-wrap:wrap;}
-  .nav-links a{color:#cfd7ff;text-decoration:none;font-size:.92rem;transition:opacity .2s;}
-  .nav-links a:hover{opacity:.78;}
+/* ===== Header (reused style) ===== */
+header{
+  position:fixed;top:0;left:0;width:100%;z-index:1000;
+  padding:.6rem 1.4rem;
+  display:flex;justify-content:space-between;align-items:center;
+  background:rgba(255,255,255,.55);
+  backdrop-filter:saturate(180%) blur(14px);
+  transition:box-shadow .3s;
+}
+header.scrolled{box-shadow:0 2px 8px rgba(0,0,0,.12);}
+.brand{display:flex;align-items:center;gap:.65rem;font-weight:700;font-size:1rem;letter-spacing:.02em}
+.brand img{width:44px;height:44px;border-radius:50%;object-fit:cover;border:2px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.2)}
+nav{display:flex;gap:1.1rem;font-size:.92rem;font-weight:500;align-items:center}
+nav a, nav button{
+  padding:.35rem .65rem;
+  border-radius:8px;
+  background:transparent;
+  border:none;
+  font:inherit;
+  color:inherit;
+  cursor:pointer;
+  text-decoration:none;
+  transition:background .25s;
+}
+nav a:hover, nav button:hover{background:rgba(0,0,0,.06)}
+nav a.active{background:rgba(0,0,0,.08)}
+@media(max-width:780px){nav{display:none}}
 
-  /* PAGE BACKDROP */
-  body{margin:0;font-family:'Inter',sans-serif;background:var(--navy);color:#fff;padding-top:66px;}
+/* ===== Main Layout ===== */
+main{
+  flex:1;
+  width:100%;
+  max-width:1400px;
+  margin:0 auto;
+  padding:120px 2rem 60px;
+  display:flex;
+  flex-direction:column;
+  gap:2.6rem;
+}
 
-  /* WRAPPER fills viewport minus nav */
-  .wrap{
-    min-height:calc(100vh - 66px);
-    display:flex;flex-direction:column;align-items:center;
-    justify-content:center;padding:2rem 1rem;
-    background:radial-gradient(circle at 30% -20%,var(--navy-dk) 0%,var(--navy) 70%);
-  }
+/* ===== Welcome Bar ===== */
+.welcome{
+  display:flex;
+  flex-wrap:wrap;
+  gap:1.2rem;
+  align-items:center;
+  justify-content:space-between;
+  background:var(--panel);
+  backdrop-filter:blur(18px);
+  border:1px solid rgba(255,255,255,.55);
+  border-radius:30px;
+  padding:1.4rem 1.8rem 1.55rem;
+  box-shadow:0 14px 38px -12px rgba(0,0,0,.20);
+  animation:fadeIn .9s ease;
+}
+.welcome h1{
+  font-size:clamp(1.6rem,3vw,2.4rem);
+  font-weight:700;
+  letter-spacing:.5px;
+  margin:0;
+}
+.welcome p{
+  color:var(--muted);
+  font-size:.95rem;
+  margin:.25rem 0 0;
+  max-width:560px;
+  line-height:1.45;
+}
+.inline-actions{
+  display:flex;
+  gap:.8rem;
+  flex-wrap:wrap;
+  align-items:center;
+}
+.btn{
+  display:inline-block;
+  background:var(--brand);
+  color:#fff;
+  padding:.75rem 1.4rem;
+  border-radius:30px;
+  font-size:.85rem;
+  font-weight:600;
+  text-decoration:none;
+  line-height:1;
+  transition:background .25s, transform .25s;
+  border:none;
+  cursor:pointer;
+}
+.btn:hover{background:var(--brand-dark);transform:translateY(-2px)}
+.btn.outline{
+  background:#fff;
+  color:var(--brand);
+  border:2px solid var(--brand);
+}
+.btn.outline:hover{
+  background:var(--brand);
+  color:#fff;
+}
 
-  /* HEADLINE */
-  .wrap h2{font-size:2.4rem;margin:0 0 .6rem;text-align:center;font-weight:700;}
-  .wrap p.sub{margin:0 0 2.2rem;text-align:center;color:#d8e0ff;font-size:1.05rem;}
+/* ===== Dashboard Grid ===== */
+.grid{
+  display:grid;
+  gap:2.2rem;
+  grid-template-columns:repeat(auto-fill,minmax(320px,1fr));
+}
+.card{
+  position:relative;
+  background:var(--panel);
+  backdrop-filter:blur(18px);
+  border:1px solid rgba(255,255,255,.55);
+  border-radius:28px;
+  padding:1.6rem 1.5rem 1.9rem;
+  display:flex;
+  flex-direction:column;
+  gap:1rem;
+  box-shadow:0 12px 36px -14px rgba(0,0,0,.25);
+  overflow:hidden;
+  animation:fadeUp .9s ease;
+}
+.card:before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:radial-gradient(circle at 85% 15%,rgba(255,255,255,.35),transparent 60%);
+  opacity:.65;
+  pointer-events:none;
+}
+.card h2{
+  font-size:1.15rem;
+  font-weight:600;
+  margin:0 0 .2rem;
+  letter-spacing:.4px;
+}
+.card p{
+  font-size:.83rem;
+  line-height:1.45;
+  color:var(--muted);
+  margin:0;
+}
 
-  /* TILE GRID */
-  .tile-grid{
-    display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;max-width:1100px;width:100%;
-  }
-  .tile{
-    padding:2.2rem;border-radius:1.4rem;
-    display:flex;flex-direction:column;align-items:center;justify-content:center;
-    text-align:center;color:#fff;position:relative;
-    background:var(--grad1); /* default, alternate via .alt */
-    box-shadow:0 10px 28px rgba(0,0,0,.45);
-    transition:transform .25s,box-shadow .25s;
-  }
-  .tile.alt{background:var(--grad2);}
-  .tile:hover{transform:translateY(-6px);box-shadow:0 16px 32px rgba(0,0,0,.55);}
-  .tile img{width:88px;height:88px;border-radius:20px;margin-bottom:1.2rem;object-fit:cover;}
-  .tile h3{margin:.2rem 0 .8rem;font-size:1.55rem;font-weight:600;}
-  .tile p{margin:0 0 1.4rem;font-size:.95rem;max-width:320px;line-height:1.4;}
-  .tile .btn{
-    display:inline-block;background:var(--cream);color:#00172f;
-    padding:.55rem 1.6rem;border-radius:8px;text-decoration:none;font-weight:600;font-size:.9rem;
-  }
+.stat-row{
+  display:flex;
+  gap:1rem;
+  flex-wrap:wrap;
+}
+.stat{
+  flex:1 1 120px;
+  background:#fff;
+  border-radius:18px;
+  padding:.9rem .95rem 1rem;
+  display:flex;
+  flex-direction:column;
+  gap:.35rem;
+  min-width:140px;
+  box-shadow:0 10px 30px -12px rgba(0,0,0,.18);
+  position:relative;
+}
+.stat small{
+  font-size:.62rem;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  font-weight:600;
+  color:#5a6a7d;
+}
+.stat .value{
+  font-size:1.25rem;
+  font-weight:700;
+  line-height:1;
+  display:flex;
+  align-items:baseline;
+  gap:.35rem;
+}
+.badge{
+  font-size:.6rem;
+  font-weight:600;
+  padding:.25rem .45rem;
+  border-radius:10px;
+  background:#e1ebff;
+  color:var(--brand);
+  letter-spacing:.05em;
+}
 
-  /* STACK on tablets/phones */
-  @media(max-width:900px){.tile-grid{grid-template-columns:1fr;}}
-  </style>
+/* Progress bar */
+.progress-bar{
+  height:10px;
+  width:100%;
+  background:#e2e9f3;
+  border-radius:6px;
+  overflow:hidden;
+  position:relative;
+}
+.progress-bar span{
+  position:absolute;
+  inset:0;
+  background:linear-gradient(90deg,#2156ff,#5c89ff);
+  width:0%;
+  transition:width 1.2s cubic-bezier(.19,1,.22,1);
+  border-radius:6px;
+}
+
+/* List */
+ul.min-list{
+  list-style:none;
+  margin:0;
+  padding:0;
+  display:flex;
+  flex-direction:column;
+  gap:.55rem;
+  font-size:.78rem;
+  color:#2f3d4f;
+}
+ul.min-list li{
+  background:#fff;
+  padding:.65rem .75rem;
+  border-radius:14px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:.6rem;
+}
+ul.min-list li span.label{
+  font-weight:600;
+  font-size:.7rem;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:#5c6d7f;
+}
+ul.min-list li .pill{
+  background:#e7f0ff;
+  color:#2156ff;
+  font-size:.6rem;
+  padding:.25rem .5rem;
+  border-radius:12px;
+  font-weight:600;
+}
+
+/* Placeholder skeleton (for loading) */
+.skel{
+  background:linear-gradient(90deg,#e2e9f3 0%,#f5f8fc 40%,#e2e9f3 80%);
+  background-size:200% 100%;
+  animation:skeleton 1.4s linear infinite;
+  border-radius:6px;
+  height:14px;
+  width:100%;
+}
+@keyframes skeleton{0%{background-position:200% 0}100%{background-position:-200% 0}}
+
+@keyframes fadeUp{0%{opacity:0;transform:translateY(40px)}100%{opacity:1;transform:none}}
+@keyframes fadeIn{0%{opacity:0}100%{opacity:1}}
+
+footer{
+  text-align:center;
+  padding:2rem 1rem 3rem;
+  font-size:.72rem;
+  color:#4e5e70;
+}
+
+/* Mobile refinements */
+@media(max-width:560px){
+  main{padding:110px 1rem 50px}
+  .welcome{padding:1.1rem 1.2rem 1.4rem;border-radius:26px}
+  .card{padding:1.3rem 1.2rem 1.55rem;border-radius:24px}
+  .stat{min-width:120px}
+}
+
+/* Utility hidden */
+.hidden{display:none!important}
+</style>
 </head>
-<body class="is-preload">
+<body>
 
-<!-- NAV -->
-<header id="main-nav">
-  <div class="inner">
-    <h1><a href="index.html">SATurn&nbsp;Bound</a></h1>
-    <nav class="nav-links">
-      <a href="index.html">Home</a>
-      <a href="aboutus.html">Our Team</a>
-      <a href="practice-tests.html">Tests</a>
-      <a href="signup.html">Sign&nbsp;Up</a>
-      <a href="login.html">Log&nbsp;In</a>
-    </nav>
+<header id="siteHeader">
+  <div class="brand">
+    <img src="images/Logo.png" alt="SATurn Bound logo">
+    <span>SATurn&nbsp;Bound</span>
   </div>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="aboutus.html">Our Team</a>
+    <a href="practice-tests.html">Tests</a>
+    <a href="signup.html" id="navSign">Sign Up</a>
+    <a href="login.html"  id="navLogin">Log In</a>
+    <button id="logoutBtn" class="hidden">Log Out</button>
+  </nav>
 </header>
 
-<!-- CONTENT -->
-<main class="wrap">
-  <h2>Welcome to SATurn Bound</h2>
-  <p class="sub">Smarter, personalized tools to help you ace the SAT.</p>
+<main>
+  <!-- Welcome / Hero Strip -->
+  <section class="welcome" id="welcomeBox">
+    <div>
+      <h1 id="welcomeTitle">Hello, Student</h1>
+      <p id="welcomeSub">Loading your personalized SAT progress & recommendations…</p>
+    </div>
+    <div class="inline-actions">
+      <a href="practice-tests.html" class="btn">Start Practice</a>
+      <a href="index.html#wizardSection" class="btn outline">New Study Plan</a>
+    </div>
+  </section>
 
-  <section class="tile-grid">
+  <!-- Dashboard Cards -->
+  <section class="grid">
 
-    <!-- Practice Tests -->
-    <article class="tile">
-      <img src="images/books.webp" alt="Practice Tests">
-      <h3>Practice Tests</h3>
-      <p>Skill-specific drills and full-length exams that adapt to you.</p>
-      <a href="practice-tests.html" class="btn">Explore Tests</a>
+    <!-- Progress & Stats -->
+    <article class="card" id="statsCard">
+      <h2>Your Progress</h2>
+      <p>Snapshot of current estimated score trajectory and practice completion.</p>
+      <div class="stat-row">
+        <div class="stat">
+          <small>Estimated Score</small>
+            <div class="value" id="estScore"><span class="skel" style="height:22px;width:80px;"></span></div>
+            <div class="progress-bar"><span id="scoreBar"></span></div>
+        </div>
+        <div class="stat">
+          <small>Practice Complete</small>
+          <div class="value"><span id="practicePct">0%</span></div>
+          <div class="progress-bar"><span id="practiceBar"></span></div>
+        </div>
+      </div>
+      <div class="stat-row">
+        <div class="stat">
+          <small>Math Focus</small>
+          <div class="value"><span id="mathFocus">—</span></div>
+          <span class="badge" id="mathBadge">Loading</span>
+        </div>
+        <div class="stat">
+          <small>RW Focus</small>
+          <div class="value"><span id="rwFocus">—</span></div>
+          <span class="badge" id="rwBadge">Loading</span>
+        </div>
+      </div>
     </article>
 
-    <!-- Video Explanations -->
-    <article class="tile alt">
-      <img src="images/ytlogo.webp" alt="Video Explanations">
-      <h3>Video Explanations</h3>
-      <p>Step-by-step solution videos from top scorers and tutors.</p>
-      <a href="#" class="btn">Watch Now</a>
+    <!-- Upcoming / Plan -->
+    <article class="card">
+      <h2>Upcoming Plan</h2>
+      <p>Your next scheduled study block and test events.</p>
+      <ul class="min-list" id="planList">
+        <li><span class="skel" style="height:14px;"></span></li>
+        <li><span class="skel" style="height:14px;"></span></li>
+        <li><span class="skel" style="height:14px;"></span></li>
+      </ul>
+      <a href="index.html#wizardSection" class="btn outline" style="margin-top:.6rem;">Regenerate Plan</a>
+    </article>
+
+    <!-- Recent Activity -->
+    <article class="card">
+      <h2>Recent Activity</h2>
+      <p>Most recent practice sets you worked on.</p>
+      <ul class="min-list" id="activityList">
+        <li><span class="skel" style="height:14px;"></span></li>
+        <li><span class="skel" style="height:14px;"></span></li>
+        <li><span class="skel" style="height:14px;"></span></li>
+      </ul>
+      <a href="practice-tests.html" class="btn" style="margin-top:.6rem;">Continue Practice</a>
+    </article>
+
+    <!-- Resources -->
+    <article class="card">
+      <h2>Resources</h2>
+      <p>Curated links to accelerate your improvement.</p>
+      <ul class="min-list">
+        <li><span class="label">Formula Sheet</span><a class="pill" href="#" target="_blank">PDF</a></li>
+        <li><span class="label">Grammar Guide</span><a class="pill" href="#" target="_blank">Open</a></li>
+        <li><span class="label">Video Channel</span><a class="pill" href="https://www.youtube.com/@SATurn-Bound" target="_blank" rel="noopener">Watch</a></li>
+        <li><span class="label">Discord</span><a class="pill" href="https://discord.gg/5c96YHx8" target="_blank" rel="noopener">Join</a></li>
+      </ul>
     </article>
 
   </section>
 </main>
 
-<!-- Optional JS -->
-<script src="assets/js/jquery.min.js"></script>
-<script src="assets/js/browser.min.js"></script>
-<script src="assets/js/breakpoints.min.js"></script>
-<script src="assets/js/util.js"></script>
-<script src="assets/js/main.js"></script>
+<footer>
+  &copy; SATurn Bound 2025. All rights reserved.
+</footer>
+
+<!-- Firebase & Auth Logic -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-app.js";
+import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDedw_zEK-L-AoKO1WkeomLVztoRnYBXt4",
+  authDomain: "saturn-bound.firebaseapp.com",
+  projectId: "saturn-bound",
+  storageBucket: "saturn-bound.appspot.com",
+  messagingSenderId: "46027081851",
+  appId: "1:46027081851:web:8402230dc2ff241c6cfade"
+};
+
+initializeApp(firebaseConfig);
+const auth = getAuth();
+
+const logoutBtn   = document.getElementById('logoutBtn');
+const navLogin    = document.getElementById('navLogin');
+const navSign     = document.getElementById('navSign');
+const welcomeTitle= document.getElementById('welcomeTitle');
+const welcomeSub  = document.getElementById('welcomeSub');
+
+onAuthStateChanged(auth, user=>{
+  if(!user){
+    // Not logged in
+    window.location.href = "login.html";
+    return;
+  }
+  // Logged in
+  logoutBtn.classList.remove('hidden');
+  navLogin.classList.add('hidden');
+  navSign.classList.add('hidden');
+
+  const name = user.displayName || user.email || "Student";
+  welcomeTitle.textContent = "Hello, " + name.split('@')[0];
+  welcomeSub.textContent = "Here is your latest progress snapshot and what's coming next.";
+  
+  // Simulated data placeholders (replace with Firestore fetch later)
+  loadFakeData();
+});
+
+logoutBtn.addEventListener('click', async ()=>{
+  try{
+    await signOut(auth);
+    window.location.href = "login.html";
+  }catch(e){
+    alert("Logout failed.");
+  }
+});
+
+/* Fake data to demonstrate animations (replace with real DB) */
+function loadFakeData(){
+  // Score
+  const estScoreEl = document.getElementById('estScore');
+  const scoreBar   = document.getElementById('scoreBar');
+  const practiceBar= document.getElementById('practiceBar');
+  const practicePct= document.getElementById('practicePct');
+  const mathFocus  = document.getElementById('mathFocus');
+  const rwFocus    = document.getElementById('rwFocus');
+  const mathBadge  = document.getElementById('mathBadge');
+  const rwBadge    = document.getElementById('rwBadge');
+  const planList   = document.getElementById('planList');
+  const activityList= document.getElementById('activityList');
+
+  const estScore = 1340;
+  const goal     = 1500;
+  const pctScore = Math.min(100, Math.round(estScore/goal*100));
+  const practiceDone = 42; // %
+  const math = "Nonlinear Functions";
+  const rw   = "Rhetorical Synthesis";
+
+  // Replace skeletons
+  estScoreEl.innerHTML = estScore + "<span style='font-size:.75rem;font-weight:600;color:#5c6d7f;'> est</span>";
+  setTimeout(()=>{ scoreBar.style.width = pctScore + "%"; }, 120);
+  practicePct.textContent = practiceDone + "%";
+  setTimeout(()=>{ practiceBar.style.width = practiceDone + "%"; }, 150);
+
+  mathFocus.textContent = math;
+  rwFocus.textContent = rw;
+  mathBadge.textContent = "Focus";
+  rwBadge.textContent = "Focus";
+
+  // Plan
+  planList.innerHTML = `
+    <li><span class="label">Today</span><span class="pill">40m Algebra + 20m R/W</span></li>
+    <li><span class="label">Wed</span><span class="pill">Full Reading Set</span></li>
+    <li><span class="label">Sat</span><span class="pill">Full-Length Test</span></li>
+  `;
+
+  // Activity
+  activityList.innerHTML = `
+    <li><span class="label">Math Drill</span><span class="pill">Accuracy 78%</span></li>
+    <li><span class="label">RW Passage</span><span class="pill">85% Score</span></li>
+    <li><span class="label">Past Test 2</span><span class="pill">Review</span></li>
+  `;
+}
+
+/* Header shadow */
+const hdr = document.getElementById('siteHeader');
+window.addEventListener('scroll',()=>hdr.classList.toggle('scrolled',window.scrollY>20));
+</script>
+
 </body>
 </html>
