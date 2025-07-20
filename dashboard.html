@@ -6,414 +6,394 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="icon" href="images/Logo.png" type="image/png">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-
 <style>
 :root{
-  --bg-top:#e9f2ff;
-  --bg-mid:#cfe2ff;
-  --bg-btm:#b7d4ff;
-  --text:#0d1117;
-  --muted:#536272;
-  --brand:#2156ff;
-  --brand-dark:#133aa5;
-  --panel:rgba(255,255,255,0.58);
+  --navy:#061a48;
+  --navy-dk:#041230;
+  --grad-bg:radial-gradient(circle at 30% 15%,#0d2d78,#041230 70%);
+  --panel:rgba(255,255,255,.55);
   --panel-solid:#ffffff;
-  --danger:#d43b3b;
-  --ok:#2d7c32;
-  --warn:#d27d14;
+  --accent:#2156ff;
+  --accent-dk:#143dba;
+  --good:#1c9c55;
+  --bad:#d83232;
+  --warn:#f3b432;
+  --muted:#5b6c80;
+  --radius-lg:30px;--radius:22px;--radius-sm:12px;
+  --shadow:0 18px 46px -18px rgba(0,0,0,.45);
+  --shadow-sm:0 6px 20px -8px rgba(0,0,0,.35);
+  --bg:#061a48;
+  --cream:#fff8e8;
+  --grid-gap:1.8rem;
+  --transition:.35s cubic-bezier(.19,1,.22,1);
 }
-
 *{box-sizing:border-box;margin:0;padding:0}
 body{
-  font-family:"Inter",Helvetica,Arial,sans-serif;
-  background:linear-gradient(180deg,var(--bg-top)0%,var(--bg-mid)45%,var(--bg-btm)100%);
-  color:var(--text);
+  font-family:Inter,system-ui,Arial,sans-serif;
+  background:var(--grad-bg);
+  color:#fff;
   -webkit-font-smoothing:antialiased;
-  scroll-behavior:smooth;
   min-height:100vh;
-  display:flex;
-  flex-direction:column;
+  padding-top:70px;
+  line-height:1.35;
 }
-
-/* ===== Header (reused style) ===== */
+a{text-decoration:none;color:inherit}
+h1,h2,h3,h4{font-weight:600;line-height:1.15}
+p{margin:0 0 .6rem}
 header{
-  position:fixed;top:0;left:0;width:100%;z-index:1000;
-  padding:.6rem 1.4rem;
+  position:fixed;top:0;left:0;width:100%;z-index:900;
+  background:#0e1e4dea;
+  backdrop-filter:blur(14px) saturate(160%);
   display:flex;justify-content:space-between;align-items:center;
-  background:rgba(255,255,255,.55);
-  backdrop-filter:saturate(180%) blur(14px);
-  transition:box-shadow .3s;
+  padding:.65rem 1.3rem;border-bottom:1px solid rgba(255,255,255,.12);
 }
-header.scrolled{box-shadow:0 2px 8px rgba(0,0,0,.12);}
-.brand{display:flex;align-items:center;gap:.65rem;font-weight:700;font-size:1rem;letter-spacing:.02em}
-.brand img{width:44px;height:44px;border-radius:50%;object-fit:cover;border:2px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.2)}
-nav{display:flex;gap:1.1rem;font-size:.92rem;font-weight:500;align-items:center}
-nav a, nav button{
-  padding:.35rem .65rem;
-  border-radius:8px;
-  background:transparent;
-  border:none;
-  font:inherit;
-  color:inherit;
-  cursor:pointer;
-  text-decoration:none;
-  transition:background .25s;
-}
-nav a:hover, nav button:hover{background:rgba(0,0,0,.06)}
-nav a.active{background:rgba(0,0,0,.08)}
-@media(max-width:780px){nav{display:none}}
+.brand{display:flex;align-items:center;gap:.7rem;font-weight:700;font-size:1rem}
+.brand img{width:44px;height:44px;object-fit:cover;border-radius:50%;border:2px solid #fff}
+nav{display:flex;gap:1.4rem;font-size:.85rem;font-weight:500}
+nav a{padding:.45rem .85rem;border-radius:999px;transition:background .25s}
+nav a:hover{background:rgba(255,255,255,.09)}
+@media(max-width:760px){nav{display:none}}
 
-/* ===== Main Layout ===== */
-main{
-  flex:1;
-  width:100%;
-  max-width:1400px;
-  margin:0 auto;
-  padding:120px 2rem 60px;
-  display:flex;
-  flex-direction:column;
-  gap:2.6rem;
-}
+main{max-width:1450px;margin:0 auto;padding:2.2rem 1.4rem 4rem;display:flex;flex-direction:column;gap:2.2rem}
 
-/* ===== Welcome Bar ===== */
-.welcome{
-  display:flex;
-  flex-wrap:wrap;
-  gap:1.2rem;
-  align-items:center;
-  justify-content:space-between;
-  background:var(--panel);
-  backdrop-filter:blur(18px);
-  border:1px solid rgba(255,255,255,.55);
-  border-radius:30px;
-  padding:1.4rem 1.8rem 1.55rem;
-  box-shadow:0 14px 38px -12px rgba(0,0,0,.20);
-  animation:fadeIn .9s ease;
-}
-.welcome h1{
-  font-size:clamp(1.6rem,3vw,2.4rem);
-  font-weight:700;
-  letter-spacing:.5px;
-  margin:0;
-}
-.welcome p{
-  color:var(--muted);
-  font-size:.95rem;
-  margin:.25rem 0 0;
-  max-width:560px;
-  line-height:1.45;
-}
-.inline-actions{
-  display:flex;
-  gap:.8rem;
-  flex-wrap:wrap;
-  align-items:center;
-}
-.btn{
-  display:inline-block;
-  background:var(--brand);
-  color:#fff;
-  padding:.75rem 1.4rem;
-  border-radius:30px;
-  font-size:.85rem;
-  font-weight:600;
-  text-decoration:none;
-  line-height:1;
-  transition:background .25s, transform .25s;
-  border:none;
-  cursor:pointer;
-}
-.btn:hover{background:var(--brand-dark);transform:translateY(-2px)}
-.btn.outline{
-  background:#fff;
-  color:var(--brand);
-  border:2px solid var(--brand);
-}
-.btn.outline:hover{
-  background:var(--brand);
-  color:#fff;
-}
-
-/* ===== Dashboard Grid ===== */
-.grid{
+/* Grid layout */
+.dashboard-grid{
   display:grid;
-  gap:2.2rem;
   grid-template-columns:repeat(auto-fill,minmax(320px,1fr));
+  gap:var(--grid-gap);
+  align-items:start;
 }
-.card{
-  position:relative;
+
+/* Panels */
+.panel{
   background:var(--panel);
-  backdrop-filter:blur(18px);
-  border:1px solid rgba(255,255,255,.55);
-  border-radius:28px;
-  padding:1.6rem 1.5rem 1.9rem;
+  backdrop-filter:blur(22px) saturate(160%);
+  border:1px solid rgba(255,255,255,.35);
+  border-radius:var(--radius);
+  padding:1.15rem 1.2rem 1.25rem;
+  box-shadow:var(--shadow-sm);
   display:flex;
   flex-direction:column;
-  gap:1rem;
-  box-shadow:0 12px 36px -14px rgba(0,0,0,.25);
-  overflow:hidden;
-  animation:fadeUp .9s ease;
-}
-.card:before{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:radial-gradient(circle at 85% 15%,rgba(255,255,255,.35),transparent 60%);
-  opacity:.65;
-  pointer-events:none;
-}
-.card h2{
-  font-size:1.15rem;
-  font-weight:600;
-  margin:0 0 .2rem;
-  letter-spacing:.4px;
-}
-.card p{
-  font-size:.83rem;
-  line-height:1.45;
-  color:var(--muted);
-  margin:0;
-}
-
-.stat-row{
-  display:flex;
-  gap:1rem;
-  flex-wrap:wrap;
-}
-.stat{
-  flex:1 1 120px;
-  background:#fff;
-  border-radius:18px;
-  padding:.9rem .95rem 1rem;
-  display:flex;
-  flex-direction:column;
-  gap:.35rem;
-  min-width:140px;
-  box-shadow:0 10px 30px -12px rgba(0,0,0,.18);
+  gap:.85rem;
   position:relative;
+  overflow:hidden;
 }
-.stat small{
-  font-size:.62rem;
-  letter-spacing:.18em;
-  text-transform:uppercase;
-  font-weight:600;
-  color:#5a6a7d;
-}
-.stat .value{
-  font-size:1.25rem;
+.panel h3{
+  margin:0 0 .2rem;
+  font-size:.95rem;
+  letter-spacing:.5px;
   font-weight:700;
-  line-height:1;
-  display:flex;
-  align-items:baseline;
-  gap:.35rem;
 }
-.badge{
-  font-size:.6rem;
-  font-weight:600;
-  padding:.25rem .45rem;
-  border-radius:10px;
-  background:#e1ebff;
-  color:var(--brand);
-  letter-spacing:.05em;
+.small-label{
+  font-size:.55rem;
+  font-weight:700;
+  letter-spacing:.14em;
+  opacity:.72;
+  text-transform:uppercase;
 }
 
-/* Progress bar */
+.metric-row{display:flex;flex-wrap:wrap;gap:1rem}
+.metric{
+  background:#ffffff10;
+  border:1px solid rgba(255,255,255,.22);
+  padding:.75rem .85rem;
+  border-radius:16px;
+  min-width:130px;
+  flex:1 1 120px;
+  display:flex;
+  flex-direction:column;
+  gap:.35rem;
+}
+.metric strong{font-size:1.25rem;letter-spacing:.5px}
+.metric span{font-size:.65rem;letter-spacing:.12em;opacity:.75;font-weight:600}
+
 .progress-bar{
+  position:relative;
+  background:rgba(255,255,255,.18);
   height:10px;
-  width:100%;
-  background:#e2e9f3;
   border-radius:6px;
   overflow:hidden;
-  position:relative;
 }
 .progress-bar span{
-  position:absolute;
-  inset:0;
-  background:linear-gradient(90deg,#2156ff,#5c89ff);
-  width:0%;
-  transition:width 1.2s cubic-bezier(.19,1,.22,1);
-  border-radius:6px;
+  position:absolute;left:0;top:0;height:100%;
+  background:linear-gradient(90deg,#54a6ff,#f27891);
+  width:0;
+  transition:width .9s var(--transition);
 }
 
-/* List */
-ul.min-list{
-  list-style:none;
-  margin:0;
-  padding:0;
-  display:flex;
-  flex-direction:column;
-  gap:.55rem;
-  font-size:.78rem;
-  color:#2f3d4f;
+/* Score gauge (simple ring) */
+.score-gauge{
+  width:140px;height:140px;
+  margin:.4rem auto 0;
+  position:relative;
 }
-ul.min-list li{
-  background:#fff;
-  padding:.65rem .75rem;
-  border-radius:14px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:.6rem;
+.score-gauge svg{transform:rotate(-90deg)}
+.score-gauge circle{
+  fill:none;stroke-width:14;stroke-linecap:round;
 }
-ul.min-list li span.label{
+.gauge-bg{stroke:rgba(255,255,255,.18)}
+.gauge-val{stroke:url(#gradScore);stroke-dasharray:440;stroke-dashoffset:440;transition:stroke-dashoffset 1s var(--transition)}
+.gauge-center{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
   font-weight:600;
-  font-size:.7rem;
-  letter-spacing:.12em;
-  text-transform:uppercase;
-  color:#5c6d7f;
 }
-ul.min-list li .pill{
-  background:#e7f0ff;
-  color:#2156ff;
-  font-size:.6rem;
-  padding:.25rem .5rem;
+.gauge-center .big{font-size:1.55rem;letter-spacing:.5px}
+.badge{
+  display:inline-block;
+  padding:.35rem .6rem;
+  background:#fff;
+  color:#061a48;
+  border-radius:999px;
+  font-size:.55rem;
+  font-weight:700;
+  letter-spacing:.14em;
+}
+.badge.warn{background:#f3b432;color:#210}
+.badge.good{background:#1c9c55;color:#fff}
+.badge.bad{background:#d83232;color:#fff}
+
+/* Study Plan */
+#studyPlanEditor{
+  min-height:180px;
+  background:#ffffffcc;
+  color:#18263a;
+  border:1px solid #d0d9e3;
+  border-radius:16px;
+  padding:1rem;
+  line-height:1.4;
+  font-size:.85rem;
+  overflow:auto;
+  outline:none;
+  box-shadow:0 4px 18px -8px rgba(0,0,0,.25);
+}
+#studyPlanEditor:empty:before{content:"Type your personalized plan goals, schedule, or tasks here...";opacity:.5}
+.plan-actions{display:flex;flex-wrap:wrap;gap:.6rem}
+.plan-actions button{
+  background:#fff;
+  border:1px solid #d0d9e3;
+  color:#0f2540;
+  font-size:.65rem;
+  padding:.5rem .85rem;
   border-radius:12px;
   font-weight:600;
+  letter-spacing:.05em;
+  cursor:pointer;
+  transition:background .25s;
+}
+.plan-actions button:hover{background:#eef3f9}
+
+/* Table of attempts */
+.attempts-table{
+  width:100%;border-collapse:collapse;font-size:.7rem;
+  overflow:hidden;border-radius:14px;
+}
+.attempts-table th, .attempts-table td{
+  padding:.55rem .65rem;text-align:left;
+}
+.attempts-table thead{background:rgba(255,255,255,.15)}
+.attempts-table tbody tr:nth-child(even){background:rgba(255,255,255,.08)}
+.attempts-table tbody tr:hover{background:rgba(255,255,255,.18)}
+
+.inline-tag{
+  display:inline-block;
+  padding:.3rem .5rem;
+  font-size:.55rem;
+  font-weight:600;
+  border-radius:8px;
+  background:#ffffff22;
+  margin:.1rem .25rem .25rem 0;
+  letter-spacing:.08em;
 }
 
-/* Placeholder skeleton (for loading) */
-.skel{
-  background:linear-gradient(90deg,#e2e9f3 0%,#f5f8fc 40%,#e2e9f3 80%);
-  background-size:200% 100%;
-  animation:skeleton 1.4s linear infinite;
-  border-radius:6px;
-  height:14px;
-  width:100%;
+/* Skill bars */
+.skill-bar-row{display:flex;flex-direction:column;gap:.3rem;margin-bottom:.55rem}
+.skill-label{
+  display:flex;justify-content:space-between;font-size:.62rem;font-weight:600;letter-spacing:.08em;opacity:.85;
 }
-@keyframes skeleton{0%{background-position:200% 0}100%{background-position:-200% 0}}
-
-@keyframes fadeUp{0%{opacity:0;transform:translateY(40px)}100%{opacity:1;transform:none}}
-@keyframes fadeIn{0%{opacity:0}100%{opacity:1}}
-
-footer{
-  text-align:center;
-  padding:2rem 1rem 3rem;
-  font-size:.72rem;
-  color:#4e5e70;
+.skill-progress{
+  height:8px;background:rgba(255,255,255,.18);border-radius:5px;overflow:hidden;position:relative;
+}
+.skill-progress span{
+  position:absolute;top:0;left:0;height:100%;background:linear-gradient(90deg,#54a6ff,#f27891);
+  width:0;transition:width 1s var(--transition);
 }
 
-/* Mobile refinements */
-@media(max-width:560px){
-  main{padding:110px 1rem 50px}
-  .welcome{padding:1.1rem 1.2rem 1.4rem;border-radius:26px}
-  .card{padding:1.3rem 1.2rem 1.55rem;border-radius:24px}
-  .stat{min-width:120px}
+/* Focus card */
+.focus-pill{
+  background:#fff;color:#061a48;
+  padding:.55rem .85rem;
+  border-radius:14px;
+  font-size:.7rem;
+  font-weight:600;
+  letter-spacing:.05em;
+  display:inline-flex;
+  align-items:center;
+  gap:.4rem;
+  margin:.35rem .4rem .35rem 0;
 }
+.focus-pill.low{background:#d83232;color:#fff}
+.focus-pill.mid{background:#f3b432;color:#341800}
+.focus-pill.good{background:#1c9c55;color:#fff}
 
-/* Utility hidden */
-.hidden{display:none!important}
+/* Buttons generic */
+button.action{
+  background:#2156ff;
+  color:#fff;
+  border:none;
+  padding:.65rem 1.1rem;
+  font-size:.7rem;
+  font-weight:600;
+  letter-spacing:.05em;
+  border-radius:999px;
+  cursor:pointer;
+  box-shadow:0 4px 14px -4px rgba(0,0,0,.35);
+  transition:background .25s, transform .25s;
+}
+button.action:hover{background:#143dba;transform:translateY(-2px)}
+button.action.alt{
+  background:#fff;color:#16315a;
+  border:1px solid #d0d9e3;
+  box-shadow:none;
+}
+button.action.alt:hover{background:#eef3f9}
+
+footer{text-align:center;padding:3rem 1rem 3.5rem;font-size:.6rem;color:#93a3bd}
+
+/* Responsive tweak */
+@media(max-width:480px){
+  .metric{flex:1 1 100%}
+  #studyPlanEditor{min-height:140px}
+}
 </style>
 </head>
 <body>
 
-<header id="siteHeader">
+<header>
   <div class="brand">
-    <img src="images/Logo.png" alt="SATurn Bound logo">
+    <img src="images/Logo.png" alt="SATurn Bound Logo">
     <span>SATurn&nbsp;Bound</span>
   </div>
   <nav>
     <a href="index.html">Home</a>
-    <a href="aboutus.html">Our Team</a>
     <a href="practice-tests.html">Tests</a>
-    <a href="signup.html" id="navSign">Sign Up</a>
-    <a href="login.html"  id="navLogin">Log In</a>
-    <button id="logoutBtn" class="hidden">Log Out</button>
+    <a href="dashboard.html" style="background:rgba(255,255,255,.15)">Dashboard</a>
+    <a href="aboutus.html">Our Team</a>
+    <a href="login.html">Log In</a>
   </nav>
 </header>
 
 <main>
-  <!-- Welcome / Hero Strip -->
-  <section class="welcome" id="welcomeBox">
-    <div>
-      <h1 id="welcomeTitle">Hello, Student</h1>
-      <p id="welcomeSub">Loading your personalized SAT progress & recommendations…</p>
-    </div>
-    <div class="inline-actions">
-      <a href="practice-tests.html" class="btn">Start Practice</a>
-      <a href="index.html#wizardSection" class="btn outline">New Study Plan</a>
-    </div>
-  </section>
+  <section class="dashboard-grid">
 
-  <!-- Dashboard Cards -->
-  <section class="grid">
+    <!-- Score Overview -->
+    <div class="panel" id="scorePanel">
+      <h3>Estimated Math Score</h3>
+      <div class="small-label">CALCULATED FROM RECENT PRACTICE</div>
 
-    <!-- Progress & Stats -->
-    <article class="card" id="statsCard">
-      <h2>Your Progress</h2>
-      <p>Snapshot of current estimated score trajectory and practice completion.</p>
-      <div class="stat-row">
-        <div class="stat">
-          <small>Estimated Score</small>
-            <div class="value" id="estScore"><span class="skel" style="height:22px;width:80px;"></span></div>
-            <div class="progress-bar"><span id="scoreBar"></span></div>
-        </div>
-        <div class="stat">
-          <small>Practice Complete</small>
-          <div class="value"><span id="practicePct">0%</span></div>
-          <div class="progress-bar"><span id="practiceBar"></span></div>
+      <div class="score-gauge">
+        <svg width="140" height="140">
+          <defs>
+            <linearGradient id="gradScore" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#54a6ff"/>
+              <stop offset="100%" stop-color="#f27891"/>
+            </linearGradient>
+          </defs>
+          <circle class="gauge-bg" cx="70" cy="70" r="56"></circle>
+          <circle class="gauge-val" id="gaugeStroke" cx="70" cy="70" r="56"></circle>
+        </svg>
+        <div class="gauge-center">
+            <div class="big" id="estScore">--</div>
+            <div style="font-size:.6rem;letter-spacing:.08em;opacity:.75">/ 800</div>
         </div>
       </div>
-      <div class="stat-row">
-        <div class="stat">
-          <small>Math Focus</small>
-          <div class="value"><span id="mathFocus">—</span></div>
-          <span class="badge" id="mathBadge">Loading</span>
+
+      <div class="metric-row">
+        <div class="metric">
+          <strong id="accuracyOverall">--%</strong>
+          <span>Weighted Accuracy</span>
+          <div class="progress-bar"><span id="accuracyBar"></span></div>
         </div>
-        <div class="stat">
-          <small>RW Focus</small>
-          <div class="value"><span id="rwFocus">—</span></div>
-          <span class="badge" id="rwBadge">Loading</span>
+        <div class="metric">
+          <strong id="attemptCount">0</strong>
+          <span>Total Attempts</span>
+        </div>
+        <div class="metric">
+          <strong id="recentImprovement">--</strong>
+          <span>Recent Δ Score</span>
         </div>
       </div>
-    </article>
 
-    <!-- Upcoming / Plan -->
-    <article class="card">
-      <h2>Upcoming Plan</h2>
-      <p>Your next scheduled study block and test events.</p>
-      <ul class="min-list" id="planList">
-        <li><span class="skel" style="height:14px;"></span></li>
-        <li><span class="skel" style="height:14px;"></span></li>
-        <li><span class="skel" style="height:14px;"></span></li>
-      </ul>
-      <a href="index.html#wizardSection" class="btn outline" style="margin-top:.6rem;">Regenerate Plan</a>
-    </article>
+      <div id="difficultyBreakdown" style="display:flex;flex-wrap:wrap;gap:.4rem;"></div>
+      <div id="scoreBadgeHolder"></div>
+    </div>
 
-    <!-- Recent Activity -->
-    <article class="card">
-      <h2>Recent Activity</h2>
-      <p>Most recent practice sets you worked on.</p>
-      <ul class="min-list" id="activityList">
-        <li><span class="skel" style="height:14px;"></span></li>
-        <li><span class="skel" style="height:14px;"></span></li>
-        <li><span class="skel" style="height:14px;"></span></li>
-      </ul>
-      <a href="practice-tests.html" class="btn" style="margin-top:.6rem;">Continue Practice</a>
-    </article>
+    <!-- Focus & Recommendations -->
+    <div class="panel" id="focusPanel">
+      <h3>Today's Focus</h3>
+      <div class="small-label">LOWEST ACCURACY AREAS</div>
+      <div id="focusSkills">Not enough data yet.</div>
+      <button class="action alt" id="refreshFocus" style="align-self:flex-start">Recalculate</button>
+    </div>
 
-    <!-- Resources -->
-    <article class="card">
-      <h2>Resources</h2>
-      <p>Curated links to accelerate your improvement.</p>
-      <ul class="min-list">
-        <li><span class="label">Formula Sheet</span><a class="pill" href="#" target="_blank">PDF</a></li>
-        <li><span class="label">Grammar Guide</span><a class="pill" href="#" target="_blank">Open</a></li>
-        <li><span class="label">Video Channel</span><a class="pill" href="https://www.youtube.com/@SATurn-Bound" target="_blank" rel="noopener">Watch</a></li>
-        <li><span class="label">Discord</span><a class="pill" href="https://discord.gg/5c96YHx8" target="_blank" rel="noopener">Join</a></li>
-      </ul>
-    </article>
+    <!-- Skill Accuracy -->
+    <div class="panel" id="skillsPanel">
+      <h3>Skill Accuracy</h3>
+      <div class="small-label">BY TAGGED SKILL</div>
+      <div id="skillAccuracyContainer">Tag question skills to populate this.</div>
+    </div>
+
+    <!-- Attempts History -->
+    <div class="panel" id="attemptsPanel">
+      <h3>Recent Attempts</h3>
+      <div class="small-label">LAST 6</div>
+      <div style="overflow:auto">
+        <table class="attempts-table" id="attemptsTable">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Test</th>
+              <th>Raw</th>
+              <th>Weighted%</th>
+              <th>Est Score</th>
+              <th>Missed</th>
+            </tr>
+          </thead>
+          <tbody id="attemptsBody">
+            <tr><td colspan="6" style="text-align:center;opacity:.7;padding:1rem;">No attempts yet</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <button class="action alt" id="clearLocal">Clear Local Data</button>
+    </div>
+
+    <!-- Personalized Study Plan -->
+    <div class="panel" id="planPanel">
+      <h3>Personal Study Plan</h3>
+      <div class="small-label">EDIT & AUTO-SAVE</div>
+      <div id="studyPlanEditor" contenteditable="true"></div>
+      <div class="plan-actions">
+        <button id="btnSavePlan">Save Now</button>
+        <button id="btnPrintPlan">Print</button>
+        <button id="btnTemplate">Insert Template</button>
+        <button id="btnClearPlan" style="color:#d83232">Clear</button>
+      </div>
+      <div style="font-size:.6rem;opacity:.7;">Autosaves every 5s after changes. Last saved: <span id="planSavedTime">Never</span></div>
+    </div>
 
   </section>
 </main>
 
-<footer>
-  &copy; SATurn Bound 2025. All rights reserved.
-</footer>
+<footer>&copy; SATurn Bound 2025. All rights reserved.</footer>
 
-<!-- Firebase & Auth Logic -->
+<!-- Firebase (Optional for auth / remote attempts) -->
 <script type="module">
+/* ============ OPTIONAL FIREBASE (Auth) INIT (adjust versions if needed) ============ */
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-app.js";
-import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-auth.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-auth.js";
+// OPTIONAL Firestore (uncomment if you will pull remote attempts)
+// import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDedw_zEK-L-AoKO1WkeomLVztoRnYBXt4",
@@ -424,93 +404,384 @@ const firebaseConfig = {
   appId: "1:46027081851:web:8402230dc2ff241c6cfade"
 };
 
-initializeApp(firebaseConfig);
-const auth = getAuth();
-
-const logoutBtn   = document.getElementById('logoutBtn');
-const navLogin    = document.getElementById('navLogin');
-const navSign     = document.getElementById('navSign');
-const welcomeTitle= document.getElementById('welcomeTitle');
-const welcomeSub  = document.getElementById('welcomeSub');
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+// const db = getFirestore(app);
 
 onAuthStateChanged(auth, user=>{
-  if(!user){
-    // Not logged in
-    window.location.href = "login.html";
-    return;
-  }
-  // Logged in
-  logoutBtn.classList.remove('hidden');
-  navLogin.classList.add('hidden');
-  navSign.classList.add('hidden');
-
-  const name = user.displayName || user.email || "Student";
-  welcomeTitle.textContent = "Hello, " + name.split('@')[0];
-  welcomeSub.textContent = "Here is your latest progress snapshot and what's coming next.";
-  
-  // Simulated data placeholders (replace with Firestore fetch later)
-  loadFakeData();
+  // If you want to hide something for non-logged users, do it here.
 });
 
-logoutBtn.addEventListener('click', async ()=>{
-  try{
-    await signOut(auth);
-    window.location.href = "login.html";
-  }catch(e){
-    alert("Logout failed.");
-  }
-});
+/* ============ DASHBOARD LOGIC ============ */
 
-/* Fake data to demonstrate animations (replace with real DB) */
-function loadFakeData(){
-  // Score
-  const estScoreEl = document.getElementById('estScore');
-  const scoreBar   = document.getElementById('scoreBar');
-  const practiceBar= document.getElementById('practiceBar');
-  const practicePct= document.getElementById('practicePct');
-  const mathFocus  = document.getElementById('mathFocus');
-  const rwFocus    = document.getElementById('rwFocus');
-  const mathBadge  = document.getElementById('mathBadge');
-  const rwBadge    = document.getElementById('rwBadge');
-  const planList   = document.getElementById('planList');
-  const activityList= document.getElementById('activityList');
+/*** CONFIG ***/
+const WEIGHTS = { easy:1.0, medium:1.4, hard:1.8 };
+const PENALIZE_MISSES = false; // set true to apply 5% weight penalty
+const MAX_SCORE = 800;
+const ATTEMPT_KEYS = [
+  // Add localStorage keys for each practice test you create
+  'practiceTest2Results'
+];
 
-  const estScore = 1340;
-  const goal     = 1500;
-  const pctScore = Math.min(100, Math.round(estScore/goal*100));
-  const practiceDone = 42; // %
-  const math = "Nonlinear Functions";
-  const rw   = "Rhetorical Synthesis";
+/*** DOM REFS ***/
+const estScoreEl = document.getElementById('estScore');
+const gaugeStroke = document.getElementById('gaugeStroke');
+const accuracyOverallEl = document.getElementById('accuracyOverall');
+const accuracyBar = document.getElementById('accuracyBar');
+const attemptCountEl = document.getElementById('attemptCount');
+const recentImprovementEl = document.getElementById('recentImprovement');
+const attemptsBody = document.getElementById('attemptsBody');
+const difficultyBreakdown = document.getElementById('difficultyBreakdown');
+const scoreBadgeHolder = document.getElementById('scoreBadgeHolder');
+const focusSkills = document.getElementById('focusSkills');
+const refreshFocus = document.getElementById('refreshFocus');
+const skillAccuracyContainer = document.getElementById('skillAccuracyContainer');
+const clearLocalBtn = document.getElementById('clearLocal');
 
-  // Replace skeletons
-  estScoreEl.innerHTML = estScore + "<span style='font-size:.75rem;font-weight:600;color:#5c6d7f;'> est</span>";
-  setTimeout(()=>{ scoreBar.style.width = pctScore + "%"; }, 120);
-  practicePct.textContent = practiceDone + "%";
-  setTimeout(()=>{ practiceBar.style.width = practiceDone + "%"; }, 150);
+const planEditor = document.getElementById('studyPlanEditor');
+const btnSavePlan = document.getElementById('btnSavePlan');
+const btnPrintPlan = document.getElementById('btnPrintPlan');
+const btnTemplate = document.getElementById('btnTemplate');
+const btnClearPlan = document.getElementById('btnClearPlan');
+const planSavedTime = document.getElementById('planSavedTime');
 
-  mathFocus.textContent = math;
-  rwFocus.textContent = rw;
-  mathBadge.textContent = "Focus";
-  rwBadge.textContent = "Focus";
-
-  // Plan
-  planList.innerHTML = `
-    <li><span class="label">Today</span><span class="pill">40m Algebra + 20m R/W</span></li>
-    <li><span class="label">Wed</span><span class="pill">Full Reading Set</span></li>
-    <li><span class="label">Sat</span><span class="pill">Full-Length Test</span></li>
-  `;
-
-  // Activity
-  activityList.innerHTML = `
-    <li><span class="label">Math Drill</span><span class="pill">Accuracy 78%</span></li>
-    <li><span class="label">RW Passage</span><span class="pill">85% Score</span></li>
-    <li><span class="label">Past Test 2</span><span class="pill">Review</span></li>
-  `;
+/*** LOAD ATTEMPTS (LOCAL) ***/
+function loadLocalAttempts(){
+  const out=[];
+  ATTEMPT_KEYS.forEach(k=>{
+    const raw = localStorage.getItem(k);
+    if(!raw) return;
+    const r = JSON.parse(raw);
+    // we also need answers/difficulty meta maybe stored separately
+    // Retrieve answers object
+    const ansObj = r.answers || {};
+    // For each answer we don't have difficulty tagging yet - default medium
+    const questionMeta = r.questionMeta || {};
+    out.push({
+      key:k,
+      date: new Date(r.timestamp || Date.now()),
+      score: r.score,
+      total: r.totalQuestions,
+      answers: ansObj,
+      questionMeta,
+      pct: r.score / r.totalQuestions,
+      // placeholder name inference
+      testName: k.replace(/Results$/,'')
+    });
+  });
+  return out.sort((a,b)=>b.date - a.date);
 }
 
-/* Header shadow */
-const hdr = document.getElementById('siteHeader');
-window.addEventListener('scroll',()=>hdr.classList.toggle('scrolled',window.scrollY>20));
+// OPTIONAL: merge remote
+async function fetchFirestoreAttempts(user){
+/*
+  const attempts=[];
+  if(!user) return attempts;
+  const colRef = collection(db,'users',user.uid,'testAttempts');
+  const snap = await getDocs(colRef);
+  snap.forEach(docSnap=>{
+    const d = docSnap.data();
+    attempts.push({
+      key: docSnap.id,
+      date: d.timestamp?.toDate?.() || new Date(),
+      score: d.score,
+      total: d.totalQuestions,
+      answers: d.answers || {},
+      questionMeta: d.questionMeta || {},
+      pct: d.score / d.totalQuestions,
+      testName: docSnap.id
+    });
+  });
+  return attempts;
+*/
+  return [];
+}
+
+/*** SCORING HELPERS ***/
+function computeWeighted(attempt){
+  // build arrays
+  let totalWeight=0, correctWeight=0, incorrectWeight=0;
+  Object.entries(attempt.answers).forEach(([qId,userAns])=>{
+    const meta = attempt.questionMeta[qId] || {};
+    const difficulty = (meta.difficulty || 'medium').toLowerCase();
+    const weight = WEIGHTS[difficulty] || WEIGHTS.medium;
+    const correctLetter = extractCorrectLetter(attempt, qId);
+    if(!correctLetter) return;
+    totalWeight += weight;
+    if(userAns === correctLetter){
+      correctWeight += weight;
+    } else {
+      incorrectWeight += weight;
+    }
+  });
+
+  if(totalWeight === 0){
+    return { weightedPct: 0, estScore: 0, correctWeight, totalWeight };
+  }
+
+  let ratio = correctWeight / totalWeight;
+  if(PENALIZE_MISSES){
+    ratio = Math.max(0, (correctWeight - 0.05 * incorrectWeight) / totalWeight);
+  }
+  const estScore = Math.round(MAX_SCORE * ratio);
+  return { weightedPct: ratio, estScore, correctWeight, totalWeight };
+}
+
+// Try to get correct letter from stored answers or meta.
+// Presently your practice page does not store correct answers per question with attempt; we approximate
+// by using score proportion only if detailed answers are not stored.
+// (For precision, store a per-question correct answer map in attempt.questionMeta.)
+function extractCorrectLetter(attempt, qId){
+  // If meta includes correct answer
+  if(attempt.questionMeta[qId]?.correct) return attempt.questionMeta[qId].correct;
+  // Fallback: If we can't, we *cannot* know which are correct individually -> return userAns so weightedPct ~ raw
+  // (Better: modify practice page to save per-question correctness.)
+  return attempt.answers[qId]; 
+}
+
+/*** BUILD DASHBOARD DATA ***/
+let allAttempts = loadLocalAttempts(); // will merge remote if you later call
+
+function aggregate(){
+  if(!allAttempts.length){
+    estScoreEl.textContent='--';
+    return;
+  }
+
+  // Weighted stats across all attempts (last N? choose)
+  const consider = allAttempts.slice(0,10); // last 10
+  let totalW=0, correctW=0;
+  let difficultyTotals={}, difficultyCorrect={};
+  let skillTotals={}, skillCorrect={};
+
+  consider.forEach(at=>{
+    Object.entries(at.answers).forEach(([qId,userAns])=>{
+      const meta = at.questionMeta[qId] || {};
+      const diff = (meta.difficulty || 'medium').toLowerCase();
+      const skill = meta.skill || 'Untagged';
+      const w = WEIGHTS[diff] || WEIGHTS.medium;
+      const correctLetter = extractCorrectLetter(at,qId);
+      const isCorrect = (userAns === correctLetter);
+      totalW += w;
+      difficultyTotals[diff]=(difficultyTotals[diff]||0)+w;
+      skillTotals[skill]=(skillTotals[skill]||0)+w;
+      if(isCorrect){
+        correctW += w;
+        difficultyCorrect[diff]=(difficultyCorrect[diff]||0)+w;
+        skillCorrect[skill]=(skillCorrect[skill]||0)+w;
+      }
+    });
+  });
+
+  const weightedPct = totalW? (correctW/totalW):0;
+  const estScore = Math.round(MAX_SCORE * weightedPct);
+  estScoreEl.textContent=estScore;
+  // Gauge
+  const circumference = 2*Math.PI*56;
+  const offset = circumference * (1 - weightedPct);
+  gaugeStroke.style.strokeDasharray = circumference;
+  gaugeStroke.style.strokeDashoffset = offset;
+
+  accuracyOverallEl.textContent = (weightedPct*100).toFixed(1)+'%';
+  accuracyBar.style.width = (weightedPct*100).toFixed(1)+'%';
+  attemptCountEl.textContent = allAttempts.length;
+
+  // Improvement
+  if(allAttempts.length>=2){
+    const prev = computeWeighted(allAttempts[1]);
+    const latest = computeWeighted(allAttempts[0]);
+    const delta = latest.estScore - prev.estScore;
+    recentImprovementEl.textContent = (delta>=0?'+':'')+delta;
+    recentImprovementEl.style.color = delta>=0 ? '#1c9c55' : '#d83232';
+  } else {
+    recentImprovementEl.textContent = '--';
+  }
+
+  // Difficulty pills
+  difficultyBreakdown.innerHTML='';
+  Object.keys(WEIGHTS).forEach(diff=>{
+    const tot = difficultyTotals[diff]||0;
+    if(!tot) return;
+    const corr = difficultyCorrect[diff]||0;
+    const pct = (corr/tot*100).toFixed(0);
+    const el = document.createElement('div');
+    el.className='badge';
+    el.style.background='rgba(255,255,255,.15)';
+    el.style.color='#fff';
+    el.textContent=diff.charAt(0).toUpperCase()+diff.slice(1)+': '+pct+'%';
+    difficultyBreakdown.appendChild(el);
+  });
+
+  // Badge summary
+  scoreBadgeHolder.innerHTML='';
+  const badge=document.createElement('div');
+  badge.className='badge '+(estScore>=650?'good': estScore>=500?'warn':'bad');
+  badge.textContent= estScore>=650?'On Track': estScore>=500?'Grow Zone':'Foundation';
+  scoreBadgeHolder.appendChild(badge);
+
+  /* Skill Accuracy */
+  if(Object.keys(skillTotals).length){
+    skillAccuracyContainer.innerHTML='';
+    Object.entries(skillTotals).forEach(([skill,wTot])=>{
+      const wCorr = skillCorrect[skill]||0;
+      const p = wCorr / wTot;
+      const row = document.createElement('div');
+      row.className='skill-bar-row';
+      row.innerHTML=`
+        <div class="skill-label">
+          <span>${skill}</span>
+          <span>${(p*100).toFixed(0)}%</span>
+        </div>
+        <div class="skill-progress"><span style="width:${(p*100).toFixed(2)}%"></span></div>
+      `;
+      skillAccuracyContainer.appendChild(row);
+    });
+  } else {
+    skillAccuracyContainer.textContent='Tag skills in question metadata to see breakdown.';
+  }
+
+  // Focus skills (lowest three)
+  buildFocus(skillTotals, skillCorrect);
+}
+
+/* Build focus suggestions */
+function buildFocus(skillTotals, skillCorrect){
+  const container = focusSkills;
+  container.innerHTML='';
+  const skills = Object.keys(skillTotals);
+  if(!skills.length){ container.textContent='Not enough data yet.'; return; }
+  const arr = skills.map(s=>{
+    const pct = (skillCorrect[s]||0)/(skillTotals[s]||1);
+    return {skill:s,pct};
+  }).sort((a,b)=>a.pct-b.pct);
+  const top = arr.slice(0,3);
+  top.forEach(item=>{
+    const pill = document.createElement('div');
+    const cls = item.pct<0.5?'low': (item.pct<0.75?'mid':'good');
+    pill.className='focus-pill '+cls;
+    pill.textContent= item.skill+' • '+(item.pct*100).toFixed(0)+'%';
+    container.appendChild(pill);
+  });
+  if(arr.length>3){
+    const hint=document.createElement('div');
+    hint.style.fontSize='.55rem';
+    hint.style.opacity='.7';
+    hint.textContent='Focus on weakest 3 first, then re-test.';
+    container.appendChild(hint);
+  }
+}
+
+/*** Attempts Table ***/
+function renderAttempts(){
+  attemptsBody.innerHTML='';
+  if(!allAttempts.length){
+    attemptsBody.innerHTML='<tr><td colspan="6" style="text-align:center;opacity:.7;padding:1rem;">No attempts yet</td></tr>';
+    return;
+  }
+  allAttempts.slice(0,6).forEach(a=>{
+    const w = computeWeighted(a);
+    const missed = a.total - a.score;
+    const tr=document.createElement('tr');
+    tr.innerHTML=`
+      <td>${a.date.toLocaleDateString()}</td>
+      <td>${a.testName}</td>
+      <td>${a.score}/${a.total}</td>
+      <td>${(w.weightedPct*100).toFixed(1)}%</td>
+      <td>${w.estScore}</td>
+      <td>${missed}</td>
+    `;
+    attemptsBody.appendChild(tr);
+  });
+}
+
+/*** CLEAR LOCAL DATA ***/
+clearLocalBtn.onclick=()=>{
+  if(!confirm('Clear only local cached attempts? (Firebase data unaffected)')) return;
+  ATTEMPT_KEYS.forEach(k=>localStorage.removeItem(k));
+  ['answers','flagged','submitted','results'].forEach(s=>localStorage.removeItem('practiceTest2_'+s));
+  allAttempts = loadLocalAttempts();
+  renderAttempts();
+  aggregate();
+};
+
+/*** STUDY PLAN PERSISTENCE ***/
+const PLAN_KEY='dashboard_study_plan_v1';
+const PLAN_TIME_KEY='dashboard_study_plan_saved_at';
+let planDirty=false;
+function loadPlan(){
+  const saved = localStorage.getItem(PLAN_KEY);
+  if(saved) planEditor.innerHTML = saved;
+  const t = localStorage.getItem(PLAN_TIME_KEY);
+  if(t) planSavedTime.textContent=new Date(+t).toLocaleTimeString();
+}
+loadPlan();
+
+function savePlan(){
+  localStorage.setItem(PLAN_KEY, planEditor.innerHTML);
+  const now=Date.now();
+  localStorage.setItem(PLAN_TIME_KEY, now);
+  planSavedTime.textContent=new Date(now).toLocaleTimeString();
+  planDirty=false;
+}
+
+planEditor.addEventListener('input',()=>{planDirty=true;});
+
+setInterval(()=>{ if(planDirty) savePlan(); },5000);
+
+btnSavePlan.onclick=savePlan;
+btnPrintPlan.onclick=()=>{
+  const win = window.open('','_blank');
+  win.document.write(`<!DOCTYPE html><html><head><title>Study Plan</title>
+  <style>body{font-family:Inter,Arial,sans-serif;padding:24px;line-height:1.5;font-size:15px;color:#111}h1{margin-top:0}</style>
+  </head><body><h1>Personal Study Plan</h1>${planEditor.innerHTML}</body></html>`);
+  win.document.close();win.focus();win.print();
+};
+
+btnTemplate.onclick=()=>{
+  if(planEditor.innerText.trim().length>0 && !confirm('Replace existing content with template (append)?')) return;
+  planEditor.innerHTML += `
+  <h4>Weekly Structure</h4>
+  <ul>
+    <li><strong>Mon:</strong> 30m Algebra (linear eqns) + 10 mixed hard.</li>
+    <li><strong>Tue:</strong> 25m Nonlinear functions + review errors.</li>
+    <li><strong>Wed:</strong> Full timed mini-set (20 Q) – pace focus.</li>
+    <li><strong>Thu:</strong> Data & Probability drill + 5 hard geometry.</li>
+    <li><strong>Fri:</strong> Mixed review (weakest 3 skills).</li>
+    <li><strong>Sat:</strong> Full-length practice (if time) / else adapt retest.</li>
+    <li><strong>Sun:</strong> Light recap + flashcards.</li>
+  </ul>
+  <h4>Priority Weak Skills</h4>
+  <ol>
+    <li>Placeholder Skill A</li>
+    <li>Placeholder Skill B</li>
+    <li>Placeholder Skill C</li>
+  </ol>
+  <h4>Score Targets</h4>
+  <p>Next checkpoint: +40 points in 2 weeks (raise weighted accuracy ≥ 70%).</p>
+  `;
+  planDirty=true;
+};
+
+btnClearPlan.onclick=()=>{
+  if(!confirm('Clear the study plan?')) return;
+  planEditor.innerHTML='';
+  savePlan();
+};
+
+/*** Re-Focus Button ***/
+refreshFocus.onclick=aggregate;
+
+/*** INIT RENDER ***/
+renderAttempts();
+aggregate();
+
+/* EXAMPLE: If you later also load remote attempts, you could:
+(async ()=>{
+  const remote = await fetchFirestoreAttempts(auth.currentUser);
+  allAttempts = [...remote, ...allAttempts].sort((a,b)=>b.date - a.date);
+  renderAttempts(); aggregate();
+})();
+*/
 </script>
 
 </body>
