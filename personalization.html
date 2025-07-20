@@ -44,29 +44,38 @@ main{padding-top:110px}
 
 /* ===== Page container ===== */
 .container {
-  max-width: 720px;
-  margin: 0 auto;
-  background: var(--panel);
-  border-radius: 28px;
-  padding: 2.4rem 2.6rem;
-  box-shadow: 0 16px 46px -14px rgba(0,0,0,.28);
-  backdrop-filter: blur(18px);
-  border: 1px solid rgba(255,255,255,.55);
+  max-width: 820px;
+  margin: 0 auto 4.5rem;
+  padding: 2.4rem 2.6rem 2.8rem;
+  background:var(--panel);
+  backdrop-filter:blur(18px);
+  border:1px solid rgba(255,255,255,.55);
+  border-radius:34px;
+  box-shadow:0 16px 46px -14px rgba(0,0,0,.28);
+  opacity:0;
+  transform:translateY(60px);
+  transition:1s cubic-bezier(.19,1,.22,1);
+  animation: fadeUp .7s ease both;
 }
+.container.visible{opacity:1;transform:none}
+
 h1 {
   font-size: 2.2rem;
   font-weight: 700;
   margin-bottom: 1rem;
   text-align: center;
-  letter-spacing: .02em;
+  letter-spacing: .5px;
 }
-p {
+.lead {
   text-align: center;
-  color: var(--muted);
-  margin-bottom: 2rem;
+  color: #2d3c4f;
+  margin: 0 auto 2.2rem;
   font-size: 1.02rem;
-  line-height: 1.5;
+  line-height: 1.6;
+  max-width: 640px;
 }
+
+/* ===== Form styling ===== */
 label {
   font-weight: 600;
   display: block;
@@ -109,12 +118,19 @@ input:focus, select:focus {
   transform: translateY(-2px);
 }
 
+/* ===== Footer ===== */
+footer{
+  padding:3rem 1rem 3.5rem;
+  text-align:center;
+  font-size:.72rem;
+  color:#4e5e70;
+}
+footer nav{margin-bottom:.6rem;font-weight:500}
+footer nav a{margin:0 .65rem}
+footer nav a:hover{opacity:.65}
+
 /* ===== Animations ===== */
 @keyframes fadeUp{0%{opacity:0;transform:translateY(30px)}100%{opacity:1;transform:none}}
-
-.container {
-  animation: fadeUp .7s ease;
-}
 </style>
 </head>
 <body>
@@ -134,9 +150,9 @@ input:focus, select:focus {
 </header>
 
 <main>
-  <div class="container">
+  <div class="container reveal">
     <h1>Personalize Your Study Plan</h1>
-    <p>Help us tailor your prep. This takes less than a minute.</p>
+    <p class="lead">Help us tailor your prep experience to your goals, schedule, and learning style. This takes less than a minute.</p>
 
     <form id="personalizeForm">
       <label for="grade">What grade are you in?</label>
@@ -183,10 +199,25 @@ input:focus, select:focus {
   </div>
 </main>
 
+<footer>
+  <nav>
+    <a href="#topbar">Top</a> •
+    <a href="aboutus.html">Our Team</a> •
+    <a href="practice-tests.html">Tests</a>
+  </nav>
+  &copy; SATurn Bound 2025. All rights reserved.
+</footer>
+
 <script>
 /* Header shadow */
 const topbar=document.getElementById('topbar');
 window.addEventListener('scroll',()=>topbar.classList.toggle('scrolled',window.scrollY>20));
+
+/* Reveal animations */
+const obs=new IntersectionObserver(es=>es.forEach(e=>{
+  if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}
+}),{threshold:.35});
+document.querySelectorAll('.container.reveal').forEach(el=>obs.observe(el));
 
 document.getElementById("personalizeForm").addEventListener("submit", function(e) {
   e.preventDefault();
