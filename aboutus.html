@@ -1,112 +1,246 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
   <title>Our Team | SATurn Bound</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="icon" href="images/Logo.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
   <style>
-    :root{
-      --bg:#0a0a23;
-      --card-bg:#161639;
-      --accent:#00ffe5;
-      --text:#e8eeed;
-    }
+  :root{
+    --bg-top:#e9f2ff;
+    --bg-mid:#cfe2ff;
+    --bg-btm:#b7d4ff;
+    --text:#0d1117;
+    --muted:#4b5868;
+    --brand:#2156ff;
+    --brand-dark:#133aa5;
+    --panel:rgba(255,255,255,.55);
+    --panel-solid:#ffffff;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:"Inter",Helvetica,Arial,sans-serif;
+    background:linear-gradient(180deg,var(--bg-top)0%,var(--bg-mid)45%,var(--bg-btm)100%);
+    color:var(--text);
+    -webkit-font-smoothing:antialiased;
+    scroll-behavior:smooth;
+  }
+  a{text-decoration:none;color:inherit}
 
-    /* ---------- Fixed top nav ---------- */
-    #main-nav{
-      position:fixed;top:0;left:0;width:100%;z-index:1000;
-      background:#0e1e4d;box-shadow:0 2px 8px rgba(0,0,0,.4);
-      font-family:'Inter',sans-serif;
-    }
-    #main-nav .inner{
-      max-width:1200px;margin:auto;padding:.75rem 1.25rem;
-      display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;
-    }
-    #main-nav h1{margin:0;font-size:1.25rem;}
-    #main-nav h1 a{color:#fff;text-decoration:none;font-weight:600;}
-    .nav-links{display:flex;gap:1.5rem;flex-wrap:wrap;}
-    .nav-links a{
-      color:#dfe9ff;text-decoration:none;font-size:.95rem;font-weight:500;
-      transition:opacity .2s;
-    }
-    .nav-links a:hover{opacity:.75;}
+  /* ===== Top bar (same as index) ===== */
+  header{
+    position:fixed;top:0;left:0;width:100%;z-index:1000;
+    padding:.6rem 1.4rem;
+    display:flex;justify-content:space-between;align-items:center;
+    background:rgba(255,255,255,.55);
+    backdrop-filter:saturate(180%) blur(14px);
+    transition:box-shadow .3s;
+  }
+  header.scrolled{box-shadow:0 2px 8px rgba(0,0,0,.12);}
+  .brand{display:flex;align-items:center;gap:.65rem;font-weight:700;font-size:1rem;letter-spacing:.02em}
+  .brand img{width:44px;height:44px;border-radius:50%;object-fit:cover;border:2px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.2)}
+  nav{display:flex;gap:1.1rem;font-size:.92rem;font-weight:500}
+  nav a{padding:.35rem .65rem;border-radius:8px;transition:background .25s}
+  nav a:hover{background:rgba(0,0,0,.06)}
+  @media(max-width:760px){nav{display:none}}
 
-    /* Space so content isn’t hidden under fixed bar */
-    body{margin:0;padding-top:66px;font-family:'Inter',sans-serif;background:var(--bg);color:#fff;}
+  /* ===== Hero ===== */
+  .hero{
+    padding:140px 1.5rem 50px; /* push below fixed header */
+    text-align:center;
+    max-width:1000px;
+    margin:auto;
+  }
+  .hero h1{
+    font-size:clamp(2.2rem,4.5vw,3.4rem);
+    font-weight:700;
+    letter-spacing:.5px;
+  }
+  .hero p{
+    margin:1rem auto 0;
+    max-width:640px;
+    font-size:1.05rem;
+    line-height:1.55;
+    color:var(--muted);
+  }
 
-    /* ---------- Layout ---------- */
-    .container{max-width:1200px;margin:auto;padding:1.5rem;}
-    h1{text-align:center;font-size:2rem;margin:0 0 2rem;color:var(--text);}
+  /* ===== Team Grid ===== */
+  .team-wrap{
+    max-width:1180px;
+    margin:0 auto 70px;
+    padding:0 1.5rem;
+  }
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(250px,1fr));
+    gap:1.9rem;
+    margin-top:2.2rem;
+  }
 
-    /* ---------- Cards ---------- */
-    .about-grid{display:flex;flex-wrap:wrap;gap:1.5rem;justify-content:center;}
-    .profile-card{
-      background:var(--card-bg);border-radius:1rem;padding:1rem;
-      flex:1 1 300px;max-width:420px;box-shadow:0 4px 20px rgba(0,0,0,.35);
-      transition:transform .3s;
-    }
-    .profile-card:hover{transform:translateY(-4px);}
-    .profile-card img{
-      width:100%;height:260px;object-fit:cover;border-radius:1rem;margin-bottom:1rem;
-    }
-    .profile-card img.shrink{object-fit:contain;}
+  .member{
+    position:relative;
+    background:var(--panel);
+    backdrop-filter:blur(18px);
+    border:1px solid rgba(255,255,255,.4);
+    border-radius:26px;
+    padding:1.3rem 1.25rem 1.5rem;
+    display:flex;
+    flex-direction:column;
+    gap:.85rem;
+    box-shadow:0 10px 28px -10px rgba(0,0,0,.18);
+    transition:transform .35s, box-shadow .35s, background .35s;
+  }
+  .member:hover{
+    transform:translateY(-6px);
+    box-shadow:0 18px 40px -12px rgba(0,0,0,.25);
+    background:rgba(255,255,255,.75);
+  }
 
-    .name{font-size:1.25rem;color:var(--accent);margin:0 0 .4rem;}
-    .bio{font-size:.9rem;line-height:1.5;}
+  .avatar{
+    width:100%;
+    aspect-ratio:4/3;
+    border-radius:20px;
+    object-fit:cover;
+    box-shadow:0 6px 18px -6px rgba(0,0,0,.25);
+    background:#eef3ff;
+  }
+  /* If you need a contained fit for a specific image, add class "contain" */
+  .avatar.contain{object-fit:contain;background:#fff;}
 
-    /* ---------- Small screens ---------- */
-    @media(max-width:600px){
-      #main-nav .inner{justify-content:center;}
-      .nav-links{justify-content:center;}
-      #main-nav h1{width:100%;text-align:center;margin-bottom:.5rem;}
-    }
-    @media(max-width:768px){
-      h1{font-size:1.6rem;}
-      .container{padding:1rem;}
-      .profile-card img{height:220px;}
-      .profile-card img.shrink{height:220px;}
-    }
+  .name{
+    font-weight:600;
+    font-size:1.05rem;
+    line-height:1.25;
+    letter-spacing:.3px;
+  }
+  .role{
+    font-size:.72rem;
+    font-weight:600;
+    letter-spacing:.15em;
+    text-transform:uppercase;
+    color:var(--brand);
+    background:rgba(33,86,255,.08);
+    display:inline-block;
+    padding:.3rem .55rem;
+    border-radius:14px;
+  }
+  .bio{
+    font-size:.87rem;
+    line-height:1.5;
+    color:#2f3d50;
+    flex:1;
+  }
+
+  /* ===== Section divider (optional subtle) ===== */
+  .divider{
+    height:2px;
+    width:80px;
+    background:linear-gradient(90deg,transparent,#2156ff,transparent);
+    margin:1.5rem auto 0;
+    border-radius:2px;
+  }
+
+  /* ===== Footer (light) ===== */
+  footer{
+    text-align:center;
+    padding:2.8rem 1rem 3.4rem;
+    font-size:.8rem;
+    color:#4a5869;
+  }
+  footer a{color:var(--brand)}
+  footer a:hover{text-decoration:underline}
+
+  /* ===== Scroll animation (simple fade/slide) ===== */
+  .reveal{opacity:0;transform:translateY(50px);transition:.9s cubic-bezier(.19,1,.22,1)}
+  .reveal.visible{opacity:1;transform:none}
+
+  @media(max-width:600px){
+    .hero{padding:120px 1rem 40px}
+    .grid{gap:1.4rem}
+  }
   </style>
 </head>
 <body>
 
-  <!-- -------- Fixed navigation bar -------- -->
-  <header id="main-nav">
-    <div class="inner">
-      <h1><a href="index.html">SATurn&nbsp;Bound</a></h1>
-      <nav class="nav-links">
-        <a href="index.html">Home</a>
-        <a href="login.html">Log&nbsp;In</a>
-        <a href="signup.html">Sign&nbsp;Up</a>
-        <a href="aboutus.html">Our&nbsp;Team</a>
-      </nav>
-    </div>
-  </header>
-
-  <!-- -------- Page content -------- -->
-  <div class="container">
-    <h1>Our Team</h1>
-
-    <div class="about-grid">
-      <div class="profile-card">
-        <img src="images/IMG_1780.jpg" alt="Vedanth Sreeprakash">
-        <div class="name">Vedanth Sreeprakash (President)</div>
-        <div class="bio">
-          Aspiring software engineer, entrepreneur, and co-founder of SATurn Bound. Passionate about making learning smarter through technology and design.
-        </div>
-      </div>
-
-      <div class="profile-card">
-        <img src="images/IMG_7795.jpg" alt="Shrianz Bambi" class="shrink">
-        <div class="name">Shrianz Bambi (Vice President)</div>
-        <div class="bio">
-          Tech enthusiast and co-founder of SATurn Bound. Loves building tools that inspire students and making education more accessible to all.
-        </div>
-      </div>
-    </div>
+<!-- ===== Header ===== -->
+<header id="siteHeader">
+  <div class="brand">
+    <img src="images/Logo.png" alt="SATurn Bound logo">
+    <span>SATurn&nbsp;Bound</span>
   </div>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="aboutus.html" style="background:rgba(0,0,0,.06)">Our Team</a>
+    <a href="signup.html">Sign Up</a>
+    <a href="login.html">Log In</a>
+  </nav>
+</header>
+
+<!-- ===== Hero Intro ===== -->
+<section class="hero reveal">
+  <h1>Meet the Team</h1>
+  <div class="divider"></div>
+  <p>We’re a small group of students and educators focused on building accessible, intelligent SAT prep.
+     Curiosity, empathy, and continuous improvement guide everything we release.</p>
+</section>
+
+<!-- ===== Team Grid ===== -->
+<section class="team-wrap">
+  <div class="grid">
+    <!-- Member 1 -->
+    <article class="member reveal">
+      <img src="images/IMG_1780.jpg" alt="Vedanth Sreeprakash" class="avatar">
+      <div class="name">Vedanth Sreeprakash</div>
+      <span class="role">President & Co‑Founder</span>
+      <p class="bio">
+        Aspiring software engineer and entrepreneur. Passionate about using design + AI to make learning
+        smarter and more motivating for every student.
+      </p>
+    </article>
+
+    <!-- Member 2 -->
+    <article class="member reveal">
+      <img src="images/IMG_7795.jpg" alt="Shrianz Bambi" class="avatar contain">
+      <div class="name">Shrianz Bambi</div>
+      <span class="role">Vice President & Co‑Founder</span>
+      <p class="bio">
+        Tech enthusiast focused on building tools that inspire students and widen access to quality preparation
+        regardless of background.
+      </p>
+    </article>
+
+    <!-- Example placeholder for future members -->
+    <!--
+    <article class="member reveal">
+      <img src="images/placeholder.jpg" alt="Future Member" class="avatar">
+      <div class="name">Future Teammate</div>
+      <span class="role">Volunteer Tutor</span>
+      <p class="bio">Short bio highlighting expertise, interests, and motivation for joining SATurn Bound.</p>
+    </article>
+    -->
+  </div>
+</section>
+
+<footer>
+  &copy; SATurn Bound 2025. <a href="index.html">Home</a> • <a href="signup.html">Sign Up</a>
+</footer>
+
+<!-- ===== Simple scroll reveal JS (same pattern as index) ===== -->
+<script>
+const hdr=document.getElementById('siteHeader');
+window.addEventListener('scroll',()=>hdr.classList.toggle('scrolled',window.scrollY>20));
+
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){e.target.classList.add('visible');observer.unobserve(e.target);}
+  });
+},{threshold:.35});
+
+document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+</script>
 
 </body>
 </html>
