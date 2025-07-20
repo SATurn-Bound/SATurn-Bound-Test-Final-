@@ -1,200 +1,450 @@
-<!DOCTYPE HTML>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <title>Practice Tests | SATurn Bound</title>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-  <link rel="stylesheet" href="assets/css/main.css" />
-  <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+<meta charset="UTF-8">
+<title>Practice Tests | SATurn Bound</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" href="images/Logo.png" type="image/png">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
-  <style>
-    .user-greeting {
-      font-size: 1.25em;
-      margin-bottom: 1em;
-      font-weight: bold;
-    }
-    .practice-section {
-      margin-bottom: 3em;
-    }
-    .practice-section h2 {
-      border-bottom: 2px solid #4c5c96;
-      padding-bottom: 0.5em;
-      margin-bottom: 1em;
-    }
-    .practice-section h3 {
-      color: #4c5c96;
-    }
-    .banner-heading {
-      margin-bottom: 0.5em;
-    }
-  </style>
+<style>
+:root{
+  --bg-top:#e9f2ff;--bg-mid:#cfe2ff;--bg-btm:#b7d4ff;
+  --text:#0d1117;--muted:#586678;
+  --brand:#2156ff;--brand-dark:#133aa5;
+  --panel:rgba(255,255,255,.55);--panel-solid:#fff;
+  --danger:#c62828;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:"Inter",Helvetica,Arial,sans-serif;
+  background:linear-gradient(180deg,var(--bg-top)0%,var(--bg-mid)45%,var(--bg-btm)100%);
+  color:var(--text);-webkit-font-smoothing:antialiased;
+  scroll-behavior:smooth;min-height:100vh;display:flex;flex-direction:column;
+}
+a{text-decoration:none;color:inherit}
+
+/* ===== Header ===== */
+header{
+  position:fixed;top:0;left:0;width:100%;z-index:1000;
+  padding:.6rem 1.4rem;display:flex;justify-content:space-between;align-items:center;
+  background:rgba(255,255,255,.55);backdrop-filter:saturate(180%) blur(14px);
+  transition:box-shadow .3s;
+}
+header.scrolled{box-shadow:0 2px 8px rgba(0,0,0,.12);}
+.brand{display:flex;align-items:center;gap:.65rem;font-weight:700;font-size:1rem}
+.brand img{width:44px;height:44px;border-radius:50%;object-fit:cover;border:2px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.2)}
+nav{display:flex;gap:1.1rem;font-size:.92rem;font-weight:500;align-items:center}
+nav a,nav button{
+  padding:.35rem .65rem;border-radius:8px;background:transparent;border:none;
+  font:inherit;color:inherit;cursor:pointer;transition:background .25s;
+}
+nav a:hover,nav button:hover{background:rgba(0,0,0,.06)}
+nav a.active{background:rgba(0,0,0,.08)}
+#logoutBtn.hidden,#navLogin.hidden,#navSign.hidden{display:none!important}
+@media(max-width:780px){nav{display:none}}
+
+/* ===== Layout ===== */
+main{
+  flex:1;width:100%;max-width:1400px;margin:0 auto;
+  padding:120px 1.6rem 80px;display:flex;flex-direction:column;gap:2.4rem;
+}
+
+/* Greeting bar */
+.greet{
+  background:var(--panel);backdrop-filter:blur(18px);
+  border:1px solid rgba(255,255,255,.55);border-radius:30px;
+  padding:1.4rem 1.75rem 1.55rem;display:flex;flex-direction:column;gap:.65rem;
+  box-shadow:0 14px 38px -12px rgba(0,0,0,.20);
+  animation:fadeIn .8s ease;
+}
+.greet h1{font-size:clamp(1.8rem,3.6vw,2.6rem);margin:0;font-weight:700;letter-spacing:.5px}
+.greet p{margin:0;font-size:.95rem;color:var(--muted)}
+
+/* Search / filter */
+.tools{
+  display:flex;flex-wrap:wrap;gap:.9rem;align-items:center;
+  background:var(--panel);backdrop-filter:blur(18px);
+  border:1px solid rgba(255,255,255,.55);border-radius:26px;
+  padding:.9rem 1.1rem;
+  box-shadow:0 10px 30px -12px rgba(0,0,0,.18);
+  animation:fadeIn .8s .05s ease both;
+}
+.tools input[type=search]{
+  flex:1 1 220px;padding:.75rem .95rem;border:1px solid #c8d2e4;
+  border-radius:14px;background:#fff;font:inherit;font-size:.9rem;color:#000;
+}
+.tools input[type=search]:focus{outline:2px solid var(--brand);outline-offset:1px}
+.counter{font-size:.7rem;font-weight:600;letter-spacing:.15em;color:#4e5d6e;text-transform:uppercase}
+
+/* Accordion categories */
+.category{
+  background:var(--panel);backdrop-filter:blur(18px);
+  border:1px solid rgba(255,255,255,.55);border-radius:34px;
+  padding:1.55rem 1.65rem 1.75rem;display:flex;flex-direction:column;gap:1.4rem;
+  box-shadow:0 18px 48px -16px rgba(0,0,0,.23);animation:fadeUp .9s ease;
+  position:relative;
+}
+.category + .category{margin-top:1.4rem}
+.cat-head{
+  display:flex;align-items:center;justify-content:space-between;cursor:pointer;
+  user-select:none;gap:1rem;
+}
+.cat-head h2{
+  margin:0;font-size:1.55rem;font-weight:700;letter-spacing:.5px;
+}
+.toggle-icon{
+  width:38px;height:38px;border-radius:50%;background:#fff;
+  display:flex;align-items:center;justify-content:center;
+  font-weight:600;font-size:1rem;color:var(--brand);
+  box-shadow:0 4px 14px -6px rgba(0,0,0,.25);transition:transform .35s;
+}
+.category.collapsed .toggle-icon{transform:rotate(-90deg)}
+.section-block{display:flex;flex-direction:column;gap:1.2rem}
+.category.collapsed .section-block{display:none}
+
+/* Sub-domain title */
+.sub{
+  display:flex;align-items:center;gap:.6rem;
+  font-size:.82rem;letter-spacing:.12em;text-transform:uppercase;
+  font-weight:600;color:#5a6a7c;margin:0 0 .35rem .3rem;
+}
+
+/* Skills grid */
+.skills{
+  display:grid;gap:.75rem;
+  grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+  padding:0;margin:0;
+}
+a.skill{
+  position:relative;display:flex;flex-direction:column;gap:.45rem;
+  background:#fff;border-radius:20px;padding:.85rem .95rem 1rem;
+  font-size:.82rem;line-height:1.25;color:#2b394b;
+  box-shadow:0 8px 26px -12px rgba(0,0,0,.18);
+  border:1px solid #e3e9f2;
+  transition:transform .25s, box-shadow .25s, border-color .25s;
+}
+a.skill:hover{
+  transform:translateY(-4px);
+  box-shadow:0 14px 34px -14px rgba(0,0,0,.28);
+  border-color:#d0dae7;
+}
+a.skill span.label{
+  font-size:.62rem;font-weight:600;letter-spacing:.18em;
+  text-transform:uppercase;color:#5d6d80;
+}
+.hidden{display:none!important}
+
+/* Animations */
+@keyframes fadeUp{0%{opacity:0;transform:translateY(50px)}100%{opacity:1;transform:none}}
+@keyframes fadeIn{0%{opacity:0}100%{opacity:1}}
+
+/* Footer */
+footer{text-align:center;padding:2.6rem 1rem 3.2rem;font-size:.72rem;color:#4e5e70}
+
+/* Mobile tweaks */
+@media(max-width:620px){
+  .category{padding:1.35rem 1.25rem 1.5rem;border-radius:30px}
+  .greet{padding:1.1rem 1.3rem 1.35rem}
+  .skills{grid-template-columns:repeat(auto-fill,minmax(200px,1fr))}
+  .cat-head h2{font-size:1.4rem}
+}
+</style>
 </head>
-<body class="is-preload">
+<body>
 
-<!-- Wrapper -->
-<div id="wrapper">
+<header id="siteHeader">
+  <div class="brand">
+    <img src="images/Logo.png" alt="SATurn Bound logo">
+    <span>SATurn&nbsp;Bound</span>
+  </div>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="aboutus.html">Our Team</a>
+    <a href="practice-tests.html" class="active">Tests</a>
+    <a href="signup.html" id="navSign">Sign Up</a>
+    <a href="login.html" id="navLogin">Log In</a>
+    <button id="logoutBtn" class="hidden">Log Out</button>
+  </nav>
+</header>
 
-  <div id="page-wrapper">
-    <!-- Header -->
-    <header id="header">
-      <h1><a href="dashboard.html">SATurn Bound</a></h1>
-      <nav><a href="#menu">Menu</a></nav>
-    </header>
+<main>
+  <!-- Greeting -->
+  <section class="greet">
+    <h1 id="greetingTitle">Practice Tests</h1>
+    <p id="greetingSub">Loading your profile…</p>
+  </section>
 
-    <!-- Menu -->
-    <nav id="menu">
-      <div class="inner">
-        <h2>Menu</h2>
-        <ul class="links">
-          <li><a href="dashboard.html">Dashboard</a></li>
-          <li><a href="practice-tests.html">Practice Tests</a></li>
-          <li><a href="logout.html">Log Out</a></li>
-        </ul>
-        <a href="#" class="close">Close</a>
-      </div>
-    </nav>
+  <!-- Tools -->
+  <div class="tools">
+    <input type="search" id="skillSearch" placeholder="Search skills (e.g. 'algebra', 'inference', 'probability')">
+    <div class="counter" id="resultCounter">0 skills</div>
+  </div>
 
-    <!-- Banner (without logo) -->
-    <section id="banner">
-      <div class="inner">
-        <h2 class="banner-heading">Practice Tests</h2>
-        <p class="user-greeting" id="userGreeting">Loading...</p>
-      </div>
-    </section>
+  <!-- MATH CATEGORY -->
+  <section class="category" id="mathCat">
+    <div class="cat-head" data-toggle="mathCat">
+      <h2>Math</h2>
+      <div class="toggle-icon">▾</div>
+    </div>
+    <div class="section-block">
 
-    <!-- Main Content -->
-    <section class="wrapper style1">
-      <div class="inner">
-        <div class="practice-section">
-          <!-- Math Section -->
-          <h2>Math</h2>
-
-          <div class="content">
-            <!-- All content stays the same up until inside the main content section -->
-
-<!-- Algebra -->
-<h3>Algebra</h3>
-<ul>
-  <li><a href="algebra-linear-equations-one-variable.html">Linear Equations in One Variable</a></li>
-  <li><a href="algebra-linear-functions.html">Linear Functions</a></li>
-  <li><a href="algebra-linear-equations-two-variables.html">Linear Equations in Two Variables</a></li>
-  <li><a href="algebra-systems-of-equations.html">Systems of Two Linear Equations in Two Variables</a></li>
-  <li><a href="algebra-linear-inequalities.html">Linear Inequalities in One or Two Variables</a></li>
-</ul>
-
-<!-- Advanced Math -->
-<h3>Advanced Math</h3>
-<ul>
-  <li><a href="advanced-nonlinear-functions.html">Nonlinear Functions</a></li>
-  <li><a href="advanced-nonlinear-equations.html">Nonlinear Equations in One Variable and Systems of Equations in Two Variables</a></li>
-  <li><a href="advanced-equivalent-expressions.html">Equivalent Expressions</a></li>
-</ul>
-
-<!-- Problem Solving and Data Analysis -->
-<h3>Problem Solving and Data Analysis</h3>
-<ul>
-  <li><a href="psda-ratios-and-units.html">Ratios, Rates, Proportional Relationships, and Units</a></li>
-  <li><a href="psda-percentages.html">Percentages</a></li>
-  <li><a href="psda-one-variable-data.html">One-Variable Data: Distributions and Measures of Center and Spread</a></li>
-  <li><a href="psda-two-variable-data.html">Two-Variable Data: Models and Scatterplots</a></li>
-  <li><a href="psda-probability.html">Probability and Conditional Probability</a></li>
-  <li><a href="psda-inference-margin-error.html">Inference from Sample Statistics and Margin of Error</a></li>
-  <li><a href="psda-statistical-claims.html">Evaluating Statistical Claims: Observational Studies and Experiments</a></li>
-</ul>
-
-<!-- Geometry and Trigonometry -->
-<h3>Geometry and Trigonometry</h3>
-<ul>
-  <li><a href="geometry-area-volume.html">Area and Volume</a></li>
-  <li><a href="geometry-lines-angles-triangles.html">Lines, Angles, and Triangles</a></li>
-  <li><a href="geometry-right-triangles-trig.html">Right Triangles and Trigonometry</a></li>
-  <li><a href="geometry-circles.html">Circles</a></li>
-</ul>
-
-<!-- English -->
-<h2>English</h2>
-
-<!-- Information and Ideas -->
-<h3>Information and Ideas</h3>
-<ul>
-  <li><a href="english/information-central-ideas.html">Central Ideas and Details</a></li>
-  <li><a href="english/information-inferences.html">Inferences</a></li>
-  <li><a href="english/information-command-evidence.html">Command of Evidence</a></li>
-</ul>
-
-<!-- Craft and Structure -->
-<h3>Craft and Structure</h3>
-<ul>
-  <li><a href="english/craft-words-in-context.html">Words in Context</a></li>
-  <li><a href="english/craft-text-structure.html">Text Structure and Purpose</a></li>
-  <li><a href="english/craft-cross-text.html">Cross-Text Connections</a></li>
-</ul>
-
-<!-- Expression of Ideas -->
-<h3>Expression of Ideas</h3>
-<ul>
-  <li><a href="english/expression-rhetorical-synthesis.html">Rhetorical Synthesis</a></li>
-  <li><a href="english/expression-transitions.html">Transitions</a></li>
-</ul>
-
-<!-- Standard English Conventions -->
-<h3>Standard English Conventions</h3>
-<ul>
-  <li><a href="english/conventions-boundaries.html">Boundaries</a></li>
-  <li><a href="english/conventions-form-structure.html">Form, Structure, and Sense</a></li>
-</ul>
-
-          </div>
+      <div>
+        <h3 class="sub">Algebra</h3>
+        <div class="skills">
+          <a class="skill" href="algebra-linear-equations-one-variable.html">
+            <span class="label">Algebra</span>
+            Linear Equations in One Variable
+          </a>
+            <a class="skill" href="algebra-linear-functions.html">
+            <span class="label">Algebra</span>
+            Linear Functions
+          </a>
+          <a class="skill" href="algebra-linear-equations-two-variables.html">
+            <span class="label">Algebra</span>
+            Linear Equations in Two Variables
+          </a>
+          <a class="skill" href="algebra-systems-of-equations.html">
+            <span class="label">Algebra</span>
+            Systems of Two Linear Equations
+          </a>
+          <a class="skill" href="algebra-linear-inequalities.html">
+            <span class="label">Algebra</span>
+            Linear Inequalities (1–2 Vars)
+          </a>
         </div>
       </div>
-    </section>
 
-    <!-- Footer -->
-    <section id="footer">
-      <div class="inner">
-        <p>&copy; SATurn Bound Inc. All rights reserved.</p>
+      <div>
+        <h3 class="sub">Advanced Math</h3>
+        <div class="skills">
+          <a class="skill" href="advanced-nonlinear-functions.html">
+            <span class="label">Advanced</span>
+            Nonlinear Functions
+          </a>
+          <a class="skill" href="advanced-nonlinear-equations.html">
+            <span class="label">Advanced</span>
+            Nonlinear & Systems (One / Two Var)
+          </a>
+          <a class="skill" href="advanced-equivalent-expressions.html">
+            <span class="label">Advanced</span>
+            Equivalent Expressions
+          </a>
+        </div>
       </div>
-    </section>
 
-  </div> <!-- end of #page-wrapper -->
-</div> <!-- end of #wrapper -->
+      <div>
+        <h3 class="sub">Problem Solving & Data Analysis</h3>
+        <div class="skills">
+          <a class="skill" href="psda-ratios-and-units.html">
+            <span class="label">PSDA</span>
+            Ratios, Rates & Units
+          </a>
+          <a class="skill" href="psda-percentages.html">
+            <span class="label">PSDA</span>
+            Percentages
+          </a>
+          <a class="skill" href="psda-one-variable-data.html">
+            <span class="label">PSDA</span>
+            One-Variable Data
+          </a>
+          <a class="skill" href="psda-two-variable-data.html">
+            <span class="label">PSDA</span>
+            Two-Variable Data & Models
+          </a>
+          <a class="skill" href="psda-probability.html">
+            <span class="label">PSDA</span>
+            Probability & Conditional
+          </a>
+          <a class="skill" href="psda-inference-margin-error.html">
+            <span class="label">PSDA</span>
+            Inference & Margin of Error
+          </a>
+          <a class="skill" href="psda-statistical-claims.html">
+            <span class="label">PSDA</span>
+            Statistical Claims & Experiments
+          </a>
+        </div>
+      </div>
 
-<!-- Firebase Auth -->
+      <div>
+        <h3 class="sub">Geometry & Trig</h3>
+        <div class="skills">
+          <a class="skill" href="geometry-area-volume.html">
+            <span class="label">Geometry</span>
+            Area & Volume
+          </a>
+          <a class="skill" href="geometry-lines-angles-triangles.html">
+            <span class="label">Geometry</span>
+            Lines, Angles & Triangles
+          </a>
+          <a class="skill" href="geometry-right-triangles-trig.html">
+            <span class="label">Trig</span>
+            Right Triangles & Trig
+          </a>
+          <a class="skill" href="geometry-circles.html">
+            <span class="label">Geometry</span>
+            Circles
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ENGLISH CATEGORY -->
+  <section class="category" id="engCat">
+    <div class="cat-head" data-toggle="engCat">
+      <h2>English</h2>
+      <div class="toggle-icon">▾</div>
+    </div>
+    <div class="section-block">
+
+      <div>
+        <h3 class="sub">Information & Ideas</h3>
+        <div class="skills">
+          <a class="skill" href="english/information-central-ideas.html">
+            <span class="label">Info</span>
+            Central Ideas & Details
+          </a>
+          <a class="skill" href="english/information-inferences.html">
+            <span class="label">Info</span>
+            Inferences
+          </a>
+          <a class="skill" href="english/information-command-evidence.html">
+            <span class="label">Info</span>
+            Command of Evidence
+          </a>
+        </div>
+      </div>
+
+      <div>
+        <h3 class="sub">Craft & Structure</h3>
+        <div class="skills">
+          <a class="skill" href="english/craft-words-in-context.html">
+            <span class="label">Craft</span>
+            Words in Context
+          </a>
+          <a class="skill" href="english/craft-text-structure.html">
+            <span class="label">Craft</span>
+            Text Structure & Purpose
+          </a>
+          <a class="skill" href="english/craft-cross-text.html">
+            <span class="label">Craft</span>
+            Cross-Text Connections
+          </a>
+        </div>
+      </div>
+
+      <div>
+        <h3 class="sub">Expression of Ideas</h3>
+        <div class="skills">
+          <a class="skill" href="english/expression-rhetorical-synthesis.html">
+            <span class="label">Expression</span>
+            Rhetorical Synthesis
+          </a>
+          <a class="skill" href="english/expression-transitions.html">
+            <span class="label">Expression</span>
+            Transitions
+          </a>
+        </div>
+      </div>
+
+      <div>
+        <h3 class="sub">Conventions</h3>
+        <div class="skills">
+          <a class="skill" href="english/conventions-boundaries.html">
+            <span class="label">Grammar</span>
+            Boundaries
+          </a>
+          <a class="skill" href="english/conventions-form-structure.html">
+            <span class="label">Grammar</span>
+            Form, Structure & Sense
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  &copy; SATurn Bound 2025. All rights reserved.
+</footer>
+
+<!-- Firebase / Auth & UI Logic -->
 <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-app.js";
-  import {
-    getAuth,
-    onAuthStateChanged
-  } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-auth.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-app.js";
+import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-auth.js";
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyDedw_zEK-L-AoKO1WkeomLVztoRnYBXt4",
-    authDomain: "saturn-bound.firebaseapp.com",
-    projectId: "saturn-bound",
-    storageBucket: "saturn-bound.appspot.com",
-    messagingSenderId: "46027081851",
-    appId: "1:46027081851:web:8402230dc2ff241c6cfade"
-  };
+const firebaseConfig = {
+  apiKey: "AIzaSyDedw_zEK-L-AoKO1WkeomLVztoRnYBXt4",
+  authDomain: "saturn-bound.firebaseapp.com",
+  projectId: "saturn-bound",
+  storageBucket: "saturn-bound.appspot.com",
+  messagingSenderId: "46027081851",
+  appId: "1:46027081851:web:8402230dc2ff241c6cfade"
+};
 
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
+initializeApp(firebaseConfig);
+const auth = getAuth();
 
-  onAuthStateChanged(auth, (user) => {
-    if (!user) {
-      window.location.href = "index.html";
-    } else {
-      document.getElementById("userGreeting").textContent =
-        "Hello, " + (user.displayName || user.email) + "!";
-    }
+/* Elements */
+const logoutBtn  = document.getElementById('logoutBtn');
+const navLogin   = document.getElementById('navLogin');
+const navSign    = document.getElementById('navSign');
+const greetTitle = document.getElementById('greetingTitle');
+const greetSub   = document.getElementById('greetingSub');
+
+onAuthStateChanged(auth, user=>{
+  if(!user){
+    window.location.href = "login.html";
+    return;
+  }
+  logoutBtn.classList.remove('hidden');
+  navLogin.classList.add('hidden');
+  navSign.classList.add('hidden');
+  greetTitle.textContent = "Practice Tests";
+  greetSub.textContent = "Hello, " + (user.displayName || user.email) + " — choose a skill to begin.";
+});
+
+logoutBtn.addEventListener('click', async ()=>{
+  try{ await signOut(auth); window.location.href="login.html"; }
+  catch(e){ alert("Logout failed."); }
+});
+
+/* Header shadow */
+const hdr=document.getElementById('siteHeader');
+window.addEventListener('scroll',()=>hdr.classList.toggle('scrolled',window.scrollY>20));
+
+/* Accordion toggle */
+document.querySelectorAll('.cat-head').forEach(head=>{
+  head.addEventListener('click',()=>{
+    const parent = head.parentElement;
+    parent.classList.toggle('collapsed');
   });
-</script>
+});
 
-<!-- Scripts -->
-<script src="assets/js/jquery.min.js"></script>
-<script src="assets/js/browser.min.js"></script>
-<script src="assets/js/breakpoints.min.js"></script>
-<script src="assets/js/util.js"></script>
-<script src="assets/js/main.js"></script>
+/* Search filter */
+const searchInput = document.getElementById('skillSearch');
+const counter = document.getElementById('resultCounter');
+const skills = [...document.querySelectorAll('a.skill')];
+
+function updateFilter(){
+  const q = searchInput.value.trim().toLowerCase();
+  let visible = 0;
+  skills.forEach(s=>{
+    const text = s.textContent.toLowerCase();
+    const match = !q || text.includes(q);
+    s.classList.toggle('hidden', !match);
+    if(match) visible++;
+  });
+  counter.textContent = visible + " skills";
+}
+searchInput.addEventListener('input', updateFilter);
+updateFilter();
+</script>
 
 </body>
 </html>
