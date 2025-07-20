@@ -149,6 +149,18 @@ input:focus, select:focus {
         <option value="graduate">Already graduated</option>
       </select>
 
+      <label for="currentLevel">What is your current skill level?</label>
+      <select id="currentLevel" name="currentLevel" required>
+        <option value="">Select score range</option>
+        <option value="<1000">Below 1000</option>
+        <option value="1000-1100">1000–1100</option>
+        <option value="1100-1200">1100–1200</option>
+        <option value="1200-1300">1200–1300</option>
+        <option value="1300-1400">1300–1400</option>
+        <option value="1400-1500">1400–1500</option>
+        <option value=">1500">1500+</option>
+      </select>
+
       <label for="targetScore">Target SAT Score?</label>
       <select id="targetScore" name="targetScore" required>
         <option value="">Select score</option>
@@ -160,22 +172,15 @@ input:focus, select:focus {
         <option value=">1500+">1500+</option>
       </select>
 
-      <label for="studyDays">How many days a week can you study?</label>
-      <select id="studyDays" name="studyDays" required>
-        <option value="">Select number of days</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-        <option value="6+">6 or more</option>
-      </select>
-
-      <label for="focus">What do you want to focus on?</label>
-      <select id="focus" name="focus" required>
-        <option value="">Choose one</option>
-        <option value="math">Math</option>
-        <option value="reading">Reading & Writing</option>
-        <option value="balanced">Balanced prep</option>
+      <label for="studyHours">How many hours per week can you dedicate to studying?</label>
+      <select id="studyHours" name="studyHours" required>
+        <option value="">Select hours range</option>
+        <option value="0-5">0-5 hours</option>
+        <option value="5-10">5-10 hours</option>
+        <option value="10-15">10-15 hours</option>
+        <option value="15-20">15-20 hours</option>
+        <option value="20-25">20-25 hours</option>
+        <option value="25+">25+ hours</option>
       </select>
 
       <button type="submit" class="btn">Save My Plan</button>
@@ -193,9 +198,9 @@ document.getElementById("personalizeForm").addEventListener("submit", function(e
 
   const userPlan = {
     grade: this.grade.value,
+    currentLevel: this.currentLevel.value,
     targetScore: this.targetScore.value,
-    studyDays: this.studyDays.value,
-    focus: this.focus.value
+    studyHours: this.studyHours.value
   };
 
   // Store in Firestore
