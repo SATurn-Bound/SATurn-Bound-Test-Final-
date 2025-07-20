@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>SATurn Bound | Formulas & Rules</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" href="images/Logo.png" type="image/png">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg-top:#e9f2ff;--bg-mid:#cfe2ff;--bg-btm:#b7d4ff;
+  --text:#0d1117;--muted:#536274;
+  --brand:#2156ff;--brand-dark:#133aa5;--accent-alt:#f27891;
+  --panel:rgba(255,255,255,.65);--panel-border:rgba(255,255,255,.75);
+  --radius:30px;
+  --shadow:0 14px 42px -18px rgba(21,42,90,.25);
+  --code-bg:#f5f8ff;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:Inter,Helvetica,Arial,sans-serif;
+  background:linear-gradient(180deg,var(--bg-top)0%,var(--bg-mid)45%,var(--bg-btm)100%);
+  color:var(--text);-webkit-font-smoothing:antialiased;
+  line-height:1.5;
+  padding-top:90px;
+  scroll-behavior:smooth;
+}
+a{text-decoration:none;color:var(--brand)}
+a:hover{text-decoration:underline}
+header{
+  position:fixed;top:0;left:0;width:100%;z-index:900;
+  padding:.75rem 1.6rem;
+  display:flex;justify-content:space-between;align-items:center;
+  background:rgba(255,255,255,.55);
+  backdrop-filter:saturate(180%) blur(14px);
+  border-bottom:1px solid rgba(255,255,255,.6);
+  transition:box-shadow .3s;
+}
+header.scrolled{box-shadow:0 4px 14px -6px rgba(0,0,0,.18)}
+.brand{display:flex;align-items:center;gap:.7rem;font-weight:700;font-size:1.05rem;letter-spacing:.03em}
+.brand img{width:50px;height:50px;border-radius:50%;object-fit:cover;border:2px solid #fff;box-shadow:0 4px 10px rgba(0,0,0,.15)}
+nav{display:flex;gap:1.05rem;font-size:.9rem;font-weight:600;color:var(--muted)}
+nav a{padding:.45rem .85rem;border-radius:10px;color:var(--muted);transition:background .25s,color .25s;text-decoration:none}
+nav a:hover{background:rgba(0,0,0,.06);color:#132238;text-decoration:none}
+nav a.active{background:var(--brand);color:#fff;box-shadow:0 4px 12px -4px rgba(33,86,255,.4)}
+@media(max-width:760px){nav{display:none}}
+main{
+  max-width:1240px;margin:0 auto;
+  padding:2rem 1.4rem 4rem;
+  display:grid;
+  grid-template-columns:250px 1fr;
+  gap:2.2rem;
+}
+@media(max-width:1000px){
+  main{grid-template-columns:1fr}
+  #toc{position:static;top:auto}
+}
+#toc{
+  position:sticky;top:110px;align-self:start;
+  background:var(--panel);backdrop-filter:blur(16px);
+  border:1px solid var(--panel-border);
+  padding:1.2rem 1.2rem 1.4rem;border-radius:22px;
+  box-shadow:var(--shadow);
+  font-size:.8rem;
+  display:flex;flex-direction:column;gap:.6rem;
+}
+#toc h4{margin:0 0 .2rem;font-size:.85rem;font-weight:700;color:#132238;letter-spacing:.5px}
+#toc a{display:block;padding:.4rem .6rem;border-radius:10px;color:#1d3357;text-decoration:none;line-height:1.25}
+#toc a:hover{background:rgba(0,0,0,.06)}
+.section{
+  background:var(--panel);backdrop-filter:blur(16px);
+  border:1px solid var(--panel-border);
+  padding:1.9rem 1.85rem 2.1rem;
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  margin-bottom:2.2rem;
+  position:relative;
+  overflow:hidden;
+}
+.section h2{
+  margin:0 0 1rem;
+  font-size:1.65rem;
+  letter-spacing:.5px;
+  font-weight:700;
+  background:linear-gradient(90deg,var(--brand),var(--accent-alt));
+  -webkit-background-clip:text;
+  color:transparent;
+}
+.section h3{
+  margin:1.6rem 0 .7rem;
+  font-size:1.15rem;
+  font-weight:700;
+  letter-spacing:.4px;
+  color:#132a52;
+}
+hr.subdiv{
+  border:0;height:1px;
+  background:linear-gradient(90deg,#2156ff33,#f2789133);
+  margin:1.25rem 0 1.4rem;
+}
+p{margin:0 0 .9rem;font-size:.92rem}
+ul{margin:0 0 1rem 1.1rem;padding:0}
+ul li{margin:0 0 .5rem;font-size:.87rem}
+.formula-block{
+  position:relative;
+  background:var(--code-bg);
+  border:1px solid #d3e0f3;
+  padding:.85rem 1rem .9rem;
+  border-radius:16px;
+  font-family:ui-monospace,Consolas,monospace;
+  font-size:.85rem;
+  line-height:1.4;
+  margin:.65rem 0 1rem;
+  overflow-x:auto;
+}
+.copy-btn{
+  position:absolute;top:8px;right:8px;
+  font-size:.6rem;
+  background:#2156ff;
+  color:#fff;
+  border:none;
+  padding:.35rem .55rem;
+  border-radius:8px;
+  cursor:pointer;
+  letter-spacing:.1em;
+}
+.copy-btn:hover{background:#133aa5}
+.inline-tag{
+  display:inline-block;
+  font-size:.55rem;
+  font-weight:700;
+  letter-spacing:.14em;
+  background:#2156ff14;
+  color:var(--brand);
+  padding:.35rem .55rem;
+  border-radius:8px;
+  margin-right:.4rem;
+  text-transform:uppercase;
+}
+.note{
+  background:#fff6d9;
+  border:1px solid #eedaa0;
+  padding:.65rem .8rem;
+  border-radius:14px;
+  font-size:.75rem;
+  margin:.7rem 0 1rem;
+  color:#5b4600;
+}
+.grid-col-2{
+  display:grid;
+  gap:1.2rem;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+}
+.bad-pill{
+  display:inline-block;
+  background:#ffe2e2;
+  color:#7a1111;
+  padding:.35rem .55rem;
+  font-size:.6rem;
+  font-weight:600;
+  letter-spacing:.12em;
+  border-radius:999px;
+  margin:0 .35rem .35rem 0;
+}
+.good-pill{
+  display:inline-block;
+  background:#e3f8ec;
+  color:#155f35;
+  padding:.35rem .55rem;
+  font-size:.6rem;
+  font-weight:600;
+  letter-spacing:.12em;
+  border-radius:999px;
+  margin:0 .35rem .35rem 0;
+}
+table.rule{
+  border-collapse:collapse;
+  width:100%;
+  font-size:.78rem;
+  margin:1rem 0 1.4rem;
+  background:#ffffffcc;
+  backdrop-filter:blur(6px);
+  border:1px solid #d6e1f2;
+  border-radius:14px;
+  overflow:hidden;
+}
+table.rule th,table.rule td{
+  border-bottom:1px solid #e3ecf7;
+  padding:.55rem .7rem;
+  vertical-align:top;
+  text-align:left;
+}
+table.rule th{
+  background:#f4f8fe;
+  font-weight:600;
+  letter-spacing:.05em;
+  font-size:.7rem;
+  color:#1b355d;
+  text-transform:uppercase;
+}
+table.rule tr:last-child td{border-bottom:none}
+.callout{
+  border-left:4px solid var(--brand);
+  background:#ffffffd9;
+  padding:.75rem .9rem;
+  border-radius:14px;
+  font-size:.8rem;
+  margin:.9rem 0 1.2rem;
+  box-shadow:0 4px 14px -8px rgba(0,0,0,.15);
+}
+footer{
+  text-align:center;
+  padding:3rem 1rem 3.5rem;
+  font-size:.7rem;
+  color:var(--muted);
+}
+@media(max-width:640px){
+  .section{padding:1.4rem 1.3rem 1.7rem}
+  .section h2{font-size:1.45rem}
+  .formula-block{font-size:.8rem}
+  main{padding:2rem 1rem 4rem}
+}
+</style>
+</head>
+<body>
+<header id="topbar">
+  <div class="brand">
+    <img src="images/Logo.png" alt="SATurn Bound logo">
+    <span>SATurn&nbsp;Bound</span>
+  </div>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="practice-tests.html">Tests</a>
+    <a href="dashboard.html">Dashboard</a>
+    <a href="formulas.html" class="active">Formulas</a>
+    <a href="aboutus.html">Our Team</a>
+    <a href="login.html">Log In</a>
+  </nav>
+</header>
+
+<main>
+  <!-- TOC -->
+  <aside id="toc">
+    <h4>Quick Jump</h4>
+    <a href="#math-core">Core Math Formulas</a>
+    <a href="#math-geometry">Geometry & Trig</a>
+    <a href="#math-algebra">Algebra & Quadratics</a>
+    <a href="#math-advanced">Advanced / Misc</a>
+    <a href="#math-reminders">Strategy & Pitfalls</a>
+    <hr class="subdiv" style="margin:.7rem 0">
+    <a href="#eng-overview">English Overview</a>
+    <a href="#eng-sentences">Sentence Boundaries</a>
+    <a href="#eng-punc">Punctuation</a>
+    <a href="#eng-clauses">Clauses & Commas</a>
+    <a href="#eng-agreement">Agreement</a>
+    <a href="#eng-verbs">Verbs & Tense</a>
+    <a href="#eng-structure">Parallel & Modifiers</a>
+    <a href="#eng-misc">Misc / Idioms</a>
+  </aside>
+
+  <!-- CONTENT -->
+  <div>
+
+    <!-- MATH -->
+    <section class="section" id="math-core">
+      <h2>Math Formula Sheet</h2>
+      <p class="callout">
+        Memorize structure + when to apply — not just symbols. Where units matter, carry them. When a formula has *conditions* (angle measure units, factoring requirements, domain limits) write those beside it in your scratch work.
+      </p>
+
+      <h3>Circle Sector & Arc</h3>
+      <div class="formula-block">
+        Sector Area (θ in radians): A = (1/2) r² θ<br>
+        Sector Area (θ in degrees): A = (θ / 360) π r²<br>
+        Arc Length (θ in radians): s = r θ<br>
+        If θ is in degrees → convert: θ<sub>rad</sub> = θ<sub>deg</sub> · π / 180
+        <button class="copy-btn" data-copy="Sector Area (rad) A = 1/2 r^2 θ; Sector Area (deg) A = (θ/360) π r^2; Arc Length s = r θ">COPY</button>
+      </div>
+
+      <h3>Percent Change</h3>
+      <div class="formula-block">
+        % change = ((final − initial) / initial) × 100%
+        <button class="copy-btn" data-copy="% change = ((final - initial) / initial) * 100%">COPY</button>
+      </div>
+
+      <h3>Special Right Triangles</h3>
+      <div class="formula-block">
+        30°–60°–90° sides: x : x√3 : 2x (short : long : hyp)<br>
+        45°–45°–90° sides: x : x : x√2
+        <button class="copy-btn" data-copy="30-60-90: x : x√3 : 2x; 45-45-90: x : x : x√2">COPY</button>
+      </div>
+
+      <h3 id="math-geometry">Key Geometry</h3>
+      <ul>
+        <li><strong>Triangle Inequality:</strong> |a − b| &lt; c &lt; a + b</li>
+        <li><strong>Area Circle:</strong> πr² &nbsp;•&nbsp; <strong>Circumference:</strong> 2πr</li>
+        <li><strong>Central vs Inscribed Angle:</strong> central = 2 × (inscribed subtending same arc)</li>
+        <li><strong>Complementary:</strong> A + B = 90° ⇒ sin A = cos B, cos A = sin B</li>
+      </ul>
+    </section>
+
+    <section class="section" id="math-algebra">
+      <h2>Algebra & Quadratics</h2>
+
+      <h3>Linear Forms</h3>
+      <ul>
+        <li>Standard: Ax + By = C ⇒ slope m = −A/B (B ≠ 0); y‑intercept = C/B</li>
+        <li>No solution (ax + b = cx + d): coefficients of x equal & constants different</li>
+        <li>Infinite solutions: both sides algebraically identical</li>
+      </ul>
+
+      <h3>Quadratic Basics (ax² + bx + c)</h3>
+      <div class="formula-block">
+        Sum of roots: −b / a<br>
+        Product of roots: c / a<br>
+        Axis of symmetry: x = −b / (2a)<br>
+        Vertex x: h = −b / (2a); y = f(h) = (4ac − b²)/(4a)<br>
+        Discriminant Δ = b² − 4ac:<br>
+        • Δ &lt; 0 → no real roots<br>
+        • Δ = 0 → 1 real double root<br>
+        • Δ &gt; 0 → 2 distinct real roots
+        <button class="copy-btn" data-copy="Sum=-b/a; Product=c/a; Vertex x=-b/2a; Discriminant b^2-4ac">COPY</button>
+      </div>
+
+      <h3>Quadratic Formula</h3>
+      <div class="formula-block">
+        x = [ −b ± √(b² − 4ac) ] / (2a)
+        <button class="copy-btn" data-copy="x = (-b ± √(b^2 - 4ac)) / (2a)">COPY</button>
+      </div>
+
+      <h3>Factor & Zero Theorems</h3>
+      <ul>
+        <li><strong>Factor Theorem:</strong> (x − a) factor ⇔ f(a) = 0.</li>
+        <li>Use possible rational roots: ±(factors of constant)/(factors of leading coefficient)</li>
+      </ul>
+
+      <h3 id="math-advanced">Exponential & Functions</h3>
+      <div class="formula-block">
+        Exponential: y = a·b^x, a = initial (y‑intercept), b = growth (b &gt; 1) or decay (0 &lt; b &lt; 1)
+        <button class="copy-btn" data-copy="Exponential: y = a b^x (a initial, b growth/decay)">COPY</button>
+      </div>
+
+      <h3>Data Distribution Shape (Mean vs Median)</h3>
+      <ul>
+        <li>Left‑skewed: mean &lt; median</li>
+        <li>Symmetric: mean ≈ median</li>
+        <li>Right‑skewed: mean &gt; median</li>
+      </ul>
+    </section>
+
+    <section class="section" id="math-reminders">
+      <h2>Math Strategy & Pitfalls</h2>
+      <div class="grid-col-2">
+        <div class="callout">
+          <strong>Check Units & Angle Mode:</strong> Degrees vs radians in trig / sector formulas. Convert early to avoid recalc.
+        </div>
+        <div class="callout">
+          <strong>Extraneous Roots:</strong> Always plug back after squaring, rational equations, or absolute value splits.
+        </div>
+      </div>
+      <ul>
+        <li><strong>Domain Restrictions:</strong> Denominator ≠ 0; radicand of even root ≥ 0; log arguments &gt; 0.</li>
+        <li><strong>Inequalities:</strong> Flip sign when multiplying or dividing by a negative.</li>
+        <li><strong>Group Like Terms First:</strong> Reduces careless sign errors before solving.</li>
+        <li><strong>Mark Hard vs Medium:</strong> Weighted scoring: protect accuracy on medium items before gambles on hard.</li>
+        <li><strong>READ the Question Stem Last Line Twice</strong> (units? form? number of solutions?).</li>
+      </ul>
+      <div class="note">Keep a compact personal error log: (Concept • Error Type • Fix) → review before each new full practice.</div>
+    </section>
+
+    <!-- ENGLISH -->
+    <section class="section" id="eng-overview">
+      <h2>English / Writing Quick Guide</h2>
+      <p class="callout">
+        Goal: identify <em>error category</em> (boundary, agreement, punctuation choice, modifier, parallelism, diction) in under 5 seconds. Then apply minimal rule needed. When in doubt: prefer clarity + concision without changing intended meaning.
+      </p>
+      <div>
+        <span class="good-pill">Boundary</span>
+        <span class="good-pill">Clause</span>
+        <span class="good-pill">Agreement</span>
+        <span class="good-pill">Verb Tense</span>
+        <span class="good-pill">Modifier</span>
+        <span class="good-pill">Parallelism</span>
+        <span class="good-pill">Diction</span>
+        <span class="bad-pill">Comma Splice</span>
+        <span class="bad-pill">Run‑On</span>
+        <span class="bad-pill">Dangling</span>
+      </div>
+    </section>
+
+    <section class="section" id="eng-sentences">
+      <h2>Sentence Boundaries</h2>
+      <table class="rule">
+        <tr><th>Structure</th><th>Correct Joining</th><th>Notes</th></tr>
+        <tr>
+          <td>Independent + Independent</td>
+          <td>Period • Semicolon • Comma + FANBOYS • Colon/Dash (if 2nd explains)</td>
+          <td>Colon/dash needs full sentence before it.</td>
+        </tr>
+        <tr>
+          <td>Dependent + Independent</td>
+          <td>Dependent , Independent</td>
+          <td>If dependent first → comma; if second → usually no comma.</td>
+        </tr>
+        <tr>
+          <td>Comma Splice</td>
+          <td><em>Fix</em>: replace comma with period, semicolon, or add FANBOYS</td>
+          <td>Comma + pronoun (“..., it...”) = red flag.</td>
+        </tr>
+      </table>
+    </section>
+
+    <section class="section" id="eng-punc">
+      <h2>Punctuation Essentials</h2>
+      <h3>Semicolon</h3>
+      <p>Same strength as a period. Use only between two independent clauses (optionally with a conjunctive adverb: “; however,”).</p>
+      <h3>Colon / Dash (single)</h3>
+      <ul>
+        <li>Full sentence before; list / explanation / restatement after.</li>
+        <li>Colon vs dash: grammatically interchangeable; dash = stronger emphasis.</li>
+      </ul>
+      <h3>Non‑Essential Info</h3>
+      <p>Surround with <strong>two</strong>: commas, dashes, or parentheses (matching pair). Do not mix.</p>
+      <div class="formula-block">
+        Core, nonessential, core. ✔<br>
+        Core—nonessential—core. ✔<br>
+        Core (nonessential) core. ✔
+      </div>
+      <h3>Lists & Modifiers</h3>
+      <ul>
+        <li>Series: item, item, and item (Oxford comma optional).</li>
+        <li>Coordinate adjectives (reversible, can insert “and”) need a comma.</li>
+      </ul>
+      <h3>Common Comma Misuses</h3>
+      <ul>
+        <li>No comma between subject and verb.</li>
+        <li>No comma before/after “that.”</li>
+        <li>No comma before a preposition or between compound items.</li>
+      </ul>
+    </section>
+
+    <section class="section" id="eng-clauses">
+      <h2>Clauses & Transitions</h2>
+      <h3>Dependent Starters</h3>
+      <p>Although / Because / When / If / Since / While — if they start the sentence, use comma after their clause.</p>
+      <h3>Transitions (Meaning First)</h3>
+      <ul>
+        <li><strong>Continuers:</strong> moreover, for example, in addition</li>
+        <li><strong>Contrast:</strong> however, nevertheless, on the other hand</li>
+        <li><strong>Cause/Effect:</strong> therefore, consequently, thus</li>
+      </ul>
+      <p>Test tactic: blank out the transition → decide relation (same / opposite / cause) → pick one that matches.</p>
+    </section>
+
+    <section class="section" id="eng-agreement">
+      <h2>Agreement & Pronouns</h2>
+      <h3>Subject–Verb</h3>
+      <ul>
+        <li>Ignore prepositional phrases & non‑essential clauses between subject and verb.</li>
+        <li>Compound subject (A and B) = plural.</li>
+        <li>Each / Every / Each of = singular.</li>
+      </ul>
+      <h3>Pronouns</h3>
+      <ul>
+        <li>Match number + clarity: replace pronoun with its noun to test.</li>
+        <li>Its = possessive; it’s = it is; their = possessive plural; they’re = they are.</li>
+      </ul>
+      <h3>Possessives vs Plurals</h3>
+      <div class="formula-block">
+        Singular possessive: student’s<br>
+        Plural: students<br>
+        Plural possessive: students’<br>
+        Irregular plural possessive: children’s
+        <button class="copy-btn" data-copy="student's (sing poss); students (plural); students' (plural poss)">COPY</button>
+      </div>
+    </section>
+
+    <section class="section" id="eng-verbs">
+      <h2>Verbs & Tense</h2>
+      <ul>
+        <li>Maintain tense consistency within paragraph context.</li>
+        <li>Present perfect (has/have + past participle): action started past, continues now (“have studied for years”).</li>
+        <li>Past perfect (had + part.): earlier of two past actions (“had studied before she enrolled”). Trigger: “by the time.”</li>
+        <li>Passive often wordier—prefer active unless only passive is grammatical.</li>
+        <li>Infinitive vs -ing: rely on idiomatic usage (“attempt to improve,” not “attempt improving”).</li>
+      </ul>
+    </section>
+
+    <section class="section" id="eng-structure">
+      <h2>Parallelism, Modifiers, Comparisons</h2>
+      <h3>Parallel Lists</h3>
+      <p>All items same grammatical form: noun / noun / noun OR to + verb / to + verb.</p>
+      <h3>Correlative Pairs</h3>
+      <p>either…or | neither…nor | not only…but also | both…and | as…as</p>
+      <h3>Dangling & Misplaced Modifiers</h3>
+      <ul>
+        <li>Intro phrase must modify the subject that immediately follows.</li>
+        <li>Reposition modifier close to the word it describes.</li>
+      </ul>
+      <h3>Comparisons</h3>
+      <ul>
+        <li>Compare like to like: “the population of City A vs that of City B.”</li>
+        <li>than (comparison) vs then (time). Always check “longer than.”</li>
+      </ul>
+    </section>
+
+    <section class="section" id="eng-misc">
+      <h2>Miscellaneous & Style</h2>
+      <ul>
+        <li><strong>Concision:</strong> If two choices are grammatical & equal in meaning, shorter usually correct.</li>
+        <li><strong>Idioms / Prepositions:</strong> rely on ear: “interested in,” “capable of,” “focus on.”</li>
+        <li><strong>Adjective vs Adverb:</strong> modify verb with -ly; “ran quick” ✗ → “ran quickly.”</li>
+        <li><strong>Redundancy:</strong> Remove repeated meaning (“unexpected surprise” → “surprise”).</li>
+        <li><strong>Pronoun Case:</strong> Try sentence with only the pronoun (“Me went” ✗ → “I went”).</li>
+      </ul>
+      <div class="note">
+        Quick scan order for underlined portion: <strong>Boundary → Agreement → Core meaning → Concision → Idiom / Diction → Punctuation nuance.</strong>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<footer>&copy; SATurn Bound 2025. All rights reserved.</footer>
+
+<script>
+/* Header shadow */
+const topbar=document.getElementById('topbar');
+window.addEventListener('scroll',()=>topbar.classList.toggle('scrolled',window.scrollY>12));
+
+/* Copy buttons */
+document.querySelectorAll('.copy-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const txt=btn.getAttribute('data-copy');
+    navigator.clipboard.writeText(txt).then(()=>{
+      const old=btn.textContent;
+      btn.textContent='COPIED!';
+      btn.disabled=true;
+      setTimeout(()=>{btn.textContent=old;btn.disabled=false;},1300);
+    });
+  });
+});
+</script>
+</body>
+</html>
