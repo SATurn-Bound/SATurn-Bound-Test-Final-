@@ -336,7 +336,7 @@ function buildQOD(){
   sets.forEach(s=>{
     const box=document.createElement('div');
     box.className='qod-item';
-    box.innerHTML=<h5>${s.title}</h5><div class="q qtext">${s.data.q}</div><div class="ans">Answer: ${s.data.a}</div>;
+    box.innerHTML=`<h5>${s.title}</h5><div class="q qtext">${s.data.q}</div><div class="ans">Answer: ${s.data.a}</div>`;
     box.addEventListener('click',()=>box.classList.toggle('revealed'));
     panel.appendChild(box);
   });
