@@ -183,7 +183,7 @@ input:focus, select:focus {
         <option value="25+">25+ hours</option>
       </select>
 
-      <button type="submit" class="btn">Save My Plan</button>
+      <button type="submit" class="btn">Next</button>
     </form>
   </div>
 </main>
@@ -203,17 +203,16 @@ document.getElementById("personalizeForm").addEventListener("submit", function(e
     studyHours: this.studyHours.value
   };
 
-  // Store in Firestore
+  // Store in Firestore if user is logged in
   const user = firebase.auth().currentUser;
   if (user) {
     firebase.firestore().collection("users").doc(user.uid).set({
       studyPlan: userPlan
-    }, { merge: true }).then(() => {
-      window.location.href = "dashboard.html"; // or wherever next
-    });
-  } else {
-    alert("User not logged in.");
+    }, { merge: true });
   }
+  
+  // Redirect to Personalizeperfection.html regardless of login status
+  window.location.href = "Personalizeperfection.html";
 });
 </script>
 </body>
