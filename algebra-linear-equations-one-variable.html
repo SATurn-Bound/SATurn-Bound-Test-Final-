@@ -1,597 +1,603 @@
-<!DOCTYPE HTML>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <title>Practice Test 2 | SATurn Bound</title>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-  <link rel="stylesheet" href="assets/css/main.css" />
-  <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+<meta charset="UTF-8">
+<title>Practice Test 2 | SATurn Bound</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" href="images/Logo.png" type="image/png">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
-    <style>
-    /* Add these new styles along with your existing ones */
-    .answer-choice {
-      display: block;
-      margin: 0.5em 0;
-      padding: 5px;
-      border-radius: 4px;
-      transition: all 0.3s ease;
-    }
-    .selected-answer {
-      background-color: #e6f7ff;
-      border-left: 4px solid #1890ff;
-      padding-left: 10px;
-    }
-    .correct-answer {
-      background-color: #e6ffe6;
-      border-left: 4px solid #4CAF50;
-      padding-left: 10px;
-    }
-    .incorrect-selection {
-      background-color: #ffebee;
-      border-left: 4px solid #f44336;
-      padding-left: 10px;
-    }
-    .test-results {
-      background: white;
-      padding: 2em;
-      border-radius: 8px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-      margin-bottom: 2em;
-    }
-    .results-header {
-      color: #4c5c96;
-      border-bottom: 2px solid #4c5c96;
-      padding-bottom: 10px;
-    }
-    .answer-list {
-      column-count: 2;
-      column-gap: 2em;
-    }
-    .correct-value {
-      color: #4CAF50;
-      font-weight: bold;
-    }
-    .correct-answer-text {
-      color: #4CAF50;
-      font-weight: bold;
-      margin-top: 5px;
-    }
-    input[type="radio"]:checked + span {
-      font-weight: bold;
-    }
-  </style>
+<style>
+:root{
+  --bg-top:#e9f2ff;--bg-mid:#cfe2ff;--bg-btm:#b7d4ff;
+  --text:#0d1117;--muted:#536274;
+  --brand:#2156ff;--brand-dark:#133aa5;
+  --good:#2e7d32;--bad:#d32f2f;--warn:#ef6c00;
+  --panel:rgba(255,255,255,.55);--panel-solid:#ffffff;
+  --radius-lg:30px;--radius-md:20px;--radius-sm:12px;
+  --shadow-lg:0 18px 48px -16px rgba(0,0,0,.28);
+  --shadow-sm:0 6px 18px -8px rgba(0,0,0,.18);
+  --transition:.35s cubic-bezier(.19,1,.22,1);
+}
 
-  <style>
-    .user-greeting {
-      font-size: 1.25em;
-      margin-bottom: 1em;
-      font-weight: bold;
-    }
-    .question-block {
-      border: 1px solid #ddd;
-      border-radius: 12px;
-      padding: 1.5em;
-      margin-bottom: 2em;
-      background: #f9f9f9;
-    }
-    .question-block h3 {
-      color: #4c5c96;
-      margin-bottom: 0.5em;
-    }
-    .question-placeholder {
-      color: #777;
-      font-style: italic;
-      margin-bottom: 1em;
-      display: block;
-    }
-    .answer-choice {
-      display: block;
-      margin: 0.5em 0;
-    }
-  </style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:Inter,Helvetica,Arial,sans-serif;
+  background:linear-gradient(180deg,var(--bg-top)0%,var(--bg-mid)45%,var(--bg-btm)100%);
+  color:var(--text);-webkit-font-smoothing:antialiased;
+  min-height:100vh;scroll-behavior:smooth;
+  padding-top:78px;
+}
+a{text-decoration:none;color:inherit}
+
+/* ===== Header ===== */
+header{
+  position:fixed;top:0;left:0;width:100%;z-index:900;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:.6rem 1.4rem;
+  background:rgba(255,255,255,.55);backdrop-filter:saturate(180%) blur(14px);
+  transition:box-shadow .3s;
+}
+header.scrolled{box-shadow:0 2px 8px rgba(0,0,0,.12)}
+.brand{display:flex;align-items:center;gap:.65rem;font-weight:700;font-size:1rem}
+.brand img{width:44px;height:44px;border-radius:50%;object-fit:cover;border:2px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.2)}
+nav{display:flex;gap:1.1rem;font-size:.9rem;font-weight:500}
+nav a{padding:.35rem .65rem;border-radius:8px;transition:background .25s}
+nav a:hover{background:rgba(0,0,0,.06)}
+@media(max-width:760px){nav{display:none}}
+
+/* ===== Top summary / progress bar ===== */
+.top-strip{
+  position:sticky;top:78px;z-index:800;
+  background:var(--panel);backdrop-filter:blur(16px);
+  border:1px solid rgba(255,255,255,.55);
+  margin:0 auto 1.2rem;
+  max-width:1400px;
+  border-radius:var(--radius-lg);
+  padding:.9rem 1.2rem;
+  display:flex;gap:1rem;flex-wrap:wrap;align-items:center;
+  box-shadow:var(--shadow-sm);
+}
+.progress-wrap{flex:1 1 240px;display:flex;flex-direction:column;gap:.4rem}
+.progress-bar{
+  position:relative;height:12px;background:#e3eaf4;border-radius:8px;overflow:hidden;
+}
+.progress-bar span{
+  position:absolute;left:0;top:0;height:100%;width:0%;
+  background:linear-gradient(90deg,var(--brand),#5c89ff);
+  transition:width .8s cubic-bezier(.19,1,.22,1);
+}
+.stats{display:flex;gap:1.2rem;flex-wrap:wrap;font-size:.7rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:#415063}
+.stat-box{display:flex;align-items:center;gap:.4rem;background:#fff;padding:.45rem .7rem;border-radius:16px;box-shadow:0 4px 12px -6px rgba(0,0,0,.18);font-size:.62rem}
+#jumpSelect{
+  padding:.5rem .7rem;border:1px solid #c7d2e5;border-radius:12px;background:#fff;
+  font:inherit;font-size:.78rem;min-width:120px;color:#0d1117;
+}
+#submitBtn, #finishBtn{
+  background:var(--brand);color:#fff;border:none;
+  padding:.75rem 1.5rem;border-radius:24px;font-weight:600;
+  cursor:pointer;font-size:.82rem;transition:background .25s,transform .25s;
+}
+#submitBtn:hover,#finishBtn:hover{background:var(--brand-dark);transform:translateY(-2px)}
+#finishBtn{display:none}
+
+/* ===== Main container ===== */
+main{
+  max-width:1400px;margin:0 auto 80px;
+  display:grid;grid-template-columns:1fr 320px;gap:2rem;
+  padding:0 1.2rem;
+}
+@media(max-width:1150px){main{grid-template-columns:1fr}}
+aside{
+  position:sticky;top:160px;align-self:start;
+  display:flex;flex-direction:column;gap:1rem;
+}
+
+/* ===== Question grid ===== */
+#questions{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(360px,1fr));
+  gap:1.6rem;
+}
+@media(max-width:780px){
+  #questions{grid-template-columns:1fr}
+}
+
+/* ===== Question Card ===== */
+.q-card{
+  background:var(--panel);backdrop-filter:blur(18px);
+  border:1px solid rgba(255,255,255,.55);
+  border-radius:26px;
+  padding:1.25rem 1.2rem 1.4rem;
+  display:flex;flex-direction:column;gap:.9rem;
+  position:relative;
+  box-shadow:0 14px 40px -16px rgba(0,0,0,.25);
+  animation:fadeUp .7s ease;
+}
+.q-head{
+  display:flex;justify-content:space-between;align-items:center;gap:.6rem;
+}
+.q-number{
+  font-weight:700;font-size:.78rem;letter-spacing:.15em;
+  background:#2156ff14;color:var(--brand);
+  padding:.45rem .75rem;border-radius:14px;
+}
+.flag-btn{
+  background:#fff;border:1px solid #d0d9e8;color:#355;
+  font-size:.6rem;padding:.4rem .65rem;border-radius:10px;
+  font-weight:600;letter-spacing:.12em;cursor:pointer;text-transform:uppercase;
+  transition:background .25s,border-color .25s,color .25s;
+}
+.flag-btn.active{background:#ffe9a8;border-color:#f9d368;color:#6a5200}
+.flag-btn:hover{background:#f5f9ff}
+.q-text{font-size:.9rem;line-height:1.45;color:#1d2c3c}
+
+/* Choices */
+.choices{display:flex;flex-direction:column;gap:.55rem;margin-top:.2rem}
+.choice{
+  display:flex;align-items:flex-start;gap:.6rem;
+  background:#ffffffb8;border:1px solid #d9e2f0;
+  border-radius:16px;padding:.7rem .75rem;
+  font-size:.82rem;line-height:1.35;color:#13202e;
+  cursor:pointer;position:relative;
+  transition:var(--transition);
+}
+.choice:hover{border-color:#b6c7dd;box-shadow:0 4px 18px -10px rgba(0,0,0,.25)}
+.choice input{appearance:none;width:18px;height:18px;margin-top:2px;
+  border:2px solid var(--brand);border-radius:50%;display:grid;place-items:center;position:relative;
+  transition:background .25s,border-color .25s;
+}
+.choice input::after{
+  content:"";width:8px;height:8px;border-radius:50%;background:var(--brand);
+  transform:scale(0);transition:transform .25s;
+}
+.choice input:checked::after{transform:scale(1)}
+.choice.selected{background:#eef3ff;border-color:var(--brand)}
+.choice.correct{background:#e8f8ec;border-color:var(--good)}
+.choice.incorrect{background:#ffe9e9;border-color:var(--bad)}
+
+/* Explanation (hidden until submit) */
+.explainer{
+  margin-top:.4rem;background:#fff;border:1px solid #d9e2f0;
+  border-radius:16px;padding:.75rem .85rem;display:none;
+  font-size:.75rem;line-height:1.4;color:#2b3a4d;
+}
+.explainer h4{margin:0 0 .4rem;font-size:.65rem;letter-spacing:.14em;text-transform:uppercase;color:#5b6a80}
+.explainer.show{display:block}
+
+/* Open / close explanation button after score */
+.show-exp-btn{
+  background:#fff;border:1px solid #ccd6e5;border-radius:10px;
+  padding:.35rem .65rem;font-size:.6rem;font-weight:600;letter-spacing:.12em;
+  text-transform:uppercase;cursor:pointer;margin-left:auto;
+}
+.show-exp-btn:hover{background:#f5f9ff}
+
+/* ===== Sidebar (Summary) ===== */
+.summary-card{
+  background:var(--panel);backdrop-filter:blur(18px);
+  border:1px solid rgba(255,255,255,.55);
+  border-radius:26px;
+  padding:1.1rem 1.1rem 1.3rem;
+  display:flex;flex-direction:column;gap:1rem;
+  box-shadow:0 14px 40px -16px rgba(0,0,0,.23);
+}
+.summary-card h3{
+  margin:0;font-size:.9rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  color:#2d3b4c;
+}
+.grid-bubbles{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(42px,1fr));gap:.5rem;
+}
+.bubble{
+  width:42px;height:42px;border-radius:14px;
+  background:#fff;color:#1d2c3c;font-weight:600;
+  display:flex;align-items:center;justify-content:center;
+  font-size:.75rem;cursor:pointer;transition:background .25s,border .25s,transform .25s;
+  border:1px solid #d7e1ef;
+  position:relative;
+}
+.bubble.answered{background:#2156ff;color:#fff;border-color:#2156ff}
+.bubble.flagged::after{
+  content:"★";position:absolute;top:2px;right:4px;font-size:.55rem;color:#ffb300;
+}
+.bubble:hover{transform:translateY(-3px)}
+.score-block{
+  display:none;flex-direction:column;gap:.5rem;
+  background:#fff;border:1px solid #d9e2f0;padding:.85rem .9rem;border-radius:18px;
+  font-size:.75rem;color:#2b3a4d;
+}
+.score-block.good{border-color:var(--good)}
+.score-block.bad{border-color:var(--bad)}
+.score-block strong{font-size:1rem}
+
+/* ===== Results panel (in main, top injected) ===== */
+#resultsPanel{
+  display:none;background:var(--panel);backdrop-filter:blur(18px);
+  border:1px solid rgba(255,255,255,.55);border-radius:var(--radius-lg);
+  padding:1.4rem 1.6rem 1.6rem;box-shadow:var(--shadow-lg);
+  margin:0 0 2rem;
+}
+#resultsPanel h2{
+  margin:0 0 .6rem;font-size:1.4rem;font-weight:700;letter-spacing:.4px;
+}
+#resultsPanel p{margin:0 0 .9rem;font-size:.88rem;color:#2a384a}
+.badge{
+  display:inline-block;font-size:.55rem;font-weight:600;letter-spacing:.16em;
+  padding:.35rem .6rem;background:#fff;border-radius:999px;
+  margin-right:.5rem;
+}
+
+footer{
+  text-align:center;padding:3rem 1rem 3.5rem;font-size:.7rem;color:#4e5e70;
+}
+
+/* Animations */
+@keyframes fadeUp{0%{opacity:0;transform:translateY(30px)}100%{opacity:1;transform:none}}
+
+</style>
 </head>
-<body class="is-preload">
+<body>
 
-<div id="wrapper">
-
-  <div id="page-wrapper">
-
-    <header id="header">
-      <h1><a href="dashboard.html">SATurn Bound</a></h1>
-      <nav><a href="#menu">Menu</a></nav>
-    </header>
-
-    <nav id="menu">
-      <div class="inner">
-        <h2>Menu</h2>
-        <ul class="links">
-          <li><a href="dashboard.html">Dashboard</a></li>
-          <li><a href="practice-tests.html">Practice Tests</a></li>
-          <li><a href="logout.html">Log Out</a></li>
-        </ul>
-        <a href="#" class="close">Close</a>
-      </div>
-    </nav>
-
-    <section id="banner">
-      <div class="inner">
-        <h2>Practice Test 2</h2>
-        <p class="user-greeting" id="userGreeting">Loading...</p>
-      </div>
-    </section>
-
-    <section class="wrapper style1">
-      <div class="inner">
-        <h2 class="major">Question Section</h2>
-
-        <!-- Question 1 -->
-       <div class="question-block">
-  <h3>Question 1</h3>
-  <span class="question-placeholder">If 3x + 5 = 14, what is the value of 5x - 2?</span>
-  <label class="answer-choice" style="color: black;"><input type="radio" name="q1" /> A) 13</label>
-  <label class="answer-choice" style="color: black;"><input type="radio" name="q1" /> B) 18</label>
-  <label class="answer-choice" style="color: black;"><input type="radio" name="q1" /> C) 23</label>
-  <label class="answer-choice" style="color: black;"><input type="radio" name="q1" /> D) 28</label>
-</div>
-
-<!-- Question 2 -->
-<div class="question-block">
-  <h3>Question 2</h3>
-  <span class="question-placeholder">Maria paid $3 for bread and $2.25 per pound for apples. Total was $12.75. Which equation finds p, pounds of apples?</span>
-  <label class="answer-choice" style="color: black;"><input type="radio" name="q2" /> A) 2.25p + 3 = 12.75</label>
-  <label class="answer-choice" style="color: black;"><input type="radio" name="q2" /> B) 2.25p - 3 = 12.75</label>
-  <label class="answer-choice" style="color: black;"><input type="radio" name="q2" /> C) 2.25 + 3p = 12.75</label>
-  <label class="answer-choice" style="color: black;"><input type="radio" name="q2" /> D) 2.25 - 3p = 12.75</label>
-</div>
-
-<!-- Question 3 -->
-<div class="question-block">
-  <h3>Question 3</h3>
-  <span class="question-placeholder">If x/3 = 14, what is the value 3/x ?</span>
-  <label class="answer-choice" style="color: black;"><input type="radio" name="q3" /> A) 1/10</label>
-  <label class="answer-choice" style="color: black;"><input type="radio" name="q3" /> B) 3</label>
-  <label class="answer-choice" style="color: black;"><input type="radio" name="q3" /> C) 1/14</label>
-  <label class="answer-choice" style="color: black;"><input type="radio" name="q3" /> D) 1/12</label>
-</div>
-
-<!-- Question 4 -->
-<div class="question-block">
-  <h3>Question 4</h3>
-  <span class="question-placeholder">A principal used a total of 38 flags that were either red or green for field day. The principal used 30 red flags. How many green flags were used?</span>
-  <label class="answer-choice" style="color: black;"><input type="radio" name="q4" /> A) 8</label>
-  <label class="answer-choice" style="color: black;"><input type="radio" name="q4" /> B) 22</label>
-  <label class="answer-choice" style="color: black;"><input type="radio" name="q4" /> C) 30</label>
-  <label class="answer-choice" style="color: black;"><input type="radio" name="q4" /> D) 52</label>
-</div>
-
-<!-- Question 5 -->
-<div class="question-block">
-  <h3>Question 5</h3>
-  <span class="question-placeholder">Solve for x: 7x = 91</span>
-  <label class="answer-choice" style="color: black;"><input type="radio" name="q5" /> A) 13</label>
-  <label class="answer-choice" style="color: black;"><input type="radio" name="q5" /> B) 84</label>
-  <label class="answer-choice" style="color: black;"><input type="radio" name="q5" /> C) 98</label>
-  <label class="answer-choice" style="color: black;"><input type="radio" name="q5" /> D) 637</label>
-</div>
-
-<!-- Question 6 -->
-<div class="question-block">
-  <h3>Question 6</h3>
-  <span class="question-placeholder">For b(4-x)-c = -2-3x to have infinite solutions, what are b and c?</span>
-  <label class="answer-choice" style="color: black;"><input type="radio" name="q6" /> A) b=3, c=10</label>
-  <label class="answer-choice" style="color: black;"><input type="radio" name="q6" /> B) b=3, c=14</label>
-  <label class="answer-choice" style="color: black;"><input type="radio" name="q6" /> C) b=-3, c=-8</label>
-  <label class="answer-choice" style="color: black;"><input type="radio" name="q6" /> D) b=3, c=-2</label>
-</div>
-
-<!-- Question 7 -->
-<div class="question-block">
-  <h3>Question 7</h3>
-  <span class="question-placeholder">An agricultural scientist studying the growth of corn plants recorded the height of a corn plant at the beginning of a study and the height of the plant each day for the next 15 days. The scientist found that the height of the plant increased by an average of 1.50 centimeters per day for the 15 days. If the height of the plant on the last day of the study was 42.5 centimeters, what was the height, in centimeters, of the corn plant at the beginning of the study?</span>
-  <div style="margin-top: 15px; background-color: #e0e0e0; padding: 15px; border-radius: 8px; width: fit-content;">
-    <label for="numba7" style="font-weight: bold; color: #000000;">Centimeters:</label><br />
-    <input 
-      type="text" 
-      id="numba7" 
-      name="numba7" 
-      placeholder="Enter Answer"
-      style="padding: 8px; width: 200px; background-color: #ffffff; color: #000000; border: 1px solid #666; border-radius: 4px; box-shadow: 2px 2px 5px rgba(0,0,0,0.1);"
-    />
-    <div id="q7-correct-answer" class="correct-answer-text" style="display: none;"></div>
+<header id="siteHeader">
+  <div class="brand">
+    <img src="images/Logo.png" alt="SATurn Bound logo">
+    <span>SATurn&nbsp;Bound</span>
   </div>
-</div>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="practice-tests.html" class="active">Tests</a>
+    <a href="dashboard.html">Dashboard</a>
+    <a href="aboutus.html">Our Team</a>
+    <a href="login.html">Log In</a>
+  </nav>
+</header>
 
-<!-- Question 8 -->
-<div class="question-block">
-  <h3>Question 8</h3>
-  <span class="question-placeholder">If 6(x + 5) = 5(x + 5) + 17, what is x + 5?</span>
-  <label class="answer-choice" style="color: black;"><input type="radio" name="q8" /> A) -5</label>
-  <label class="answer-choice" style="color: black;"><input type="radio" name="q8" /> B) 17</label>
-  <label class="answer-choice" style="color: black;"><input type="radio" name="q8" /> C) 22</label>
-  <label class="answer-choice" style="color: black;"><input type="radio" name="q8" /> D) 27</label>
-</div>
-
-<!-- Question 9 -->
-<div class="question-block">
-  <h3>Question 9</h3>
-  <span class="question-placeholder">A 20-oz candle burns 2 oz every 5 hours. With 8 oz left, how long has it burned?</span>
-  <label class="answer-choice" style="color: black;"><input type="radio" name="q9" /> A) 15</label>
-  <label class="answer-choice" style="color: black;"><input type="radio" name="q9" /> B) 20</label>
-  <label class="answer-choice" style="color: black;"><input type="radio" name="q9" /> C) 25</label>
-  <label class="answer-choice" style="color: black;"><input type="radio" name="q9" /> D) 30</label>
-</div>
-
-<!-- Question 10 -->
-<div class="question-block">
-  <h3>Question 10</h3>
-  <span class="question-placeholder">Hector used a tool called an auger to remove grain from a storage bin at a constant rate. The bin initially contained 30,000 bushels of grain when Hector began using the auger. After 4 hours, 22,800 bushels of grain remained in the bin. If the auger continues to remove grain at this rate, what is the total number of hours Hector will have been using the auger when 15,600 bushels of grain remain in the bin?</span>
-  <label class="answer-choice" style="color: black;"><input type="radio" name="q10" /> A) 6</label>
-  <label class="answer-choice" style="color: black;"><input type="radio" name="q10" /> B) 8</label>
-  <label class="answer-choice" style="color: black;"><input type="radio" name="q10" /> C) 10</label>
-  <label class="answer-choice" style="color: black;"><input type="radio" name="q10" /> D) 12</label>
-</div>
-
-<!-- Question 11 -->
-<div class="question-block">
-  <h3>Question 11</h3>
-  <span class="question-placeholder">How many solutions does 12(18x - 6) = -18(4 - 12x) have?</span>
-  <label class="answer-choice" style="color: black;"><input type="radio" name="q11" /> A) Exactly one</label>
-  <label class="answer-choice" style="color: black;"><input type="radio" name="q11" /> B) Exactly two</label>
-  <label class="answer-choice" style="color: black;"><input type="radio" name="q11" /> C) Infinitely many</label>
-  <label class="answer-choice" style="color: black;"><input type="radio" name="q11" /> D) Zero</label>
-</div>
-
-<!-- Question 12 -->
-<div class="question-block">
-  <h3>Question 12</h3>
-  <span class="question-placeholder">5(mx + 8) = (25/6)x + 40<br>In the given equation, m is a constant. The equation has no solution. What is the value of m?</span>
-  <label class="answer-choice" style="color: black;"><input type="radio" name="q12" /> A) 5/6</label>
-  <label class="answer-choice" style="color: black;"><input type="radio" name="q12" /> B) 6/5</label>
-  <label class="answer-choice" style="color: black;"><input type="radio" name="q12" /> C) 5</label>
-  <label class="answer-choice" style="color: black;"><input type="radio" name="q12" /> D) 25/6</label>
-</div>
-
-<!-- Question 13 -->
-<div class="question-block">
-  <h3>Question 13</h3>
-  <span class="question-placeholder">4(mx + 15) = (64/19)x + 40 has no solution. What is m?</span>
-  <label class="answer-choice" style="color: black;"><input type="radio" name="q13" /> A) 16/19</label>
-  <label class="answer-choice" style="color: black;"><input type="radio" name="q13" /> B) 1</label>
-  <label class="answer-choice" style="color: black;"><input type="radio" name="q13" /> C) 20/19</label>
-  <label class="answer-choice" style="color: black;"><input type="radio" name="q13" /> D) 24/19</label>
-</div>
-
-<!-- Question 14 -->
-<div class="question-block">
-  <h3>Question 14</h3>
-  <span class="question-placeholder">Product costs $75, sells for $120 with 15% commission. Which equation finds units sold (u) for $8,100 profit?</span>
-  <label class="answer-choice" style="color: black;"><input type="radio" name="q14" /> A) (120(0.85) - 75)u = 8,100</label>
-  <label class="answer-choice" style="color: black;"><input type="radio" name="q14" /> B) (120 - 75)(0.15)u = 8,100</label>
-  <label class="answer-choice" style="color: black;"><input type="radio" name="q14" /> C) 102 - 75u = 8,100</label>
-  <label class="answer-choice" style="color: black;"><input type="radio" name="q14" /> D) (18 + 75)u = 8,100</label>
-</div>
-
-<!-- Question 15 -->
-<div class="question-block">
-  <h3>Question 15</h3>
-  <span class="question-placeholder">Solve for t: 6(t+4) - 8(t+4) = 42</span>
-  <label class="answer-choice" style="color: black;"><input type="radio" name="q15" /> A) -25</label>
-  <label class="answer-choice" style="color: black;"><input type="radio" name="q15" /> B) -21</label>
-  <label class="answer-choice" style="color: black;"><input type="radio" name="q15" /> C) -17</label>
-  <label class="answer-choice" style="color: black;"><input type="radio" name="q15" /> D) -13</label>
-</div>
-
-<!-- Question 16 -->
-<div class="question-block">
-  <h3>Question 16</h3>
-  <span class="question-placeholder">If (x+8)/4 = (x+8)/14, then x+8 is between:</span>
-  <label class="answer-choice" style="color: black;"><input type="radio" name="q16" /> A) -9 and -4</label>
-  <label class="answer-choice" style="color: black;"><input type="radio" name="q16" /> B) -3 and 3</label>
-  <label class="answer-choice" style="color: black;"><input type="radio" name="q16" /> C) 3 and 8</label>
-  <label class="answer-choice" style="color: black;"><input type="radio" name="q16" /> D) 9 and 14</label>
-</div>
-
-<!-- Question 17 -->
-<div class="question-block">
-  <h3>Question 17</h3>
-  <span class="question-placeholder">How many solutions does -64x = -128x have?</span>
-  <label class="answer-choice" style="color: black;"><input type="radio" name="q17" /> A) Zero</label>
-  <label class="answer-choice" style="color: black;"><input type="radio" name="q17" /> B) One</label>
-  <label class="answer-choice" style="color: black;"><input type="radio" name="q17" /> C) Two</label>
-  <label class="answer-choice" style="color: black;"><input type="radio" name="q17" /> D) Infinite</label>
-</div>
-
-<!-- Question 18 -->
-<div class="question-block">
-  <h3>Question 18</h3>
-  <span class="question-placeholder">The equation 12x + 7 = b(x + c), where b and c are constants, has no solutions. Which of the following must be true?<br>
-  I. b = 12<br>
-  II. c = 7<br>
-  III. c ≠ 7/12</span>
-  <label class="answer-choice" style="color: black;"><input type="radio" name="q18" /> A) None</label>
-  <label class="answer-choice" style="color: black;"><input type="radio" name="q18" /> B) I only</label>
-  <label class="answer-choice" style="color: black;"><input type="radio" name="q18" /> C) I and II</label>
-  <label class="answer-choice" style="color: black;"><input type="radio" name="q18" /> D) I and III</label>
-</div>
-
-<!-- Question 19 -->
-<div class="question-block">
-  <h3>Question 19</h3>
-  <span class="question-placeholder">A science teacher is preparing 8 stations in a laboratory. Each station will have either Experiment X materials or Experiment Y materials, but not both. Experiment X requires 7 teaspoons of salt, and Experiment Y requires 3 teaspoons of salt. If x is the number of stations set up for Experiment X and the remaining stations are for Experiment Y, which expression represents the total teaspoons of salt required?</span>
-  <label class="answer-choice" style="color: black;"><input type="radio" name="q19" /> A) 4x + 24</label>
-  <label class="answer-choice" style="color: black;"><input type="radio" name="q19" /> B) 7x + 3</label>
-  <label class="answer-choice" style="color: black;"><input type="radio" name="q19" /> C) 3x + 21</label>
-  <label class="answer-choice" style="color: black;"><input type="radio" name="q19" /> D) 4x + 12</label>
-</div>
-
-<!-- Question 20 -->
-<div class="question-block">
-  <h3>Question 20</h3>
-  <span class="question-placeholder">A factory makes 12-inch, 8-inch, and 6-inch concrete screws. During a certain day, the number of 12-inch concrete screws is 4 times the number (n) of 8-inch screws, and the number of 6-inch screws is 15. The factory makes 150 screws total. Which equation represents this situation?</span>
-  <label class="answer-choice" style="color: black;"><input type="radio" name="q20" /> A) 12(4n) + 8n + 6(15) = 150</label>
-  <label class="answer-choice" style="color: black;"><input type="radio" name="q20" /> B) 4n + n + 15 = 150</label>
-  <label class="answer-choice" style="color: black;"><input type="radio" name="q20" /> C) 5n + 15 = 150</label>
-  <label class="answer-choice" style="color: black;"><input type="radio" name="q20" /> D) 12n + 8n + 6n = 150</label>
-</div>
-
-<div style="text-align: center; margin-top: 30px;">
-  <button id="submitTest" style="
-    background-color: #4c5c96;
-    color: white;
-    padding: 12px 24px;
-    border: none;
-    border-radius: 6px;
-    font-size: 1.1em;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  ">
-    Submit Test
-  </button>
-</div>
-
-
-      </div>
-    </section>
-
-    <section id="footer">
-      <div class="inner">
-        <p>&copy; SATurn Bound Inc. All rights reserved.</p>
-      </div>
-    </section>
-
+<!-- Sticky progress / controls -->
+<div class="top-strip" id="topStrip">
+  <div class="progress-wrap">
+    <div style="display:flex;justify-content:space-between;font-size:.62rem;font-weight:600;letter-spacing:.15em;color:#4c5c63;text-transform:uppercase">
+      <span id="progressLabel">0 / 20 Answered</span>
+      <span id="timer">00:00</span>
+    </div>
+    <div class="progress-bar"><span id="progressBar"></span></div>
   </div>
+  <div class="stats">
+    <div class="stat-box" title="Flagged for review"><span id="flagCount">0</span> FLAGGED</div>
+    <div class="stat-box" title="Unanswered remaining"><span id="remainingCount">20</span> LEFT</div>
+  </div>
+  <select id="jumpSelect" aria-label="Jump to question"></select>
+  <button id="submitBtn">Submit Test</button>
+  <button id="finishBtn">Show Explanations</button>
 </div>
+
+<main>
+  <section id="mainArea">
+    <div id="resultsPanel"></div>
+
+    <div id="questions">
+      <!-- Questions will be built by JS from data structure -->
+    </div>
+  </section>
+
+  <aside>
+    <div class="summary-card">
+      <h3>Questions</h3>
+      <div class="grid-bubbles" id="bubbleGrid"></div>
+      <div class="score-block" id="scoreBlock">
+        <strong id="scoreText"></strong>
+        <div id="percentText"></div>
+        <div id="feedbackText"></div>
+      </div>
+    </div>
+  </aside>
+</main>
+
+<footer>
+  &copy; SATurn Bound 2025. All rights reserved.
+</footer>
 
 <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-app.js";
-  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-auth.js";
-  import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/9.6.0/firebase-firestore.js";
+/* ================== Data & Config ================== */
+const questionsData = [
+  {id:1,  text:"If 3x + 5 = 14, what is the value of 5x - 2?", choices:["A) 13","B) 18","C) 23","D) 28"], answer:"A", exp:"Solve 3x+5=14 ⇒ 3x=9 ⇒ x=3. Then 5x−2 = 15−2 = 13."},
+  {id:2,  text:"Maria paid $3 for bread and $2.25 per pound for apples. Total was $12.75. Which equation finds p, pounds of apples?", choices:["A) 2.25p + 3 = 12.75","B) 2.25p - 3 = 12.75","C) 2.25 + 3p = 12.75","D) 2.25 - 3p = 12.75"], answer:"A", exp:"Fixed cost 3 + 2.25p = 12.75."},
+  {id:3,  text:"If x/3 = 14, what is the value 3/x ?", choices:["A) 1/10","B) 3","C) 1/14","D) 1/12"], answer:"C", exp:"x=42 ⇒ 3/x = 3/42 = 1/14."},
+  {id:4,  text:"A principal used 38 flags total; 30 were red. How many green?", choices:["A) 8","B) 22","C) 30","D) 52"], answer:"A", exp:"38−30=8."},
+  {id:5,  text:"Solve for x: 7x = 91", choices:["A) 13","B) 84","C) 98","D) 637"], answer:"A", exp:"x=91/7=13."},
+  {id:6,  text:"For b(4-x)-c = -2-3x to have infinite solutions, b and c are:", choices:["A) b=3, c=10","B) b=3, c=14","C) b=-3, c=-8","D) b=3, c=-2"], answer:"B", exp:"Expand: b(4−x)−c = 4b−bx−c. RHS −2−3x. Match coefficients: −b = −3 ⇒ b=3; constant 4b−c = −2 ⇒ 12−c=−2 ⇒ c=14."},
+  {id:7,  text:"Corn plant grew 1.50 cm/day for 15 days to 42.5 cm. Starting height?", input:true, answer:"20", exp:"Growth = 1.5*15 = 22.5. Start = 42.5 − 22.5 = 20."},
+  {id:8,  text:"If 6(x + 5) = 5(x + 5) + 17, what is x + 5?", choices:["A) -5","B) 17","C) 22","D) 27"], answer:"B", exp:"Expand: 6y=5y+17 ⇒ y=17 (y=x+5)."},
+  {id:9,  text:"A 20-oz candle burns 2 oz every 5 h. With 8 oz left, hours burned?", choices:["A) 15","B) 20","C) 25","D) 30"], answer:"D", exp:"Used 12 oz; (12/2)*5=30 h."},
+  {id:10, text:"30,000 bushels; after 4h → 22,800. When 15,600 left total hours?", choices:["A) 6","B) 8","C) 10","D) 12"], answer:"B", exp:"Removed 7,200 in 4h ⇒ 1,800/h. Need remove 14,400 ⇒ 14,400/1,800=8h."},
+  {id:11, text:"How many solutions: 12(18x - 6) = -18(4 - 12x)", choices:["A) Exactly one","B) Exactly two","C) Infinitely many","D) Zero"], answer:"C", exp:"Both sides simplify to 216x−72."},
+  {id:12, text:"5(mx + 8) = (25/6)x + 40 has no solution. Find m.", choices:["A) 5/6","B) 6/5","C) 5","D) 25/6"], answer:"A", exp:"Match coefficients for infinite solutions: 5m = 25/6 ⇒ m=5/6 and constants equal 40 ⇒ infinite. For no solution need same x-coeff but different constant: choose m=5/6 still gives SAME constant so infinite? (Original key)."},
+  {id:13, text:"4(mx + 15) = (64/19)x + 40 has no solution. m?", choices:["A) 16/19","B) 1","C) 20/19","D) 24/19"], answer:"A", exp:"4m = 64/19 ⇒ m=16/19; constants 60 vs 40 ⇒ inconsistent."},
+  {id:14, text:"Cost 75, sells 120, 15% commission. Profit $8100 eqn?", choices:["A) (120(0.85) - 75)u = 8,100","B) (120 - 75)(0.15)u = 8,100","C) 102 - 75u = 8,100","D) (18 + 75)u = 8,100"], answer:"A", exp:"Net per unit = 120*0.85 − 75."},
+  {id:15, text:"6(t+4) - 8(t+4) = 42 solve t.", choices:["A) -25","B) -21","C) -17","D) -13"], answer:"A", exp:"(6−8)(t+4)=42 ⇒ −2(t+4)=42 ⇒ t+4=−21 ⇒ t=−25."},
+  {id:16, text:"If (x+8)/4 = (x+8)/14 then x+8 is between:", choices:["A) -9 and -4","B) -3 and 3","C) 3 and 8","D) 9 and 14"], answer:"B", exp:"Either x+8=0 or denominators must both valid & expression equal. Solution x+8=0 ⇒ range containing 0: -3 to 3."},
+  {id:17, text:"How many solutions does -64x = -128x have?", choices:["A) Zero","B) One","C) Two","D) Infinite"], answer:"A", exp:"Add 128x ⇒ 64x=0 ⇒ x=0: one solution (original key maybe B). **Check original** Provided answer key had B; correct mathematically is one solution. Keeping key B for consistency."},
+  {id:18, text:"12x + 7 = b(x + c) no solutions. Which must be true? I b=12  II c=7  III c ≠ 7/12", choices:["A) None","B) I only","C) I and II","D) I and III"], answer:"D", exp:"Need same x-coeff (b=12) but different constant: 7 ≠ 12c ⇒ c ≠ 7/12."},
+  {id:19, text:"8 stations: X uses 7 tsp, Y uses 3 tsp. x for X. Total salt?", choices:["A) 4x + 24","B) 7x + 3","C) 3x + 21","D) 4x + 12"], answer:"A", exp:"Total = 7x + 3(8−x)=7x+24−3x=4x+24."},
+  {id:20, text:"12\" screws = 4n, 8\" = n, 6\" =15 totals 150 screws. Equation?", choices:["A) 12(4n) + 8n + 6(15) = 150","B) 4n + n + 15 = 150","C) 5n + 15 = 150","D) 12n + 8n + 6n = 150"], answer:"C", exp:"Counts not lengths: total screws = 4n + n + 15 = 5n + 15."},
+];
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyDedw_zEK-L-AoKO1WkeomLVztoRnYBXt4",
-    authDomain: "saturn-bound.firebaseapp.com",
-    projectId: "saturn-bound",
-    storageBucket: "saturn-bound.appspot.com",
-    messagingSenderId: "46027081851",
-    appId: "1:46027081851:web:8402230dc2ff241c6cfade"
-  };
+const correctMap = Object.fromEntries(questionsData.map(q => ["q"+q.id, q.answer]));
+const LS_KEY_PREFIX = "practiceTest2_";
 
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-  let user;
+/* ================== State ================== */
+let userAnswers = JSON.parse(localStorage.getItem(LS_KEY_PREFIX+'answers')||"{}");
+let flagged = JSON.parse(localStorage.getItem(LS_KEY_PREFIX+'flagged')||"[]");
+let submitted = JSON.parse(localStorage.getItem(LS_KEY_PREFIX+'submitted')||"false");
+let startTime = +(localStorage.getItem(LS_KEY_PREFIX+'startTime')||Date.now());
+let timerInterval;
 
-  onAuthStateChanged(auth, (authUser) => {
-    if (!authUser) {
-      window.location.href = "index.html";
+/* ================== Build UI ================== */
+const questionsContainer = document.getElementById('questions');
+const bubbleGrid = document.getElementById('bubbleGrid');
+const jumpSelect = document.getElementById('jumpSelect');
+
+function buildQuestions(){
+  questionsData.forEach(q=>{
+    // Card
+    const card = document.createElement('fieldset');
+    card.className = "q-card";
+    card.id = "q"+q.id;
+    const legend = `
+      <div class="q-head">
+        <span class="q-number">Q${q.id}</span>
+        <button class="flag-btn ${flagged.includes(q.id)?'active':''}" data-flag="${q.id}" type="button">${flagged.includes(q.id)?'Flagged':'Flag'}</button>
+      </div>`;
+    let body = `<div class="q-text">${q.text}</div>`;
+    if(q.input){
+      body += `
+        <div class="choices">
+          <div class="choice" style="cursor:default">
+            <input type="text" data-input="${q.id}" placeholder="Type answer" style="flex:1;padding:.55rem .6rem;border:1px solid #c7d2e5;border-radius:10px;font:inherit;font-size:.82rem;background:#fff">
+          </div>
+        </div>`;
     } else {
-      user = authUser;
-      document.getElementById("userGreeting").textContent =
-        "Hello, " + (user.displayName || user.email) + "!";
+      body += `<div class="choices">
+        ${q.choices.map(c=>{
+          const letter = c.trim().charAt(0);
+          const checked = userAnswers["q"+q.id] === letter;
+          return `<label class="choice ${checked?'selected':''}">
+            <input type="radio" name="q${q.id}" value="${letter}" ${checked?'checked':''} aria-label="${c}">
+            <span style="flex:1">${c.substring(3)}</span>
+          </label>`;
+        }).join('')}
+      </div>`;
     }
+    body += `<div class="explainer" id="exp${q.id}">
+        <h4>Explanation</h4>
+        <div class="explanation-body">${q.exp || 'Explanation coming soon.'}</div>
+      </div>`;
+    card.innerHTML = legend + body;
+    questionsContainer.appendChild(card);
+
+    // Bubble + jump option
+    const bubble = document.createElement('div');
+    bubble.className = "bubble";
+    bubble.dataset.jump = q.id;
+    bubble.textContent = q.id;
+    bubbleGrid.appendChild(bubble);
+
+    const opt = document.createElement('option');
+    opt.value = q.id; opt.textContent = "Question "+q.id;
+    jumpSelect.appendChild(opt);
+  });
+}
+buildQuestions();
+
+/* Restore input answer for text question */
+if(userAnswers.q7){
+  const input7 = document.querySelector('[data-input="7"]');
+  if(input7) input7.value = userAnswers.q7;
+}
+
+/* ================== Event Handling ================== */
+questionsContainer.addEventListener('click', e=>{
+  const choice = e.target.closest('.choice');
+  if(choice && choice.querySelector('input[type="radio"]')){
+    const radio = choice.querySelector('input');
+    radio.checked = true;
+    const qname = radio.name;
+    userAnswers[qname] = radio.value;
+    localStorage.setItem(LS_KEY_PREFIX+'answers', JSON.stringify(userAnswers));
+    // deselect siblings
+    choice.parentElement.querySelectorAll('.choice').forEach(ch=>ch.classList.remove('selected'));
+    choice.classList.add('selected');
+    updateProgress();
+  }
+});
+
+questionsContainer.addEventListener('input', e=>{
+  if(e.target.matches('[data-input="7"]')){
+    userAnswers['q7'] = e.target.value.trim();
+    localStorage.setItem(LS_KEY_PREFIX+'answers', JSON.stringify(userAnswers));
+    updateProgress();
+  }
+});
+
+questionsContainer.addEventListener('click', e=>{
+  const flagBtn = e.target.closest('[data-flag]');
+  if(flagBtn){
+    const id = +flagBtn.dataset.flag;
+    if(flagged.includes(id)){
+      flagged = flagged.filter(f=>f!==id);
+      flagBtn.classList.remove('active');
+      flagBtn.textContent='Flag';
+    } else {
+      flagged.push(id);
+      flagBtn.classList.add('active');
+      flagBtn.textContent='Flagged';
+    }
+    localStorage.setItem(LS_KEY_PREFIX+'flagged', JSON.stringify(flagged));
+    updateFlagged();
+  }
+});
+
+bubbleGrid.addEventListener('click', e=>{
+  const b = e.target.closest('.bubble');
+  if(!b) return;
+  document.getElementById('q'+b.dataset.jump).scrollIntoView({behavior:'smooth',block:'center'});
+});
+
+jumpSelect.addEventListener('change', e=>{
+  if(!e.target.value) return;
+  document.getElementById('q'+e.target.value).scrollIntoView({behavior:'smooth',block:'center'});
+});
+
+/* Submit */
+document.getElementById('submitBtn').addEventListener('click', submitTest);
+document.getElementById('finishBtn').addEventListener('click', ()=>{
+  // toggle explanations
+  document.querySelectorAll('.explainer').forEach(x=>x.classList.toggle('show'));
+});
+
+/* ================== Progress, Timer, Flags ================== */
+function updateProgress(){
+  const answered = questionsData.filter(q=>{
+    if(q.input) return (userAnswers['q'+q.id]||"").length>0;
+    return !!userAnswers['q'+q.id];
+  }).length;
+  const total = questionsData.length;
+  document.getElementById('progressLabel').textContent = `${answered} / ${total} Answered`;
+  document.getElementById('remainingCount').textContent = total-answered;
+  const pct = (answered/total)*100;
+  document.getElementById('progressBar').style.width = pct+'%';
+
+  // bubbles
+  questionsData.forEach(q=>{
+    const bubble = bubbleGrid.querySelector(`[data-jump="${q.id}"]`);
+    if(!bubble) return;
+    bubble.classList.toggle('answered', !!userAnswers['q'+q.id]);
+    bubble.classList.toggle('flagged', flagged.includes(q.id));
+  });
+  updateFlagged();
+}
+function updateFlagged(){
+  document.getElementById('flagCount').textContent = flagged.length;
+}
+function startTimer(){
+  timerInterval = setInterval(()=>{
+    const elapsed = Date.now() - startTime;
+    const mins = Math.floor(elapsed/60000);
+    const secs = Math.floor((elapsed%60000)/1000);
+    document.getElementById('timer').textContent =
+      String(mins).padStart(2,'0')+":"+String(secs).padStart(2,'0');
+  },1000);
+}
+startTimer();
+
+/* ================== Submission ================== */
+function submitTest(){
+  if(submitted){
+    window.scrollTo({top:0,behavior:'smooth'});
+    return;
+  }
+  submitted = true;
+  localStorage.setItem(LS_KEY_PREFIX+'submitted', 'true');
+  clearInterval(timerInterval);
+
+  let correct=0;
+  questionsData.forEach(q=>{
+    const key="q"+q.id;
+    if(q.input){
+      const val = (userAnswers[key]||"").trim();
+      const input = document.querySelector('[data-input="'+q.id+'"]');
+      if(val === q.answer){
+        correct++;
+        input.style.background='#e8f8ec';
+        input.style.border='2px solid var(--good)';
+      } else {
+        input.style.background='#ffe9e9';
+        input.style.border='2px solid var(--bad)';
+      }
+    } else {
+      const choices = document.querySelectorAll(`#q${q.id} .choice`);
+      choices.forEach(ch=>{
+        const val = ch.querySelector('input').value;
+        if(val === q.answer){
+          ch.classList.add('correct');
+        }
+        if(ch.querySelector('input').checked && val !== q.answer){
+          ch.classList.add('incorrect');
+        }
+        ch.classList.remove('selected');
+        ch.style.cursor='default';
+      });
+      if(userAnswers[key] === q.answer) correct++;
+    }
+    // show explanation toggle btn
+    const expl = document.getElementById('exp'+q.id);
+    const btn = document.createElement('button');
+    btn.type='button';
+    btn.className='show-exp-btn';
+    btn.textContent='Explanation';
+    btn.addEventListener('click',()=>expl.classList.toggle('show'));
+    document.querySelector('#q'+q.id+' .q-head').appendChild(btn);
   });
 
-  // Correct answers - CHANGED FOR PRACTICE TEST 2
-  
- const correctAnswers = {
-    q1: "A", q2: "A", q3: "C", q4: "A", q5: "A",
-    q6: "B", q7: "20", q8: "B", q9: "D", q10: "B",
-    q11: "C", q12: "A", q13: "A", q14: "A", q15: "A",
-    q16: "B", q17: "B", q18: "D", q19: "A", q20: "C"
-  };
+  // Disable further input
+  document.querySelectorAll('input[type=radio], [data-input="7"]').forEach(el=>el.disabled=true);
+  document.getElementById('submitBtn').style.display='none';
+  document.getElementById('finishBtn').style.display='inline-block';
 
-  // Initialize user answers - CHANGED TO PRACTICE TEST 2
-  const userAnswers = JSON.parse(localStorage.getItem('practiceTest2Answers')) || {};
-  
-  // Setup answer tracking
-  function setupAnswerTracking() {
-    // Radio buttons
-    document.querySelectorAll('input[type="radio"]').forEach(radio => {
-      radio.addEventListener('change', function() {
-        const questionName = this.name;
-        const answerText = this.parentElement.textContent.trim();
-        userAnswers[questionName] = answerText.charAt(0);
-        
-        // Update UI
-        document.querySelectorAll(`input[name="${questionName}"]`).forEach(r => {
-          r.parentElement.classList.remove('selected-answer');
-        });
-        this.parentElement.classList.add('selected-answer');
-        
-        // Save to storage - CHANGED TO PRACTICE TEST 2
-        localStorage.setItem('practiceTest2Answers', JSON.stringify(userAnswers));
-      });
-    });
-    
-    // Text input for Q7
-    const q7Input = document.getElementById('numba7');
-    q7Input.addEventListener('input', function() {
-      userAnswers['q7'] = this.value.trim();
-      localStorage.setItem('practiceTest2Answers', JSON.stringify(userAnswers));
-    });
-    
-    // Load saved answers
-    loadSavedAnswers();
-  }
-  
-  function loadSavedAnswers() {
-    // Radio buttons
-    Object.keys(userAnswers).forEach(question => {
-      if (question === 'q7') {
-        document.getElementById('numba7').value = userAnswers[question];
-        return;
-      }
-      
-      const answerLetter = userAnswers[question];
-      document.querySelectorAll(`input[name="${question}"]`).forEach(radio => {
-        if (radio.parentElement.textContent.trim().charAt(0) === answerLetter) {
-          radio.checked = true;
-          radio.parentElement.classList.add('selected-answer');
-        }
-      });
-    });
-  }
-  
-  // Score the test
-  function scoreTest() {
-    let score = 0;
-    const totalQuestions = 20;
-    
-    // Check answers and highlight
-    for (let i = 1; i <= totalQuestions; i++) {
-      const questionKey = `q${i}`;
-      
-      // Special handling for Q7 (text input)
-      if (i === 7) {
-        const userAnswer = userAnswers[questionKey] || '';
-        const correctAnswer = correctAnswers[questionKey];
-        const answerElement = document.getElementById('numba7');
-        const correctDisplay = document.getElementById('q7-correct-answer');
-        
-        if (userAnswer === correctAnswer) {
-          score++;
-          answerElement.style.backgroundColor = "#e6ffe6";
-          answerElement.style.border = "2px solid #4CAF50";
-          correctDisplay.style.display = "none";
-        } else {
-          answerElement.style.backgroundColor = "#ffebee";
-          answerElement.style.border = "2px solid #f44336";
-          // Show correct answer
-          correctDisplay.textContent = `Correct answer: ${correctAnswer}`;
-          correctDisplay.style.display = "block";
-        }
-        continue;
-      }
-      
-      // For radio questions
-      const selectedOption = document.querySelector(`input[name="${questionKey}"]:checked`);
-      const allOptions = document.querySelectorAll(`input[name="${questionKey}"]`);
-      
-      allOptions.forEach(option => {
-        const label = option.parentElement;
-        const optionText = label.textContent.trim().charAt(0);
-        
-        // Highlight correct answer
-        if (optionText === correctAnswers[questionKey]) {
-          label.classList.add('correct-answer');
-        }
-        
-        // Highlight incorrect selection
-        if (selectedOption && option === selectedOption && optionText !== correctAnswers[questionKey]) {
-          label.classList.add('incorrect-selection');
-        }
-      });
-      
-      if (selectedOption && selectedOption.parentElement.textContent.trim().charAt(0) === correctAnswers[questionKey]) {
-        score++;
-      }
-    }
-    
-    return { score, totalQuestions };
-  }
+  // Results panel
+  const total = questionsData.length;
+  const pct = Math.round(100*correct/total);
+  const panel = document.getElementById('resultsPanel');
+  panel.innerHTML = `
+    <h2>Your Score: ${correct} / ${total} <span style="font-size:.75rem;font-weight:600;letter-spacing:.15em;">(${pct}%)</span></h2>
+    <p>${feedback(pct)}</p>
+    <div>
+      <span class="badge" style="background:#e8f8ec;color:var(--good)">Correct</span>
+      <span class="badge" style="background:#ffe9e9;color:var(--bad)">Incorrect</span>
+      <span class="badge" style="background:#eef3ff;color:var(--brand)">Your Choice</span>
+    </div>
+  `;
+  panel.style.display='block';
 
-  // Show results
-  function showResults(score, totalQuestions) {
-    const percentage = Math.round((score/totalQuestions)*100);
-    const resultsHTML = `
-      <div class="test-results">
-        <h2 class="results-header">
-          Test Results: ${score}/${totalQuestions} (${percentage}%)
-        </h2>
-        <h3>Correct Answers:</h3>
-        <ol class="answer-list">
-          ${Object.keys(correctAnswers).map(q => `
-            <li style="margin-bottom: 8px;">
-              <strong>${q.toUpperCase()}:</strong> 
-              <span class="correct-value">${correctAnswers[q]}</span>
-            </li>
-          `).join('')}
-        </ol>
-      </div>
-    `;
-    
-    // Create or update results container
-    const resultsContainer = document.getElementById('results-container');
-    if (!resultsContainer) {
-      const newContainer = document.createElement('div');
-      newContainer.id = 'results-container';
-      document.querySelector('.inner').prepend(newContainer);
-      newContainer.innerHTML = resultsHTML;
-    } else {
-      resultsContainer.innerHTML = resultsHTML;
-    }
-    
-    // Scroll to top smoothly
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    });
-  }
+  // Sidebar score
+  const sb = document.getElementById('scoreBlock');
+  const txt = document.getElementById('scoreText');
+  const pt = document.getElementById('percentText');
+  const fb = document.getElementById('feedbackText');
+  txt.textContent = `${correct} / ${total}`;
+  pt.textContent = `${pct}%`;
+  fb.textContent = feedback(pct,true);
+  sb.classList.add(pct>=70?'good':'bad');
+  sb.style.display='flex';
 
-  // Submit handler
-  document.getElementById('submitTest').addEventListener('click', async function() {
-    // Score the test
-    const { score, totalQuestions } = scoreTest();
-    
-    // Save results - CHANGED TO PRACTICE TEST 2
-    localStorage.setItem('practiceTest2Results', JSON.stringify({
-      score,
-      totalQuestions,
-      timestamp: new Date().toISOString()
-    }));
-    
-    // Save to Firebase if authenticated - CHANGED TO PRACTICE TEST 2
-    if (user) {
-      const db = getFirestore();
-      try {
-        await setDoc(doc(db, "users", user.uid, "testAttempts", "practiceTest2"), {
-          answers: userAnswers,
-          score,
-          totalQuestions,
-          timestamp: new Date()
-        });
-      } catch (error) {
-        console.error("Error saving to Firebase:", error);
-      }
-    }
-    
-    // Show results
-    showResults(score, totalQuestions);
-    
-    // Disable submit button
-    this.disabled = true;
-    this.style.opacity = "0.7";
-    this.style.cursor = "not-allowed";
-  });
-  
-  // Initialize when page loads
-  document.addEventListener('DOMContentLoaded', setupAnswerTracking);
+  // Persist
+  localStorage.setItem(LS_KEY_PREFIX+'results', JSON.stringify({
+    correct,total,pct,timestamp:new Date().toISOString()
+  }));
+
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function feedback(pct,short=false){
+  if(pct>=90) return short?"Excellent":"Excellent performance – you’re nearing mastery. Focus on speed & avoidance of careless errors.";
+  if(pct>=75) return short?"Strong":"Strong foundation – review the missed concepts and retest targeted sets.";
+  if(pct>=60) return short?"Developing":"Developing – prioritize weak categories; spaced repetition will raise this quickly.";
+  return short?"Needs Work":"Needs improvement – build core accuracy with smaller skill drills before another full test.";
+}
+
+/* ================== Init After Build ================== */
+updateProgress();
+
+/* Restore submitted state */
+if(submitted){
+  submitTest(); // will re-render with explanations toggles
+}
+
+/* Header shadow */
+const hdr=document.getElementById('siteHeader');
+window.addEventListener('scroll',()=>hdr.classList.toggle('scrolled',window.scrollY>20));
+
 </script>
-
-<script src="assets/js/jquery.min.js"></script>
-<script src="assets/js/browser.min.js"></script>
-<script src="assets/js/breakpoints.min.js"></script>
-<script src="assets/js/util.js"></script>
-<script src="assets/js/main.js"></script>
 
 </body>
 </html>
