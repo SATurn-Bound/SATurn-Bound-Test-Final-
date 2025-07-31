@@ -442,7 +442,7 @@ signupForm.addEventListener('submit', async e=>{
       await updateProfile(cred.user,{displayName:name});
     }
     successMsg.style.display='block';
-    setTimeout(()=>window.location.href='personalization.html', 900);
+    setTimeout(()=>window.location.href='dashboard.html', 900);
   }catch(err){
     errorMsg.textContent = friendlyError(err);
   }
@@ -456,7 +456,7 @@ document.getElementById('googleSignUp').addEventListener('click', async ()=>{
     await signInWithPopup(auth, provider);
     successMsg.style.display='block';
     successMsg.textContent='Signed in with Google! Redirecting…';
-    setTimeout(()=>window.location.href='personalization.html', 700);
+    setTimeout(()=>window.location.href='dashboard.html', 700);
   }catch(err){
     errorMsg.textContent = friendlyError(err);
   }
