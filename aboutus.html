@@ -1,1 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About Us | Saturn Bound</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #0a0a23;
+      --card-bg: #161639;
+      --accent: #00ffe5;
+      --text: #e8eeed;
+    }
+
+    /* ---------- Page ---------- */
+    body{
+      margin:0;
+      font-family:'Inter',sans-serif;
+      background:var(--bg);
+      color:#fff;
+    }
+    .container{
+      max-width:1200px;
+      margin:auto;
+      padding:1.5rem;
+    }
+
+    /* ---------- Heading ---------- */
+    h1{
+      text-align:center;
+      font-size:2rem;
+      margin:0 0 2rem;
+      color:var(--text);
+    }
+
+    /* ---------- Cards ---------- */
+    .about-grid{
+      display:flex;
+      flex-wrap:wrap;
+      gap:1.5rem;
+      justify-content:center;
+    }
+    .profile-card{
+      background:var(--card-bg);
+      border-radius:1rem;
+      padding:1rem;
+      flex:1 1 300px;
+      max-width:420px;
+      box-shadow:0 4px 20px rgba(0,0,0,.35);
+      transition:transform .3s;
+    }
+    .profile-card:hover{
+      transform:translateY(-4px);
+    }
+
+    /* ---------- Images ---------- */
+    .profile-card img{
+      width:100%;
+      height:260px;
+      object-fit:cover;      /* default behaviour */
+      border-radius:1rem;
+      margin-bottom:1rem;
+    }
+    /* Just the Shrianz photo gets “contain” so the whole face fits */
+    .profile-card img.shrink{
+      object-fit:contain;
+    }
+
+    /* ---------- Text ---------- */
+    .name{
+      font-size:1.25rem;
+      color:var(--accent);
+      margin:0 0 .4rem;
+    }
+    .bio{
+      font-size:.9rem;
+      line-height:1.5;
+    }
+
+    /* ---------- Small screens ---------- */
+    @media(max-width:768px){
+      h1{font-size:1.6rem;}
+      .container{padding:1rem;}
+      .profile-card img{height:220px;}
+      .profile-card img.shrink{height:220px;}
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Our Team</h1>
+
+    <div class="about-grid">
+      <div class="profile-card">
+        <img src="images/IMG_1780.jpg" alt="Vedanth Sreeprakash">
+        <div class="name">Vedanth Sreeprakash (President)</div>
+        <div class="bio">
+          Aspiring software engineer, entrepreneur, and co-founder of Saturn Bound. Passionate about making learning smarter through technology and design.
+        </div>
+      </div>
+
+      <div class="profile-card">
+        <!-- added class="profile-img shrink" -->
+        <img src="images/shrianzimage" alt="Shrianz Bambi" class="shrink">
+        <div class="name">Shrianz Bambi (Vice President)</div>
+        <div class="bio">
+          Tech enthusiast and co-founder of Saturn Bound. Loves building tools that inspire students and making education more accessible to all.
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
+
 
